@@ -7,7 +7,7 @@ import { isAuthenticated } from './middleware.js';
 
 // handlers
 import authRouter from './handler/auth.js';
-import uploadRouter from './handler/upload.js';
+import documentRouter from './handler/document.js';
 
 dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
 })
 
 app.use(authRouter);
-app.use(uploadRouter);
+app.use(documentRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
