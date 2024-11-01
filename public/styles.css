@@ -18,12 +18,15 @@ body {
     background-color: #2a2a2a;
     border-radius: 20px;
     overflow: hidden;
-    width: 1920px;
-    max-width: 100%;
+    width: 60%;
     height: 800px;
     display: flex;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    position: relative;
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
+    bottom: 20%;
 }
 
 .login-info {
@@ -71,7 +74,7 @@ body {
 
 .form-group input {
     width: 100%;
-    padding: 15px 15px 15px 50px;
+    padding: 15px 15px 15px 60px;
     border: 1px solid #444;
     background-color: #333;
     color: white;
@@ -79,13 +82,14 @@ body {
     font-size: 18px;
 }
 
-.form-group i {
+.form-group img {
     position: absolute;
     left: 15px;
     top: 50%;
     transform: translateY(-50%);
     color: #e6a23c;
-    font-size: 24px;
+    width: 40px;
+    height: 40px;
 }
 
 .form-actions {

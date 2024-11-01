@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
     <div class="decorative-shape shape1"></div>
@@ -20,17 +21,20 @@
         </div>
         <div class="login-form">
             <div class="logo">
-                <img src="./TUlogo.png" alt="Logo">
+                <img src="img/TUlogo.png" alt="Logo">
             </div>
             <h2>เข้าสู่ระบบยื่นคำร้อง</h2>
             <form>
                 <div class="form-group">
-                    <i aria-hidden="true">👤</i>
+                    <img src="img/Male User.png" aria-hidden="true">
                     <input type="text" placeholder="Username" required aria-label="Username">
                 </div>
                 <div class="form-group">
-                    <i aria-hidden="true">🔒</i>
-                    <input type="password" placeholder="Password" required aria-label="Password">
+                    <img src="img/Secure.png" aria-hidden="true">
+                    <input type="password" placeholder="Password" required aria-label="Password" id="password">
+                    <span class="toggle-password" aria-hidden="true" onclick="togglePassword()">
+                        <img src="img/eye closed hidden.png" />
+                    </span>
                 </div>
                 <div class="form-actions">
                     <label class="remember-me">
@@ -44,5 +48,7 @@
             </form>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
