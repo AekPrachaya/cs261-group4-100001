@@ -11,29 +11,23 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 5vh 5vw;
+    overflow: hidden;
 }
 
 .login-container {
     background-color: #2a2a2a;
     border-radius: 20px;
     overflow: hidden;
-    width: 60%;
-    height: 800px;
     display: flex;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-    position: absolute;
-    top: 20%;
-    left: 20%;
-    right: 20%;
-    bottom: 20%;
 }
 
 .login-info {
-    background: linear-gradient(135deg, #e6a23c, #d35400);
+    background: linear-gradient(180deg, #D8A25E, #d88f5e, #a05a47, #A04747);
     color: white;
     padding: 60px;
-    width: 50%;
+    width: 44%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,6 +37,7 @@ body {
     font-size: 36px;
     margin-bottom: 30px;
     line-height: 1.2;
+    color: #EEDF7A;
 }
 
 .login-info p {
@@ -51,10 +46,13 @@ body {
     line-height: 1.5;
 }
 
+.login-info strong {
+    color: #EEDF7A;
+}
 .login-form {
     background-color: #2a2a2a;
     padding: 60px;
-    width: 50%;
+    width: 56%;
     color: white;
     display: flex;
     flex-direction: column;
@@ -65,6 +63,7 @@ body {
     text-align: center;
     margin-bottom: 40px;
     font-size: 32px;
+    color: #EEDF7A;
 }
 
 .form-group {
@@ -82,6 +81,10 @@ body {
     font-size: 18px;
 }
 
+.form-group input::placeholder{
+    color: #eede7a8b;
+}
+
 .form-group img {
     position: absolute;
     left: 15px;
@@ -90,6 +93,19 @@ body {
     color: #e6a23c;
     width: 40px;
     height: 40px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password img {
+    width: 30px;
+    height: 30px;
 }
 
 .form-actions {
@@ -116,8 +132,8 @@ body {
 }
 
 .login-button {
-    background: linear-gradient(to right, #e6a23c, #d35400);
-    color: white;
+    background: linear-gradient(to right, #D8A25E, #d88f5e, #a05a47, #A04747);
+    color: #333;
     border: none;
     padding: 15px;
     border-radius: 10px;
@@ -128,7 +144,7 @@ body {
 }
 
 .login-button:hover {
-    background: linear-gradient(to right, #d35400, #e6a23c);
+    background:#A04747
 }
 
 .decorative-shape {
