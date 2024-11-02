@@ -1,11 +1,10 @@
 import express from 'express';
-import { uploadDocuments } from '../server/upload.js';
-
+import { uploadDocuments } from '../server/document.js';
+import { insertPetition, deletePetition } from '../server/db.js'
 const router = express.Router();
 
 router.post('/api/upload', async (req, res) => {
     const { type, content, files } = req.body;
-
 
     if (!type || !content) {
         return res.status(400).json({ error: 'Type and content are required' });
@@ -14,6 +13,40 @@ router.post('/api/upload', async (req, res) => {
     try {
         if (type === 'add/remove') {
             return await addOrRemoveCourses(content, files);
+        }
+        return res.status(400).json({ error: 'Invalid type' });
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+router.delete('/api/delete', async (req, res) => {
+    const { id } = req.body;
+
+    if (!id) {
+        return res.status(400).json({ error: 'ID is required' });
+    }
+
+    try {
+        return await deletePetition(id);
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+router.put('/api/update', async (req, res) => {
+    const { id, petition } = req.body;
+
+    if (!id || !petition) {
+        return res.status(400).json({ error: 'ID, type and content are required' });
+    }
+
+    try {
+        if (type === 'add/remove') {
+
+            return await updatePetition(id, petition);
         }
         return res.status(400).json({ error: 'Invalid type' });
     } catch (error) {
@@ -102,7 +135,8 @@ const addOrRemoveCourses = async (content) => {
     const documentPublicIDs = await uploadDocuments(content);
     content['documents'] = documentPublicIDs;
 
-    //TODO: Insert the document to the database
+    const row = await insertPetition(content);
+    return row;
 }
 
 
