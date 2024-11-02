@@ -1,15 +1,14 @@
+import { PORT } from './config.js';
 import express from 'express';
 import session from 'express-session';
 import path from 'path';
-import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { isAuthenticated } from './middleware.js';
 
 // handlers
 import authRouter from './handler/auth.js';
-import documentRouter from './handler/document.js';
+import petitionRouter from './handler/petition.js';
 
-dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -33,9 +32,9 @@ app.get('/', (req, res) => {
 })
 
 app.use(authRouter);
-app.use(documentRouter);
+app.use(petitionRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on port http://127.0.0.1:${PORT}`)
+const LISTENING_PORT = PORT || 3000;
+app.listen(LISTENING_PORT, () => {
+    console.log(`Server running on port http://127.0.0.1:${LISTENING_PORT}`)
 });
