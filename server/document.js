@@ -50,7 +50,7 @@ export const getDocumentsByPetitionID = async (petitionID) => {
     return {};
 }
 
-/* Delete document by public_id
+/* delete document by public_id
  * @param {string} public_id
  * @returns {Object} {success: boolean, message: string}
  * */
