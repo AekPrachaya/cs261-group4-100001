@@ -39,6 +39,7 @@ router.post('/api/login', async (req, res) => {
         const result = await response.json();
         req.session.user = {
             id: result["username"],
+            type: result["type"],
         };
         return res.status(200).json(result);
     } catch (error) {
