@@ -19,20 +19,25 @@ This project is a Petition Submission System for TU students by Group 4, CS261.
 
 ### Request
 `POST /api/petition/upload`
+
 type: string: type of petition
 content: Petition
 
 `POST /api/petition/get`
+
 id: string
 
 `POST /api/petition/get_all`
+
 student_id: string
 
 `PUT /api/petition/`
+
 id: string (petition_id)
 content: Content
 
 `DELETE /api/petition/`
+
 id: string (petition_id)
 
 [View type](https://github.com/AekPrachaya/cs261-group4-100001/blob/d9ac45c16d3f981ee151895be2e6221db2021a79/server/type.js)
