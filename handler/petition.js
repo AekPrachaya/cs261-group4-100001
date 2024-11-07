@@ -1,18 +1,17 @@
 import express from 'express';
-import { uploadDocuments } from '../server/document.js';
-import { insertPetition, deletePetition } from '../server/db.js'
+// import { uploadDocuments } from '../server/document.js';
+import { insertPetition, deletePetition, updatePetition } from '../server/db.js'
 const router = express.Router();
 
-router.post('/api/upload', async (req, res) => {
-    const { type, content, files } = req.body;
-
+router.post('/api/petition', async (req, res) => {
+    const { type, content } = req.body;
     if (!type || !content) {
         return res.status(400).json({ error: 'Type and content are required' });
     }
-
     try {
         if (type === 'add/remove') {
-            return await addOrRemoveCourses(content, files);
+            const result = await addOrRemoveCourses(content);
+            return res.status(200).json({ data: result.data });
         }
         return res.status(400).json({ error: 'Invalid type' });
     } catch (error) {
@@ -21,7 +20,7 @@ router.post('/api/upload', async (req, res) => {
     }
 })
 
-router.delete('/api/delete', async (req, res) => {
+router.delete('/api/petition', async (req, res) => {
     const { id } = req.body;
 
     if (!id) {
@@ -29,14 +28,18 @@ router.delete('/api/delete', async (req, res) => {
     }
 
     try {
-        return await deletePetition(id);
+        const result = await deletePetition(id);
+        if (result) {
+            return res.status(200).json({ status: 'success' });
+        }
+        return res.status(400).json({ error: 'Invalid ID' });
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
     }
 })
 
-router.put('/api/update', async (req, res) => {
+router.put('/api/petition', async (req, res) => {
     const { id, petition } = req.body;
 
     if (!id || !petition) {
@@ -44,12 +47,13 @@ router.put('/api/update', async (req, res) => {
     }
 
     try {
-        if (type === 'add/remove') {
-
-            return await updatePetition(id, petition);
+        const result = await updatePetition(id, petition);
+        if (result) {
+            return res.status(200).json({ data: result });
         }
         return res.status(400).json({ error: 'Invalid type' });
     } catch (error) {
+        console.log(petition)
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
     }
@@ -104,39 +108,25 @@ router.put('/api/update', async (req, res) => {
  * @param {Content} content - The content object containing course details.
  */
 const addOrRemoveCourses = async (content) => {
-
-    // Validate the content object
-    if (!content || !content.topic || !content.date || !content.person_in_charge || !content.student_info || !content.location || !content.phone_no || !content.telephone_no || !content.advisor || !content.is_add || !content.courses || !content.reason) {
-        throw new Error('Invalid content object');
+    if (!content) {
+        throw new Error('Content is required');
     }
 
-    // Validate the student_info object
-    if (!content.student_info || !content.student_info.name_title || !content.student_info.student_id || !content.student_info.year || !content.student_info.major) {
-        throw new Error('Invalid student_info object');
-    }
-
-    // Validate the location object
-    if (!content.location || !content.location.house_no || !content.location.village_no || !content.location.sub_district || !content.location.district || !content.location.province || !content.location.postal_code) {
-        throw new Error('Invalid location object');
-    }
-
-    // Validate the courses array
-    if (!content.courses || content.courses.length === 0) {
-        throw new Error('Invalid courses array');
-    }
-
-    // Validate each course object
-    for (const course of content.courses) {
-        if (!course || !course.course_id || !course.course_name || !course.section || !course.date || !course.credit || !course.lecturer || !course.approve_by) {
-            throw new Error('Invalid course object');
+    try {
+        // Parse and validate the content using Zod
+        const row = await insertPetition(content);
+        return {
+            data: row[0]
         }
+    } catch (error) {
+        throw new Error('Error inserting petition');
     }
-    /** @type {string[]} */
-    const documentPublicIDs = await uploadDocuments(content);
-    content['documents'] = documentPublicIDs;
 
-    const row = await insertPetition(content);
-    return row;
+    /** @type {string[]} */
+    // const documentPublicIDs = await uploadDocuments(content);
+    // content['documents'] = documentPublicIDs;
+
+
 }
 
 
