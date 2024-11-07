@@ -1,9 +1,9 @@
 import express from 'express';
 // import { uploadDocuments } from '../server/document.js';
-import { insertPetition, deletePetition, updatePetition } from '../server/db.js'
+import { insertPetition, deletePetition, updatePetition, getPetitions, getPetition } from '../server/db.js'
 const router = express.Router();
 
-router.post('/api/petition', async (req, res) => {
+router.post('/api/petition/upload', async (req, res) => {
     const { type, content } = req.body;
     if (!type || !content) {
         return res.status(400).json({ error: 'Type and content are required' });
@@ -20,11 +20,47 @@ router.post('/api/petition', async (req, res) => {
     }
 })
 
+router.post('/api/petition/get', async (req, res) => {
+    const { id } = req.body;
+    if (!id) {
+        return res.status(400).json({ error: 'ID is required' });
+    }
+    try {
+        const result = await getPetition(id);
+        if (result) {
+            return res.status(200).json({ data: result });
+        }
+        return res.status(400).json({ error: 'Invalid ID' });
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+
+router.post('/api/petition/get_all', async (req, res) => {
+    const { student_id } = req.body;
+    if (!student_id) {
+        return res.status(400).json({ error: 'student_id is required' });
+    }
+
+    try {
+        const result = await getPetitions(student_id);
+        if (result) {
+            return res.status(200).json({ data: result });
+        }
+        return res.status(400).json({ error: 'Invalid student_id' });
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
 router.delete('/api/petition', async (req, res) => {
     const { id } = req.body;
 
     if (!id) {
-        return res.status(400).json({ error: 'ID is required' });
+        return res.status(400).json({ error: 'student_id is required' });
     }
 
     try {
@@ -32,7 +68,7 @@ router.delete('/api/petition', async (req, res) => {
         if (result) {
             return res.status(200).json({ status: 'success' });
         }
-        return res.status(400).json({ error: 'Invalid ID' });
+        return res.status(400).json({ error: 'Invalid student_id' });
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
