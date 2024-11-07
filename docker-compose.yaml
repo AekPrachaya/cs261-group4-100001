@@ -1,0 +1,18 @@
+networks:
+  cs261-group:
+    driver: bridge
+
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    environment:
+      - POSTGRESQL_USERNAME=dev
+      - POSTGRESQL_PASSWORD=cs261isnotevenfun
+      - POSTGRESQL_DATABASE=tupetition
+    ports:
+      - '5431:5432'
+    networks:
+      - cs261-group
+
+
+
