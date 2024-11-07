@@ -47,18 +47,8 @@ export const insertPetition = async (petition) => {
  * @returns {Promise<Petition[]>} all petitions
  * */
 export const getPetitions = async (student_id) => {
-    try {
-        const { rows } = await POOL.query('SELECT * FROM petitions WHERE student_id = $1', [student_id])
-        return {
-            status: 'success',
-            data: rows
-        }
-    } catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        }
-    }
+    const { rows } = await POOL.query('SELECT * FROM petitions WHERE student_id = $1', [student_id])
+    return rows;
 }
 
 /** Get a petition by petition_id
@@ -66,18 +56,8 @@ export const getPetitions = async (student_id) => {
  * @returns {Promise<Object>} petition
  * */
 export const getPetition = async (petition_id) => {
-    try {
-        const { rows } = await POOL.query('SELECT * FROM petitions WHERE id = $1', [petition_id])
-        return {
-            status: 'success',
-            data: rows[0]
-        }
-    } catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        }
-    }
+    const { rows } = await POOL.query('SELECT * FROM petitions WHERE id = $1 LIMIT 1', [petition_id])
+    return rows[0];
 }
 
 /** Update a petition by petition_id
