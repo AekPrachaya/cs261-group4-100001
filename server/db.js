@@ -35,22 +35,11 @@ await POOL.query(CREATE_PETITION_TABLE);
  */
 export const insertPetition = async (petition) => {
     const { student_id, type, advisor, documents, content } = petition
-    try {
-
-        const { rows } = await POOL.query(
-            'INSERT INTO petitions (student_id, type, advisor, documents, content) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [student_id, type, advisor, documents, content]
-        )
-        return {
-            status: 'success',
-            data: rows[0]
-        }
-    } catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        }
-    }
+    const { rows } = await POOL.query(
+        'INSERT INTO petitions (student_id, type, advisor, documents, content) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [student_id, type, advisor, documents, content]
+    )
+    return rows;
 }
 
 /** Get all petitions by student_id
@@ -97,23 +86,13 @@ export const getPetition = async (petition_id) => {
  * @returns {Object} updated petition
  * */
 export const updatePetition = async (petition_id, petition) => {
-    const { student_id, type, advisor, documents, content } = petition
-    try {
+    const { advisor, documents, content } = petition
 
-        const { rows } = await POOL.query(
-            'UPDATE petitions SET student_id = $1, type = $2, advisor = $3, documents = $4, content = $5 WHERE id = $6 RETURNING *',
-            [student_id, type, advisor, documents, content, petition_id]
-        )
-        return {
-            status: 'success',
-            data: rows[0]
-        }
-    } catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        }
-    }
+    const { rows } = await POOL.query(
+        'UPDATE petitions SET advisor = $1, documents = $2, content = $3 WHERE id = $4 RETURNING *',
+        [advisor, documents, content, petition_id]
+    )
+    return rows[0];
 
 }
 
@@ -122,17 +101,6 @@ export const updatePetition = async (petition_id, petition) => {
  * @returns {Promise<void>}
  * */
 export const deletePetition = async (petition_id) => {
-    try {
-        const { rows } = await POOL.query('DELETE FROM petitions WHERE id = $1 RETURNING *', [petition_id])
-        return {
-            status: 'success',
-            data: rows[0],
-            message: 'Petition deleted'
-        }
-    } catch (error) {
-        return {
-            status: 'error',
-            message: error.message
-        }
-    }
+    const { rows } = await POOL.query('DELETE FROM petitions WHERE id = $1 RETURNING *', [petition_id])
+    return rows[0];
 }
