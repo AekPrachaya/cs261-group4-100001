@@ -13,11 +13,13 @@ app.use(petitionRouter);
 
 
 describe('Petition Handlers API', () => {
+    /** @param Petition */
     const petition = {
         student_id: 125124,
         type: "add/remove",
         advisor: "Dr.advisor",
         documents: [1, 2, 3],
+        status: "pending",
         content: {
             topic: "Test Topic",
             date: new Date(),
