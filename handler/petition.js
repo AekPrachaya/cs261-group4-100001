@@ -1,6 +1,6 @@
 import express from 'express';
 // import { uploadDocuments } from '../server/document.js';
-import { insertPetition, deletePetition, updatePetition, getPetitions, getPetition } from '../server/db.js'
+import { insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment } from '../server/db.js'
 const router = express.Router();
 
 router.post('/api/petition/upload', async (req, res) => {
@@ -9,8 +9,16 @@ router.post('/api/petition/upload', async (req, res) => {
         return res.status(400).json({ error: 'Type and content are required' });
     }
     try {
+        let result
         if (type === 'add/remove') {
-            const result = await addOrRemoveCourses(content);
+            result = await addOrRemoveCourses(content);
+
+        }
+
+        if (result) {
+            insertComment({
+                petition_id: result.data.id,
+            })
             return res.status(200).json({ data: result.data });
         }
         return res.status(400).json({ error: 'Invalid type' });
