@@ -14,7 +14,7 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 220px; /* Reduced width for better proportion */
+    width: 200px; /* Reduced width for better proportion */
     background: linear-gradient(to bottom, #FFCC99, #CC6600);
     padding: 20px;
     display: flex;
@@ -116,7 +116,7 @@ body {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center; /* Space between title and button */
+    justify-content: space-between; /* Space between title and button */
     color: #FFD700; /* Gold color for the title */
 }
 
@@ -144,7 +144,7 @@ body {
 
 /* Position the button in the top-right corner of the .header container */
 .preview-button {
-    position: absolute;
+    position: relative;
     top: 0px;
     right: 10px;
 }
@@ -164,27 +164,36 @@ body {
     margin-top: 20px;
 }
 
-.user-details, .info {
-    background-color: #252525;
+.user-details {
     padding: 20px;
     border-radius: 10px;
-    width: 45%; /* Adjusted width */
-    margin-left: -5%;
-    margin-top: 2%;
+    width: 47%; /* Adjusted width */
+    margin-top: 0%;
 }
 
+.info {
+    background-color: #252525; /* Different background color for .info */
+    padding: 15px;
+    border-radius: 8px; /* Slightly rounded corners for inner box */
+    margin-top: 20px;
+    letter-spacing: 1;
+    line-height: 30px;
+
+}
+
+/* Profile picture styling remains the same */
 .profile-pic {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #444;
+    background-color: #252525;
     color: white;
-    border-radius: 50%; /* Changed to circular */
-    height: 100px;
-    width: 100px;
-    margin: 0 auto 20px;
+    border-radius: 3%; /* Circular shape */
+    height: 30%;
+    width: 100%;
+    margin: 0px auto 0px;
     text-align: center;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .divider {
@@ -206,24 +215,24 @@ body {
     text-align: center;
     margin-bottom: 20px;
     color: #FFD700;
-    font-size: 16px; /* Adjusted font size */
+    font-size: 36px; /* Adjusted font size */
 }
 
 .requests h2 {
     text-align: center;
-    width: 100%;
+    width: 80%;
     background-color: #252525;
     padding: 10px;
     color: white; /* color */
     font-size: 16px;
     border: 3%; 
     margin-top: 5%;
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 /* Individual request buttons without background */
 .requests button {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     background-color: #252525;
     color: white; /* text */
@@ -233,7 +242,7 @@ body {
     text-align: left;
     font-size: 14px;
     margin-top: 5%;
-    margin-left: 10%;
+    margin-left: 15%;
 }
 
 .requests button:hover {
@@ -250,4 +259,24 @@ body {
     .user-details, .requests {
         width: 100%;
     }
+}
+
+.language-switch {
+    position: relative;
+    /* top: 20px;
+    right: 20px; */
+    background-color: #e6a23c;
+    color: #333;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.language-switch:hover {
+    background-color: #d88f5e;
 }

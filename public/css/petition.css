@@ -190,3 +190,23 @@ h1 {
 .petition-container::-webkit-scrollbar-thumb:hover {
     background-color: #cd833a;
 }
+
+.language-switch {
+    position: relative;
+    top: 20px;
+    right: 20px;
+    background-color: #e6a23c;
+    color: #333;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.language-switch:hover {
+    background-color: #d88f5e;
+}

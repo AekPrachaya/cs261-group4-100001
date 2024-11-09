@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +13,12 @@
     <div class="decorative-shape shape4"></div>
 
     <div class="login-container">
-        <!-- ปุ่มเปลี่ยนภาษา -->
-        <button class="language-switch">EN</button>
+        <!-- ปุ่มเปลี่ยนภาษาไปยังภาษาไทย -->
+        <button class="language-switch" onclick="location.href='index.html'">TH</button>
         
         <div class="login-info">
-            <h1>ยินดีต้อนรับสู่ระบบยื่นคำร้อง</h1>
-            <p>กรุณากรอก Username และ Password<br>เพื่อเข้าสู่ระบบยื่นคำร้อง</p>
+            <h1>Welcome to the Request Submission System</h1>
+            <p>Please enter your Username and Password<br>to access the request submission system.</p>
             <p><strong>Username:</strong><br>TU reg username</p>
             <p><strong>Password:</strong><br>TU reg password</p>
         </div>
@@ -27,14 +27,14 @@
             <div class="logo">
                 <img src="../img/TUlogo.png" alt="Logo">
             </div>
-            <h2>เข้าสู่ระบบยื่นคำร้อง</h2>
+            <h2>Request Submission Login</h2>
             <form>
                 <div class="form-group">
-                    <img src="../img/User_cicrle.svg" aria-hidden="true" alt="Male User Icon">
+                    <img src="../img/User_cicrle.svg" aria-hidden="true" alt="User Icon">
                     <input type="text" placeholder="Username" required aria-label="Username">
                 </div>
                 <div class="form-group">
-                    <img src="../img/lock.svg" aria-hidden="true" alt="Secure Icon">
+                    <img src="../img/lock.svg" aria-hidden="true" alt="Lock Icon">
                     <input type="password" placeholder="Password" required aria-label="Password" id="password">
                     <span class="toggle-password" aria-hidden="true" onclick="togglePassword()" onKeyDown="togglePassword()">
                         <img src="../img/eye closed hidden.svg" alt="Toggle Password Visibility" />
@@ -53,8 +53,6 @@
         </div>
     </div>
 
-    <script src="../js/language.js"></script>
-    <script src="../js/change_language_login.js"></script>
     <script src="../js/script.js"></script>
 </body>
 </html>
