@@ -3,7 +3,6 @@ export const CREATE_PETITION_TABLE = `CREATE TABLE IF NOT EXISTS petitions (
     student_id INT NOT NULL,
     type TEXT NOT NULL,
     advisor TEXT NOT NULL,
-    documents INT[],
     status TEXT NOT NULL CHECK (status IN ('pending', 'approved', 'rejected')) DEFAULT 'pending',
     content JSONB NOT NULL
 )`
@@ -26,4 +25,10 @@ export const CREATE_COMMENT_TABLE = `CREATE TABLE IF NOT EXISTS comments (
     dean_comment TEXT,
     dean_signature TEXT,
     dean_date TIMESTAMP
+)`
+
+export const CREATE_DOCUMENT_TABLE = `CREATE TABLE IF NOT EXISTS documents (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    petition_id UUID NOT NULL REFERENCES petitions(id) ON DELETE CASCADE,
+    public_id TEXT NOT NULL
 )`
