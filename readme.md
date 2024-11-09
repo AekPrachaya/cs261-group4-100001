@@ -15,10 +15,7 @@ Install [docker-compose](https://docs.docker.com/compose/install/) and run docke
 ```bash
 docker-compose up -d
 ```
-Install packages
-```bash
-npm i
-```
+
 Start dev server of the project
 ```bash
 npm run dev
