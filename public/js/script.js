@@ -12,3 +12,7 @@ function togglePassword() {
         toggleIcon.alt = "Show Password";
     }
 }
+
+function switchLanguage() {
+    alert("เปลี่ยนภาษายังอยู่ระหว่างการพัฒนา");
+}
