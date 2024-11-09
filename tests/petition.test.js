@@ -18,7 +18,6 @@ describe('Petition Handlers API', () => {
         student_id: 125124,
         type: "add/remove",
         advisor: "Dr.advisor",
-        documents: [1, 2, 3],
         status: "pending",
         content: {
             topic: "Test Topic",
@@ -112,6 +111,5 @@ describe('Petition Handlers API', () => {
             .send({ id: insertedPetition.id });
 
         expect(res.status).to.equal(200);
-        expect(res.body.status).to.equal('success');
     });
 });

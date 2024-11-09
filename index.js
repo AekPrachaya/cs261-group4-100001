@@ -8,13 +8,13 @@ import { isAuthenticated } from './middleware.js';
 // handlers
 import authRouter from './handler/auth.js';
 import petitionRouter from './handler/petition.js';
+import commentRouter from './handler/comment.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
-
 app.use(session({
     secret: "f4e7945b-4a3e-4b34-bf56-6091e4d4f58b",
     resave: false,
@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 
 app.use(authRouter);
 app.use(petitionRouter);
+app.use(commentRouter);
 
 const LISTENING_PORT = PORT || 3000;
 app.listen(LISTENING_PORT, () => {

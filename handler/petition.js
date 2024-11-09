@@ -1,6 +1,11 @@
 import express from 'express';
-// import { uploadDocuments } from '../server/document.js';
-import { insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment } from '../server/db.js'
+import {
+    insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment
+} from '../server/db.js'
+
+import { deleteDocumentsByPublicIDs, getDocumentsByPetitionID, uploadDocuments } from '../server/document.js';
+import multer from 'multer';
+
 const router = express.Router();
 
 router.post('/api/petition/upload', async (req, res) => {
@@ -72,9 +77,12 @@ router.delete('/api/petition', async (req, res) => {
     }
 
     try {
+        const documents = await getDocumentsByPetitionID(id);
         const result = await deletePetition(id);
         if (result) {
-            return res.status(200).json({ status: 'success' });
+            const public_ids = documents.map(document => document.public_id);
+            await deleteDocumentsByPublicIDs(public_ids);
+            return res.status(200).json({ data: result });
         }
         return res.status(400).json({ error: 'Invalid student_id' });
     } catch (error) {
@@ -82,6 +90,7 @@ router.delete('/api/petition', async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 })
+
 
 router.put('/api/petition', async (req, res) => {
     const { id, petition } = req.body;
@@ -97,7 +106,53 @@ router.put('/api/petition', async (req, res) => {
         }
         return res.status(400).json({ error: 'Invalid type' });
     } catch (error) {
-        console.log(petition)
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+router.post('/api/petition/files', upload.array('files'), async (req, res) => {
+    const { petition_id } = req.body;
+    const files = req.files;
+    if (!files || !petition_id) {
+        return res.status(400).json({ error: 'Files and petition_id are required' });
+    }
+
+    try {
+        const public_ids = await uploadDocuments(files, petition_id);
+        return res.status(200).json({ data: public_ids });
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+router.delete('/api/petition/files', async (req, res) => {
+    const { public_ids } = req.body;
+    if (!public_ids) {
+        return res.status(400).json({ error: 'Public IDs is required' });
+    }
+    try {
+        const result = await deleteDocumentsByPublicIDs(public_ids);
+        return res.status(200).json({ data: result });
+    } catch (error) {
+        console.error("Fetch error:", error);
+        return res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
+router.post('/api/petition/files/get', async (req, res) => {
+    const { petition_id } = req.body;
+    if (!petition_id) {
+        return res.status(400).json({ error: 'Public IDs is required' });
+    }
+    try {
+        const result = await getDocumentsByPetitionID(petition_id);
+        return res.status(200).json({ data: result });
+    } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
     }
@@ -165,12 +220,6 @@ const addOrRemoveCourses = async (content) => {
     } catch (error) {
         throw new Error('Error inserting petition');
     }
-
-    /** @type {string[]} */
-    // const documentPublicIDs = await uploadDocuments(content);
-    // content['documents'] = documentPublicIDs;
-
-
 }
 
 
