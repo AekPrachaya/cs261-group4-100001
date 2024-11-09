@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('requestForm');
+const form = document.getElementById('requestForm');
     const fileUpload = document.getElementById('fileUpload');
 
     form.addEventListener('submit', function(e) {
@@ -9,9 +8,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     fileUpload.addEventListener('change', function(e) {
-        const fileName = e.target.files[0]?.name || 'No file chosen';
-        e.target.nextElementSibling.textContent = fileName;
-    });
+        const files = e.target.files;
+        const allowedTypes = ['application/pdf', 'image/png'];
+        
+        // ตรวจสอบจำนวนไฟล์
+        if (files.length > 5) {
+            alert('กรุณาอัปโหลดไม่เกิน 5 ไฟล์');
+            e.target.value = '';  // รีการเลือกไฟล์
+            e.target.nextElementSibling.textContent = 'No file chosen';
+            return;
+        }
+        
+        // ตรวจสอบชนิดไฟล์
+        for (let file of files) {
+            if (!allowedTypes.includes(file.type)) {
+                alert('กรุณาเลือกไฟล์ PDF หรือ PNG เท่านั้น');
+                e.target.value = '';  // รีการเลือกไฟล์
+                e.target.nextElementSibling.textContent = 'No file chosen';
+                return;
+            }
+        }
 
-    // Add any additional JavaScript functionality here
-});
+        // แสดงชื่อไฟล์ทั้งหมด
+        const fileNames = Array.from(files).map(file => file.name).join(', ');
+        e.target.nextElementSibling.textContent = fileNames;
+    });
