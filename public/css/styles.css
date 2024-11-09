@@ -151,7 +151,7 @@ body {
     cursor: pointer;
     font-size: 18px;
     transition: all 0.3s ease-in-out;
-    width: 550px;
+    width: 100%;
     position: relative;
     overflow: hidden;
 }
