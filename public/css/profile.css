@@ -168,7 +168,6 @@ body {
     padding: 20px;
     border-radius: 10px;
     width: 47%; /* Adjusted width */
-    margin-left: -10%;
     margin-top: 0%;
 }
 
@@ -177,7 +176,9 @@ body {
     padding: 15px;
     border-radius: 8px; /* Slightly rounded corners for inner box */
     margin-top: 20px;
-    margin-bottom: 30px;
+    letter-spacing: 1;
+    line-height: 30px;
+
 }
 
 /* Profile picture styling remains the same */
@@ -188,7 +189,7 @@ body {
     background-color: #252525;
     color: white;
     border-radius: 3%; /* Circular shape */
-    height: 40%;
+    height: 30%;
     width: 100%;
     margin: 0px auto 0px;
     text-align: center;
@@ -219,7 +220,7 @@ body {
 
 .requests h2 {
     text-align: center;
-    width: 100%;
+    width: 80%;
     background-color: #252525;
     padding: 10px;
     color: white; /* color */
@@ -231,7 +232,7 @@ body {
 
 /* Individual request buttons without background */
 .requests button {
-    width: 100%;
+    width: 80%;
     padding: 10px;
     background-color: #252525;
     color: white; /* text */
