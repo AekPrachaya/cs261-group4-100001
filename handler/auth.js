@@ -58,5 +58,8 @@ router.get('api/logout', (req, res) => {
     });
 });
 
+app.get('/api/session', (req, res) => {
+    return res.json(req.session);
+});
 
 export default router;
