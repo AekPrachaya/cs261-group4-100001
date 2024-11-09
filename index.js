@@ -27,8 +27,20 @@ app.use(session({
 
 app.use(isAuthenticated);
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+})
+
+app.get('/petition', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'petition.html'));
+})
+
+app.get('/profile', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'profile.html'));
+})
+
+app.get('/request', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'request.html'));
 })
 
 app.use(authRouter);
