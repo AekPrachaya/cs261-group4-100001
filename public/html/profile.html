@@ -6,31 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ข้อมูลของผู้ใช้งาน</title>
     <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/nav.css">
 </head>
 
 <body>
-    <div class="sidebar">
+    <nav class="sidebar">
         <div class="logo">
             <img src="../img/TUlogo.png" alt="Thammasat University Logo">
-            <h1>มหาวิทยาลัยธรรมศาสตร์<br>Thammasat University</h1>
+            <div class="logo-text">มหาวิทยาลัยธรรมศาสตร์</div>
         </div>
-        <div class="user-info">
-            <div class="user-dropdown">
-                <div class="profile-icon"></div>
-                <div class="username-text">
-                    <strong>Username</strong><br>
-                    <span class="user-id">User ID</span>
-                </div>
-                <div class="dropdown-arrow">&#x25BC;</div>
-            </div>
-        </div>
-        <div class="menu">
-            <button>ข้อมูลส่วนตัว</button>
-            <button>เขียนคำร้อง</button>
-            <button>ตรวจสอบสถานะคำร้อง</button>
-            <button>ออกจากระบบ</button>
-        </div>
-    </div>
+        <ul class="nav-links">
+            
+        </ul>
+        <ul class="nav-links bottom-links">
+            <li><a href="#">ข้อมูลส่วนตัว</a></li>
+            <li><a href="./request.html">เขียนคำร้อง</a></li>
+            <li><a href="#" class="active" >ตรวจสอบสถานะคำร้อง</a></li>
+            <li><a href="#">ออกจากระบบ</a></li>
+        </ul>
+    </nav>
 
     <div class="content">
         <div class="header">
@@ -60,6 +54,8 @@
             </div>
         </div>
     </div>
+    <script src="../js/language.js"></script>
+    <script src="../js/change_language_login.js"></script>
 </body>
 
 </html>
