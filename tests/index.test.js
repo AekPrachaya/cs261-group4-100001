@@ -1,2 +1,3 @@
 import './db.test.js'
-import './petitions.test.js'
+import './petition.test.js'
+import './documents.test.js'
