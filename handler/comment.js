@@ -1,5 +1,5 @@
 import express from 'express';
-import { getComment, insertComment, updateComment } from '../server/db';
+import { getComment, insertComment, updateComment } from '../server/db.js';
 
 const router = express.Router();
 
