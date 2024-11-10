@@ -43,3 +43,46 @@ if (location.hash) {
         languageButton.textContent = "EN";
     }
 }
+
+function submitLogin() {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    console.log("Logging in...");
+
+    fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {
+        method: 'POST',
+        headers: {
+            'Application-Key': ' ',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "UserName": username,
+            "PassWord": password
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageElement = document.getElementById('message');
+        console.log(data.message);
+
+        messageElement.classList.remove('success', 'fail');
+
+        if (data.message.toLowerCase().includes("success")) {
+            messageElement.innerText = 'Success !';
+            messageElement.classList.add('success');
+        } else {
+            messageElement.innerText = 'Invalid Username or Password !';
+            messageElement.classList.add('fail');
+        }
+
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const messageElement = document.getElementById('message');
+        messageElement.innerText = 'Invalid Username or Password !';
+        messageElement.classList.remove('success');
+        messageElement.classList.add('fail');
+    });
+}
