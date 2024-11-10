@@ -160,23 +160,8 @@ body {
   position: relative;
   overflow: hidden;
 }
-.login-button::after {
-  content: "";
-  background: linear-gradient(to right, #d8a25e, #d88f5e, #a05a47, #a04747);
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  transition: all 1.5s ease-in-out;
-  box-shadow: inset 0 0 10px #1c1c1c;
-}
-.login-button::after:hover {
-  width: 0;
-}
 .login-button:hover {
-  scale: 0.99;
+  scale: 1.03;
 }
 
 .decorative-shape {
@@ -274,4 +259,3 @@ body {
 .language-switch:hover {
   background-color: #d88f5e;
 }
-
