@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Form</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+  </head>
+  <body>
+    <div class="decorative-shape shape1"></div>
+    <div class="decorative-shape shape2"></div>
+    <div class="decorative-shape shape3"></div>
+    <div class="decorative-shape shape4"></div>
+
+    <div class="login-container">
+      <!-- ปุ่มเปลี่ยนภาษาไปยังภาษาไทย -->
+      <button class="language-switch" onclick="location.href='index.html'">
+        TH
+      </button>
+
+      <div class="login-info">
+        <h1>Welcome to the Request Submission System</h1>
+        <p>
+          Please enter your Username and Password<br />to access the request
+          submission system.
+        </p>
+        <p><strong>Username:</strong><br />TU reg username</p>
+        <p><strong>Password:</strong><br />TU reg password</p>
+      </div>
+
+      <div class="login-form">
+        <div class="logo">
+          <img src="../img/TUlogo.png" alt="Logo" />
+        </div>
+        <h2>Request Submission Login</h2>
+        <form>
+          <div class="form-group">
+            <img
+              src="../img/User_cicrle.svg"
+              aria-hidden="true"
+              alt="User Icon"
+            />
+            <input
+              type="text"
+              placeholder="Username"
+              required
+              aria-label="Username"
+            />
+          </div>
+          <div class="form-group">
+            <img src="../img/lock.svg" aria-hidden="true" alt="Lock Icon" />
+            <input
+              type="password"
+              placeholder="Password"
+              required
+              aria-label="Password"
+              id="password"
+            />
+            <span
+              class="toggle-password"
+              aria-hidden="true"
+              onclick="togglePassword()"
+              onKeyDown="togglePassword()"
+            >
+              <img
+                src="../img/eye closed hidden.svg"
+                alt="Toggle Password Visibility"
+              />
+            </span>
+          </div>
+          <div class="form-actions">
+            <label class="remember-me">
+              <input type="checkbox" id="remember" />
+              <span>Remember password</span>
+            </label>
+          </div>
+          <div class="login-button-container">
+            <button type="submit" class="login-button">Login</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="custom-alert" class="custom-alert hidden">
+      <div class="custom-alert-content">
+        <span id="alert-message"></span>
+        <button id="alert-close-button" onclick="closeCustomAlert()">OK</button>
+      </div>
+    </div>
+
+
+
+    <script src="../js/script.js"></script>
+    <script src="../js/login_varifile.js"></script>
+  </body>
+</html>
+
