@@ -33,9 +33,50 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     showCustomAlert("Login successful!");
-    setTimeout(() => {
-      window.location.href = "request.html";
-    }, 1500);
+fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Application-Key": "TU_API_KEY" 
+  },
+  body: JSON.stringify({ username, password })
+})
+.then((response) => {
+  if (!response.ok) {
+    throw new Error("Incorrect Credentials");
+  }
+  return response.json();
+})
+.then((data) => {
+  console.log("API response:", data);
+  if (data.status === true && data.message === "Success") {
+    const userData = {
+      username: data.username
+    };
+    fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    })
+    .then(() => {
+      setTimeout(() => {
+        window.location.href = "request.html";
+      }, 1500);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      showCustomAlert("Failed to save login data.");
+    });
+  } else {
+    showCustomAlert("Login failed. Invalid credentials.");
+  }
+})
+.catch((error) => {
+  console.error("Error:", error);
+  showCustomAlert("An error occurred. Please try again.");
+    });
   });
 });
 
