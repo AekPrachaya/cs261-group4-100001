@@ -50,7 +50,8 @@ fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
   console.log("API response:", data);
   if (data.status === true && data.message === "Success") {
     const userData = {
-      username: data.username
+      username: data.username,
+      password: data.password
     };
     fetch('http://localhost:3000/api/login', {
       method: 'POST',
