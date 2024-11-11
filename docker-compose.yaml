@@ -1,0 +1,31 @@
+networks:
+  cs261-group:
+    driver: bridge
+
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    environment:
+      - POSTGRESQL_USERNAME=dev
+      - POSTGRESQL_PASSWORD=cs261isnotevenfun
+      - POSTGRESQL_DATABASE=tupetition
+    ports:
+      - '5431:5432'
+    networks:
+      - cs261-group
+  nodejs:
+      image: 'node:latest'  # Use the latest Node.js image or specify a version like 'node:18'
+      working_dir: /app
+      volumes:
+        - .:/app  # Mount the current directory to /app in the container
+      command: "npm run dev"  # Adjust this command if your app has a different start script
+      environment:
+        - TU_API_KEY=YOUR_API_KEY
+        - CLOUDINARY_URL=YOUR_CLOUDINARY_URL
+        - POSTGRESQL_URL=postgresql://<username>:<password>@<host>:<port>/<database>
+      ports:
+        - '3000:3000'  # Map port 3000 on the host to port 3000 in the container
+      depends_on:
+        - postgresql
+      networks:
+        - cs261-group
