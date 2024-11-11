@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordInput.focus();
       return;
     }
-
-    showCustomAlert("Login successful!");
 fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
   method: "POST",
   headers: {
@@ -43,8 +41,9 @@ fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
 })
 .then((response) => {
   if (!response.ok) {
-    throw new Error("Incorrect Credentials");
+    throw new Error("Your username or password is not correct.");
   }
+  showCustomAlert("Login successful!");
   return response.json();
 })
 .then((data) => {
