@@ -10,7 +10,6 @@ router.post('/api/login', async (req, res) => {
     }
 
     const { username, password } = req.body;
-
     // Validate request body
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required' });
@@ -37,10 +36,11 @@ router.post('/api/login', async (req, res) => {
         }
 
         const result = await response.json();
-        req.session.user = {
-            result
-        };
-        return res.redirect('/profile');
+        delete result.status;
+        delete result.message;
+
+        req.session.user = result;
+        return res.status(200).json({ user: result, redirectTo: '/profile' });
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
@@ -48,17 +48,18 @@ router.post('/api/login', async (req, res) => {
 });
 
 // Logout route
-router.get('api/logout', (req, res) => {
+router.get('/api/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
+            console.log(err)
             return res.status(500).json({ error: 'Error logging out' });
         }
-        res.json({ message: 'Logged out successfully' });
+        res.redirect('/');
     });
 });
 
-app.get('/api/session', (req, res) => {
-    return res.json(req.session);
+router.get('/api/session', (req, res) => {
+    return res.json(req.session.user);
 });
 
 export default router;

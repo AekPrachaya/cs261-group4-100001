@@ -3,31 +3,41 @@ import express from 'express';
 import session from 'express-session';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { isAuthenticated } from './middleware.js';
+import cors from 'cors';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+
+
+
+app.use(cors({
+    origin: 'http://127.0.0.1:3000',  // ต้องเป็นโดเมนที่คุณต้องการอนุญาต
+    credentials: true  // อนุญาตให้ส่งข้อมูลประจำตัว (cookies, HTTP authentication)
+}));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+    secret: "f4e7945b-4a3e-4b34-bf56-6091e4d4f58b",
+    resave: false,
+    saveUninitialized: true,
+}))
+
+app.use(express.json());
+
 
 // handlers
 import authRouter from './handler/auth.js';
 import petitionRouter from './handler/petition.js';
 import commentRouter from './handler/comment.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+app.use(authRouter);
+app.use(petitionRouter);
+app.use(commentRouter);
 
-const app = express();
-app.use(express.json());
-app.use(session({
-    secret: "f4e7945b-4a3e-4b34-bf56-6091e4d4f58b",
-    resave: false,
-    saveUninitialized: true,
-    cookies: {
-        secure: false,
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 7 days
-    }
-}))
-
-app.use(isAuthenticated);
-
-app.get('/', (_, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 })
 
@@ -35,7 +45,7 @@ app.get('/petition', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'petition.html'));
 })
 
-app.get('/profile', (_, res) => {
+app.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'profile.html'));
 })
 
@@ -43,9 +53,6 @@ app.get('/request', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'request.html'));
 })
 
-app.use(authRouter);
-app.use(petitionRouter);
-app.use(commentRouter);
 
 const LISTENING_PORT = PORT || 3000;
 app.listen(LISTENING_PORT, () => {

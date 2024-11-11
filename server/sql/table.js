@@ -1,6 +1,6 @@
 export const CREATE_PETITION_TABLE = `CREATE TABLE IF NOT EXISTS petitions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    student_id INT NOT NULL,
+    student_id TEXT NOT NULL,
     type TEXT NOT NULL,
     advisor TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('pending', 'approved', 'rejected')) DEFAULT 'pending',

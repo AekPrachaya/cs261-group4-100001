@@ -10,9 +10,10 @@ services:
       - POSTGRESQL_PASSWORD=cs261isnotevenfun
       - POSTGRESQL_DATABASE=tupetition
     ports:
-      - '5431:5432'
+      - '5432:5432'
     networks:
       - cs261-group
+
   nodejs:
       image: 'node:latest'  # Use the latest Node.js image or specify a version like 'node:18'
       working_dir: /app
@@ -20,9 +21,9 @@ services:
         - .:/app  # Mount the current directory to /app in the container
       command: "npm run dev"  # Adjust this command if your app has a different start script
       environment:
-        - TU_API_KEY=YOUR_API_KEY
-        - CLOUDINARY_URL=YOUR_CLOUDINARY_URL
-        - POSTGRESQL_URL=postgresql://<username>:<password>@<host>:<port>/<database>
+        - TU_API_KEY=TUa201d4b75066bdf8c0013079ef5b12a1ec50bd76540e62aa79170f70f09535d686a912c40db0f945eeabd84f500cd8f5
+        - CLOUDINARY_URL=cloudinary://563773429783869:7NyAdMmkXvAPkNiZ4x8MD0jcRr4@dv8olw3cr
+        - POSTGRESQL_URL=postgresql://dev:cs261isnotevenfun@postgresql:5432/tupetition
       ports:
         - '3000:3000'  # Map port 3000 on the host to port 3000 in the container
       depends_on:

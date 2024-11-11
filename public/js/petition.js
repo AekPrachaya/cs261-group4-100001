@@ -2,13 +2,13 @@
 const languageButton = document.querySelector(".language-switch");
 
 function switchLanguage() {// เปลี่่ยน hash ที่ url เพื่อใช้กำหนดภาษา
-    if(location.hash === "#th"){
+    if (location.hash === "#th") {
         location.hash = "en";
         location.reload();
-    }else if(location.hash ==="#en"){
+    } else if (location.hash === "#en") {
         location.hash = "th";
         location.reload();
-    }else{
+    } else {
         location.hash = "en";
         location.reload();
     }
@@ -30,70 +30,81 @@ if (location.hash) {
     }
 }
 
-const studentId = "123";
-
+console.log(JSON.parse(localStorage.getItem('user')).username)
 fetch('/api/petition/get_all', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    student_id: studentId
-  }),
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+        student_id: JSON.parse(localStorage.getItem('user')).username,
+    }),
 })
-  .then(response => response.json())
-  .then(data => {
-    if (Array.isArray(data)) {
+    .then(response => response.json())
+    .then(data => {
+        console.log('Fetched petition data:', data);
 
-      const approved = [];
-      const inProgress = [];
-      const awaitingAction = [];
-      const awaitingDocuments = [];
-      const denied = [];
+        if (Array.isArray(data.data)) {
+            // Arrays to hold petitions based on status
+            const approved = [];
+            const inProgress = [];
+            const awaitingAction = [];
+            const awaitingDocuments = [];
+            const denied = [];
 
-      data.forEach(petition => {
-        switch (petition.type) {
-          case 'อนุมัติแล้ว':
-            approved.push(petition);
-            break;
-          case 'อยู่ในระหว่างพิจารณา':
-            inProgress.push(petition);
-            break;
-          case 'รอดำเนินการ':
-            awaitingAction.push(petition);
-            break;
-          case 'รอเอกสาร':
-            awaitingDocuments.push(petition);
-            break;
-          case 'ปฎิเสธคำร้อง': 
-            denied.push(petition);
-            break;
+            data.data.forEach(petition => {
+                console.log('Processing petition:', petition);  // Log each petition
+                switch (petition.status) {
+                    case 'approved':
+                        approved.push(petition);
+                        break;
+                    case 'pending':
+                        inProgress.push(petition);
+                        break;
+                    case 'awaiting_action':
+                        awaitingAction.push(petition);
+                        break;
+                    case 'awaiting_documents':
+                        awaitingDocuments.push(petition);
+                        break;
+                    case 'denied':
+                        denied.push(petition);
+                        break;
+                    default:
+                        console.warn(`Unknown petition status: ${petition.status}`);
+                }
+            });
+
+            updatePetitionStatus('อนุมัติแล้ว', approved);
+            updatePetitionStatus('อยู่ในระหว่างพิจารณา', inProgress);
+            updatePetitionStatus('รอดำเนินการ', awaitingAction);
+            updatePetitionStatus('รอเอกสาร', awaitingDocuments);
+            updatePetitionStatus('ปฎิเสธคำร้อง', denied);
+        } else {
+            console.error('No petitions found or incorrect data format');
         }
-      });
-
-      updatePetitionStatus('อนุมัติแล้ว', approved);
-      updatePetitionStatus('อยู่ในระหว่างพิจารณา', inProgress);
-      updatePetitionStatus('รอดำเนินการ', awaitingAction);
-      updatePetitionStatus('รอเอกสาร', awaitingDocuments);
-      updatePetitionStatus('ปฎิเสธคำร้อง', denied);
-    } else {
-      console.error('No petitions found or incorrect data format');
-    }
-  })
-  .catch(error => console.error('Error fetching petition data:', error));
+    })
+    .catch(error => console.error('Error fetching petition data:', error));
 
 function updatePetitionStatus(status, petitions) {
-  const statusContainer = document.querySelector(`.status-container h1:contains(${status})`).parentElement;
-  const petitionContainer = statusContainer.querySelector('.petition-container');
-  
-  petitionContainer.innerHTML = '';
-  
-  if (petitions.length > 0) {
-    petitions.forEach(petition => {
-      const petitionElement = document.createElement('p');
-      petitionElement.textContent = petition.name;
-      petitionContainer.appendChild(petitionElement);
-    });
-  }
+    // Find the status container that matches the status name
+    const statusContainer = Array.from(document.querySelectorAll('.status-container h1'))
+        .find(h1 => h1.textContent.trim().toLowerCase() === status.trim().toLowerCase());
+
+    if (statusContainer) {
+        const petitionContainer = statusContainer.parentElement.querySelector('.petition-container');
+
+        petitionContainer.innerHTML = '';
+
+        if (petitions.length > 0) {
+            petitions.forEach(petition => {
+                const petitionElement = document.createElement('p');
+                petitionElement.textContent = `${petition.type}`;
+                petitionContainer.appendChild(petitionElement);
+            });
+        }
+    } else {
+        console.warn(`Status container for "${status}" not found.`);
+    }
 }
 

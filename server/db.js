@@ -6,9 +6,8 @@ if (!POSTGRESQL_URL) {
 }
 
 const { Pool } = pg;
-
 const POOL = new Pool({
-    connectionString: POSTGRESQL_URL,
+    connectionString: POSTGRESQL_URL || "postgresql://dev:cs261isnotevenfun@postgresql:5431/tupetition",
 })
 
 try {
