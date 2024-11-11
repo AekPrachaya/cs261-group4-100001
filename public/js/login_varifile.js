@@ -43,7 +43,7 @@ fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
   if (!response.ok) {
     throw new Error("Your username or password is not correct.");
   }
-  showCustomAlert("Login successful!");
+  
   return response.json();
 })
 .then((data) => {
@@ -60,6 +60,7 @@ fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
       body: JSON.stringify(userData)
     })
     .then(() => {
+      showCustomAlert("Login successful!");
       setTimeout(() => {
         window.location.href = "request.html";
       }, 1500);
