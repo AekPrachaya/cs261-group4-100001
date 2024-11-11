@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
+
 <body>
     <div class="decorative-shape shape1"></div>
     <div class="decorative-shape shape2"></div>
@@ -15,14 +17,14 @@
     <div class="login-container">
         <!-- ปุ่มเปลี่ยนภาษา -->
         <button class="language-switch">EN</button>
-        
+
         <div class="login-info">
             <h1>ยินดีต้อนรับสู่ระบบยื่นคำร้อง</h1>
             <p>กรุณากรอก Username และ Password<br>เพื่อเข้าสู่ระบบยื่นคำร้อง</p>
             <p><strong>Username:</strong><br>TU reg username</p>
             <p><strong>Password:</strong><br>TU reg password</p>
         </div>
-        
+
         <div class="login-form">
             <div class="logo">
                 <img src="../img/TUlogo.png" alt="Logo">
@@ -36,7 +38,8 @@
                 <div class="form-group">
                     <img src="../img/lock.svg" aria-hidden="true" alt="Secure Icon">
                     <input type="password" placeholder="Password" required aria-label="Password" id="password">
-                    <span class="toggle-password" aria-hidden="true" onclick="togglePassword()" onKeyDown="togglePassword()">
+                    <span class="toggle-password" aria-hidden="true" onclick="togglePassword()"
+                        onKeyDown="togglePassword()">
                         <img src="../img/eye closed hidden.svg" alt="Toggle Password Visibility" />
                     </span>
                 </div>
@@ -57,4 +60,5 @@
     <script src="../js/change_language_login.js"></script>
     <script src="../js/script.js"></script>
 </body>
+
 </html>
