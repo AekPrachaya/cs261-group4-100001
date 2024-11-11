@@ -1,8 +1,8 @@
 // import { language } from "./language";
 
-function changeLoginLang(lang = language.en){ //เปลี่ยนภาษาหน้า login
+function changeLoginLang(lang = language.en) { //เปลี่ยนภาษาหน้า login
     const loginInfo = document.querySelector(".login-info");
-    const loginHeader= document.querySelector(".login-form").children[1];
+    const loginHeader = document.querySelector(".login-form").children[1];
 
     loginInfo.children[0].textContent = lang.login.welcome.header;
     loginInfo.children[1].textContent = lang.login.welcome.paragrraph;
@@ -10,17 +10,17 @@ function changeLoginLang(lang = language.en){ //เปลี่ยนภาษ�
     loginHeader.textContent = lang.login.form.header;
 }
 
-function changeSidebarLang(lang = language.en){ //เปลี่ยนภาษาหน้า sidebar
+function changeSidebarLang(lang = language.en) { //เปลี่ยนภาษาหน้า sidebar
     const sidebarHeader = document.querySelector(".logo-text");
     const navLink = document.querySelectorAll(".nav-links")[1].children;
 
     sidebarHeader.textContent = lang.sidebar.header;
-    for(let i=0; i<navLink.length; i++){
+    for (let i = 0; i < navLink.length; i++) {
         navLink[i].children[0].textContent = Object.values(lang.sidebar.link)[i];
     }
 }
 
-function changeRequestLang(lang = language.en){ //เปลี่ยนภาษาหน้า request
+function changeRequestLang(lang = language.en) { //เปลี่ยนภาษาหน้า request
     const langF = lang.request.form;
 
     const header = document.querySelector(".form-header h1");
@@ -33,10 +33,10 @@ function changeRequestLang(lang = language.en){ //เปลี่ยนภาษ
 
     const formSelect = document.querySelectorAll(".form-group select");
 
-    header.textContent = langF.personalInfo.header; //เปลี่ยนภาษาส่วนหัวข้อ
+    header.textContent = lang.request.header; //เปลี่ยนภาษาส่วนหัวข้อ
     //personal information section
     formPersonalInfoHeader.textContent = langF.personalInfo.header;
-    for(let i=0; i<formSelect[0].length; i++){ // เปลี่ยนภาษาในส่วนเลือกคำนำหน้า
+    for (let i = 0; i < formSelect[0].length; i++) { // เปลี่ยนภาษาในส่วนเลือกคำนำหน้า
         form[0][i].textContent = Object.values(langF.personalInfo.title)[i];
     }
 
@@ -44,8 +44,8 @@ function changeRequestLang(lang = language.en){ //เปลี่ยนภาษ
     formPersonalinfoLastname.placeholder = langF.personalInfo.LastName;// เปลี่ยนภาษาในส่วนนามสกุล
 
     formSelect[1][0].textContent = langF.personalInfo.educationYear // เปลี่ยนภาษาในส่วนเลือกปีการศึกษา
-    
-    for(let i=0; i<formSelect[2].length; i++){ // เปลี่ยนภาษาในส่วนเลือกคณะ
+
+    for (let i = 0; i < formSelect[2].length; i++) { // เปลี่ยนภาษาในส่วนเลือกคณะ
         formSelect[2][i].textContent = Object.values(langF.personalInfo.faculty.chocice)[i];
     }
 
@@ -97,19 +97,19 @@ function changeRequestLang(lang = language.en){ //เปลี่ยนภาษ
     buttonNext.textContent = langF.button.next;
 }
 
-function changePetitionLang(lang = language.en){
+function changePetitionLang(lang = language.en) {
     const langP = lang.pettition;
     const header = document.querySelector(".form-header").children[0];
     const status = document.querySelectorAll(".status-container");
 
     header.textContent = langP.header;
 
-    for(let i=0; i<status.length; i++){
+    for (let i = 0; i < status.length; i++) {
         status[i].children[0].textContent = Object.values(langP.status)[i];
     }
 }
 
-function changeUserProfileLang(lang = language.en){
+function changeUserProfileLang(lang = language.en) {
     const langU = lang.profile;
     const userHeader = document.querySelector(".header").children[0];
     const userMenu = document.querySelector(".info");
@@ -117,7 +117,7 @@ function changeUserProfileLang(lang = language.en){
 
     userHeader.textContent = langU.header;
 
-    for(let i=0; i<userMenu.children.length-1; i++){
+    for (let i = 0; i < userMenu.children.length - 1; i++) {
         userMenu.children[i].children[0].textContent = Object.values(langU.personalInfo)[i];
     }
 
