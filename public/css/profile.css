@@ -10,12 +10,13 @@ body {
     font-family: Arial, sans-serif;
     background-color: #252525;
     color: white;
+    height: auto;
 }
 
 /* Sidebar */
 .sidebar {
     width: 200px; /* Reduced width for better proportion */
-    background: linear-gradient(to bottom, #FFCC99, #CC6600);
+    background: linear-gradient(to bottom, #D8A25E, #A04747);
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -159,8 +160,7 @@ body {
 
 .main-content {
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    gap: 13%;
     margin-top: 20px;
 }
 
@@ -169,6 +169,7 @@ body {
     border-radius: 10px;
     width: 47%; /* Adjusted width */
     margin-top: 0%;
+    margin-left: 3%;
 }
 
 .info {
@@ -227,7 +228,6 @@ body {
     font-size: 16px;
     border: 3%; 
     margin-top: 5%;
-    margin-left: 15%;
 }
 
 /* Individual request buttons without background */
@@ -235,14 +235,13 @@ body {
     width: 80%;
     padding: 10px;
     background-color: #252525;
-    color: white; /* text */
-    border: 3%; /* Remove border */
+    color: white; 
+    border: 3%; 
     margin-top: 10px;
     cursor: pointer;
     text-align: left;
     font-size: 14px;
     margin-top: 5%;
-    margin-left: 15%;
 }
 
 .requests button:hover {
