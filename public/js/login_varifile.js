@@ -31,53 +31,33 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordInput.focus();
       return;
     }
-fetch("https://restapi.tu.ac.th/api/v1/auth/Ad/verify", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "Application-Key": "TU_API_KEY" 
-  },
-  body: JSON.stringify({ username, password })
-})
-.then((response) => {
-  if (!response.ok) {
-    throw new Error("Your username or password is not correct.");
-  }
-  
-  return response.json();
-})
-.then((data) => {
-  console.log("API response:", data);
-  if (data.status === true && data.message === "Success") {
-    const userData = {
-      username: data.username,
-      password: data.password
-    };
-    fetch('http://localhost:3000/api/login', {
-      method: 'POST',
+    fetch("http://localhost:3000/api/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(userData)
+      body: JSON.stringify({ username, password }),
     })
-    .then(() => {
-      showCustomAlert("Login successful!");
-      setTimeout(() => {
-        window.location.href = "request.html";
-      }, 1500);
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      showCustomAlert("Failed to save login data.");
-    });
-  } else {
-    showCustomAlert("Login failed. Invalid credentials.");
-  }
-})
-.catch((error) => {
-  console.error("Error:", error);
-  showCustomAlert("An error occurred. Please try again.");
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Login failed. Invalid credentials.");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.status === true && data.message === "Success") {
+          showCustomAlert("Login successful!");
+          setTimeout(() => {
+            window.location.href = "request.html";
+          }, 1500);
+        } else {
+          showCustomAlert("Login failed. Invalid credentials.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        showCustomAlert("An error occurred. Please try again.");
+      });
   });
 });
 
