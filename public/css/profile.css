@@ -282,13 +282,35 @@ body {
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
+        justify-content: center;
         align-items: center;
     }
 
-    .user-details,
-    .requests {
+    .user-details {
         width: 100%;
     }
+
+    .requests {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .divider {
+        width: 100%;
+        background-color: white;
+        margin-top: 0.8%;
+        height: 1px;
+        /* Full height of the main content */
+        align-self: center;
+        position: relative;
+        left: 50%;
+        /* Center between the user-details and requests */
+        transform: translateX(-50%);
+    }
+
 }
 
 .language-switch {
