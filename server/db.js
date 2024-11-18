@@ -7,7 +7,7 @@ if (!POSTGRESQL_URL) {
 
 const { Pool } = pg;
 const POOL = new Pool({
-    connectionString: POSTGRESQL_URL || "postgresql://dev:cs261isnotevenfun@postgresql:5431/tupetition",
+    connectionString: POSTGRESQL_URL,
 })
 
 try {
@@ -162,6 +162,16 @@ export const insertFile = async (petition_id, public_id) => {
 export const deleteFile = async (public_id) => {
     const { rows } = await POOL.query('DELETE FROM documents WHERE public_id = $1 RETURNING *', [public_id])
     return rows[0];
+}
+
+/*
+ * get file info in document db
+ * @param {string} petition_id
+ * @returns {Promise<Object[]>} The file info
+ * */
+export const getFilesByPetitionId = async (petition_id) => {
+    const { rows } = await POOL.query('SELECT * FROM documents WHERE petition_id = $1', [petition_id])
+    return rows;
 }
 
 
