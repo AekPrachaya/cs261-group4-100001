@@ -1,14 +1,14 @@
 import express from 'express';
 import {
-    insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment
+    insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment, insertFile, getFilesByPetitionId
 } from '../server/db.js'
 
-import { deleteDocumentsByPublicIDs, getDocumentsByPetitionID, uploadDocuments } from '../server/document.js';
-import multer from 'multer';
+
+import { deleteDocumentsByPublicIDs, getDocumentsByPetitionID, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
 
 const router = express.Router();
 
-router.post('/api/petition/upload', async (req, res) => {
+router.post('/api/petition', async (req, res) => {
     const { type, content } = req.body;
     if (!type || !content) {
         return res.status(400).json({ error: 'Type and content are required' });
@@ -33,8 +33,8 @@ router.post('/api/petition/upload', async (req, res) => {
     }
 })
 
-router.post('/api/petition/get', async (req, res) => {
-    const { id } = req.body;
+router.get('/api/petition/:id', async (req, res) => {
+    const { id } = req.params;
     if (!id) {
         return res.status(400).json({ error: 'ID is required' });
     }
@@ -51,8 +51,8 @@ router.post('/api/petition/get', async (req, res) => {
 })
 
 
-router.post('/api/petition/get_all', async (req, res) => {
-    const { student_id } = req.body;
+router.get('/api/petitions/:student_id', async (req, res) => {
+    const { student_id } = req.params;
     if (!student_id) {
         return res.status(400).json({ error: 'student_id is required' });
     }
@@ -69,19 +69,24 @@ router.post('/api/petition/get_all', async (req, res) => {
     }
 })
 
-router.delete('/api/petition', async (req, res) => {
-    const { id } = req.body;
+router.delete('/api/petition/:id', async (req, res) => {
+    const { id } = req.params;
 
     if (!id) {
-        return res.status(400).json({ error: 'student_id is required' });
+        return res.status(400).json({ error: 'id is required' });
     }
 
     try {
-        const documents = await getDocumentsByPetitionID(id);
+        const documents = await getFilesByPetitionId(id);
+
         const result = await deletePetition(id);
-        if (result) {
+        if (documents.length > 0 && result) {
+            // Delete on Cloudinary
             const public_ids = documents.map(document => document.public_id);
             await deleteDocumentsByPublicIDs(public_ids);
+
+            // Delete on db
+            await deleteDocumentsInDatabaseByPublicIDs(public_ids);
             return res.status(200).json({ data: result });
         }
         return res.status(400).json({ error: 'Invalid student_id' });
@@ -111,52 +116,6 @@ router.put('/api/petition', async (req, res) => {
     }
 })
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-router.post('/api/petition/files', upload.array('files'), async (req, res) => {
-    const { petition_id } = req.body;
-    const files = req.files;
-    if (!files || !petition_id) {
-        return res.status(400).json({ error: 'Files and petition_id are required' });
-    }
-
-    try {
-        const public_ids = await uploadDocuments(files, petition_id);
-        return res.status(200).json({ data: public_ids });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
-
-router.delete('/api/petition/files', async (req, res) => {
-    const { public_ids } = req.body;
-    if (!public_ids) {
-        return res.status(400).json({ error: 'Public IDs is required' });
-    }
-    try {
-        const result = await deleteDocumentsByPublicIDs(public_ids);
-        return res.status(200).json({ data: result });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
-
-router.post('/api/petition/files/get', async (req, res) => {
-    const { petition_id } = req.body;
-    if (!petition_id) {
-        return res.status(400).json({ error: 'Public IDs is required' });
-    }
-    try {
-        const result = await getDocumentsByPetitionID(petition_id);
-        return res.status(200).json({ data: result });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
 
 /**
  * @typedef {Object} StudentInfo
