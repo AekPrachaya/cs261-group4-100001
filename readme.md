@@ -25,6 +25,8 @@ Start dev server of the project
 ```bash
 npm run dev
 ```
+
+
 ## Page
 This section provides quick access to different parts of the platform
 
