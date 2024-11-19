@@ -1,10 +1,11 @@
 import express from 'express';
 import {
-    insertPetition, deletePetition, updatePetition, getPetitions, getPetition, insertComment, insertFile, getFilesByPetitionId
-} from '../server/db.js'
+    insertPetition, deletePetition, updatePetition, getPetitions, getPetition
+} from '../server/db/petition.js';
 
-
-import { deleteDocumentsByPublicIDs, getDocumentsByPetitionID, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
+import { deleteDocumentsByPublicIDs, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
+import { insertComment } from '../server/db/comment.js';
+import { getDocumentsByPetitionId } from '../server/db/document.js';
 
 const router = express.Router();
 
@@ -77,7 +78,7 @@ router.delete('/api/petition/:id', async (req, res) => {
     }
 
     try {
-        const documents = await getFilesByPetitionId(id);
+        const documents = await getDocumentsByPetitionId(id);
 
         const result = await deletePetition(id);
         if (documents.length > 0 && result) {

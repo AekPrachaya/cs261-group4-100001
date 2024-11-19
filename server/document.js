@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import { deleteFile, insertFile } from '../server/db.js';
+import { deleteDocument, addDocument } from '../server/db/document.js';
 import streamifier from 'streamifier';
 
 /* upload document
@@ -43,7 +43,7 @@ export const uploadDocuments = async (fileBuffers, petitionID) => {
         const public_ids = await Promise.all(promises);
 
         // Insert to DB
-        const insertPromises = public_ids.map((public_id) => insertFile(petitionID, public_id));
+        const insertPromises = public_ids.map((public_id) => addDocument(petitionID, public_id));
         await Promise.all(insertPromises);
 
         return public_ids;
@@ -135,7 +135,7 @@ export const deleteFolderByPublicID = async (public_id) => {
 
 export const deleteDocumentsInDatabaseByPublicIDs = async (public_ids) => {
     // Delete document on DB
-    const deleteDocumentPromises = public_ids.map((public_id) => deleteFile(public_id));
+    const deleteDocumentPromises = public_ids.map((public_id) => deleteDocument(public_id));
     const deletedResult = await Promise.all(deleteDocumentPromises);
     const deletedFiles = deletedResult.filter(item => item != undefined).map((result) => result);
     return deletedFiles;
