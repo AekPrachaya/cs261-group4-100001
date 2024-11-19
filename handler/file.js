@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
-import { uploadDocuments, getDocumentsByPetitionID, deleteDocumentsByPublicIDs, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
-import { insertFile } from '../server/db.js';
+import { uploadDocuments, getDocumentsByPetitionID, deleteDocumentsByPublicIDs } from '../server/document.js';
+import { addDocument } from '../server/db/document.js';
 
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.post('/api/files', upload.array('files'), async (req, res) => {
         if (!public_ids) {
             return res.status(400).json({ error: 'Error uploading files' });
         }
-        const promises = public_ids.map(public_id => insertFile(petition_id, public_id));
+        const promises = public_ids.map(public_id => addDocument(petition_id, public_id));
         const insertFileResult = await Promise.all(promises);
         if (!insertFileResult) {
             return res.status(400).json({ error: 'Error inserting files' });
