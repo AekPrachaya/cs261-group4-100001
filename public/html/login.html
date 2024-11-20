@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <button class="language-switch">EN</button>
+
+        <div class="login-form">
+            <div class="logo">
+                <img src="../img/TUlogo.png" alt="Logo">
+            </div>
+            <h1 class="welcome-text">ยินดีต้อนรับ!</h1>
+            <p class="subtitle">โปรดเข้าสู่ระบบก่อน</p>
+        </div>
+        
+        <form class="login-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="username">ชื่อผู้ใช้</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">รหัสผ่าน</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="remember-me">
+                <input type="checkbox" id="remember" name="remember">
+                <label for="remember">จดจำรหัสผ่าน</label>
+            </div>
+
+            <button type="submit" class="submit-button">เข้าสู่ระบบ</button>
+            <footer class="footer">
+                สำหรับมหาวิทยาลัยธรรมศาสตร์
+            </footer>
+        </form>
+        
+    </div>
+</body>
+
+</html>
