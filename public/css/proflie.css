@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+/* General Styles */
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #f9f9f9;
+  }
+  
+  .layout {
+    display: flex;
+    gap: 30px; /* เพิ่มระยะห่างระหว่าง sidebar และ main-container */
+}
+
+.sidebar {
+    width: 384px;
+    height: auto; /* ให้ขนาดสูงตามเนื้อหา */
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin-top: 30px; /* เว้นระยะห่างด้านบน */
+    margin-left: 5%;
+}
+
+  /* Container */
+  .container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .tu-logo {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .petition-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .menu li {
+    margin-bottom: 15px;
+  }
+  
+  .menu li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1rem;
+  }
+  
+  .menu li a.active {
+    color: #007BFF;
+    font-weight: bold;
+  }
+  
+  .user-info {
+    font-size: 0.9rem;
+    color: gray;
+    position: fixed;
+    bottom: 8%;
+    left: 3.7%;
+  }
+  
+  /* Main Content */
+  .content {
+    width: 100%;
+    padding: 40px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 36px;
+    margin-bottom: 50px;
+  }
+  
+  .personal-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* ระยะห่างระหว่างบรรทัด */
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between; /* กระจายพื้นที่ระหว่าง label และ value */
+  }
+
+  .label {
+    flex: 1; /* ให้ label กินพื้นที่เท่ากันทุกบรรทัด */
+    font-weight: bold; /* ข้อความ label ตัวหนา */
+  }
+
+  .value {
+    flex: 1; /* ให้ value กินพื้นที่เท่ากันทุกบรรทัด */
+    color: blue; /* ข้อความ value เป็นสีน้ำเงิน */
+    text-align: left; /* จัดข้อความไปทางซ้าย */
+    margin-left: 5%;
+  }
+  
+  
