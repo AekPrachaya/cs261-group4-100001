@@ -4,6 +4,7 @@ import session from 'express-session';
 import { expect } from 'chai';
 import express from 'express';
 import authRouter from '../handler/auth.js';
+import '../config.js'
 
 const app = express()
 app.use(express.json());
@@ -28,15 +29,27 @@ describe("Session Test", () => {
             .send({
                 username: "6609611816",
                 password: "1102200218882"
-            });
+            }).redirects(0);
 
-        expect(res.statusCode).to.equal(200);
+        expect(res.statusCode).to.equal(302);
 
         const session = await agent.get('/api/session').send();
 
-        console.log("session", session.body);
         expect(session.statusCode).to.equal(200);
         expect(session.body).to.be.an('object');
+    })
+
+    it('should delete session after logout', async () => {
+        const res = await agent
+            .get('/api/logout')
+            .send();
+
+        expect(res.statusCode).to.equal(302);
+
+        const session = await agent.get('/api/session').send();
+
+        expect(session.statusCode).to.equal(200);
+        expect(session.body).equals('');
     })
 })
 
