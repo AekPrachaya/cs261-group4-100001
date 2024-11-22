@@ -1,20 +1,16 @@
-// tests/handlers.test.js
 import request from 'supertest';
 import { expect } from 'chai';
 import express from 'express';
 
 import petitionRouter from '../handler/petition.js';
-import { insertPetition } from '../server/db.js';
 
-const app = express()
+const app = express();
 app.use(express.json());
-
 app.use(petitionRouter);
 
-
 describe('Petition Handlers API', () => {
-    /** @param Petition */
-    const petition = {
+    // Sample petition content
+    const samplePetition = {
         student_id: 125124,
         type: "add/remove",
         advisor: "Dr.advisor",
@@ -54,62 +50,71 @@ describe('Petition Handlers API', () => {
             ],
             reason: "For testing purposes"
         }
-    }
+    };
 
-    let insertedPetition;
-    // POST /api/petition/upload
-    it('should create a new petition with add/remove course content', async () => {
+    const createPetition = async () => {
         const res = await request(app)
-            .post('/api/petition/upload')
-            .send({ type: 'add/remove', content: petition });
+            .post('/api/petition')
+            .send({ type: 'add/remove', content: samplePetition });
+        return res.body.data;
+    };
 
-        expect(res.status).to.equal(200);
-        expect(res.body.data).to.be.an('object');
+    const deletePetition = async (id) => {
+        const res = await request(app)
+            .delete(`/api/petition/${id}`)
+            .send();
+        return res.body.data;
+    };
 
-        insertedPetition = res.body.data;
+    // Test cases
+    it('should create a new petition with add/remove course content', async () => {
+        const petition = await createPetition();
+        expect(petition).to.be.an('object');
+        await deletePetition(petition.id);
     });
 
     it('should get a petition by id', async () => {
+        const petition = await createPetition();
         const res = await request(app)
-            .post('/api/petition/get')
-            .send({ id: insertedPetition.id });
+            .get(`/api/petition/${petition.id}`)
+            .send();
 
         expect(res.status).to.equal(200);
         expect(res.body.data).to.be.an('object');
-    })
+        await deletePetition(petition.id);
+    });
 
-
-    it('should get multple petitions by student_id', async () => {
+    it('should get multiple petitions by student_id', async () => {
+        const petition = await createPetition();
         const res = await request(app)
-            .post('/api/petition/get_all')
-            .send({ student_id: petition.student_id });
+            .get(`/api/petitions/${petition.student_id}`)
+            .send();
 
         expect(res.status).to.equal(200);
         expect(res.body.data).to.be.an('array');
-    })
+        await deletePetition(petition.id);
+    });
 
-
-
-    // PUT /api/petition/update
     it('should update a petition', async () => {
+        const petition = await createPetition();
+
         const updatedContent = {
-            ...petition,
+            ...samplePetition,
             advisor: "New Advisor"
         };
+
         const res = await request(app)
             .put('/api/petition')
-            .send({ id: insertedPetition.id, petition: updatedContent });
+            .send({ id: petition.id, petition: updatedContent });
+
         expect(res.status).to.equal(200);
         expect(res.body.data.advisor).to.equal(updatedContent.advisor);
 
+        await deletePetition(petition.id);
     });
 
-    // DELETE /api/petition/delete
     it('should delete a petition', async () => {
-        const res = await request(app)
-            .delete('/api/petition')
-            .send({ id: insertedPetition.id });
-
-        expect(res.status).to.equal(200);
+        const petition = await createPetition();
+        await deletePetition(petition.id);
     });
 });

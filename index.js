@@ -6,6 +6,14 @@ import { fileURLToPath } from 'url';
 import { isAuthenticated } from './middleware.js';
 import cors from 'cors';
 
+
+
+import authRouter from './handler/auth.js';
+import petitionRouter from './handler/petition.js';
+import commentRouter from './handler/comment.js';
+import fileRouter from './handler/file.js';
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -33,11 +41,9 @@ app.use(express.json());
 
 
 // handlers
-import authRouter from './handler/auth.js';
-import petitionRouter from './handler/petition.js';
-import commentRouter from './handler/comment.js';
 
 app.use(authRouter);
+app.use(fileRouter);
 app.use(petitionRouter);
 app.use(commentRouter);
 
