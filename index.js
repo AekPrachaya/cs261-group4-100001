@@ -47,8 +47,9 @@ app.use(fileRouter);
 app.use(petitionRouter);
 app.use(commentRouter);
 
-app.get('/', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
 })
 app.use(isAuthenticated);
 
@@ -57,7 +58,7 @@ app.get('/petition', (_, res) => {
 })
 
 app.get('/profile', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'profile.html'));
+    res.sendFile(path.join(__dirname, 'public', 'html', 'proflie.html'));
 })
 
 app.get('/request', (_, res) => {

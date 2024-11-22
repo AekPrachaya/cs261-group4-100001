@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,38 @@
     <link rel="stylesheet" href="../css/request.css">
     <link rel="stylesheet" href="../css/nav.css">
 </head>
+
 <body>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">
-              <img src="../img/TUlogo.png" alt="TU Logo">
-              <span class="Petition">TU Petition</span>
+            <div>
+
+                <div class="logo">
+                    <img src="../img/TUlogo.png" alt="TU Logo">
+                    <span class="Petition">TU Petition</span>
+                </div>
+                <ul class="menu">
+                    <li><a href="#" class="active">ยื่นคำร้อง</a></li>
+                    <li><a href="#">ตรวจสอบสถานะคำร้อง</a></li>
+                </ul>
             </div>
-            <ul class="menu">
-              <li><a href="#" class="active">ยื่นคำร้อง</a></li>
-              <li><a href="#">ตรวจสอบสถานะคำร้อง</a></li>
-            </ul>
-          </aside>
+            <footer class="user-info">
+                <div>
+                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-id"></p>
+                </div>
+                <a href="/profile">
+                    <img src="../img/CogOutline.png" alt="gear_img">
+                </a>
+            </footer>
+        </aside>
         <div class="main-container">
             <header class="header">
                 <button id="sidebarToggle" class="sidebar-toggle">☰</button>
                 <h2>เขียนคำร้อง</h2>
             </header>
-            <p class="student-info">นายสมชาย หลงอไฟ รหัสนักศึกษา 6609000000 คณะวิทยาศาสตร์และเทคโนโลยี สาขาวิชาการคอมพิวเตอร์</p>
+            <p class="student-info">นายสมชาย หลงอไฟ รหัสนักศึกษา 6609000000 คณะวิทยาศาสตร์และเทคโนโลยี
+                สาขาวิชาการคอมพิวเตอร์</p>
             <main class="main-content">
                 <form id="petitionForm">
                     <div class="form-group">
@@ -185,6 +200,8 @@
             </main>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="../js/nav.js"></script>
+    <!-- <script src="request.js"></script> -->
 </body>
+
 </html>

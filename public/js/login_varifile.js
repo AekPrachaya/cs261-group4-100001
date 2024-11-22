@@ -1,67 +1,22 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector(".login-form form");
-    const usernameInput = form.querySelector("input[aria-label='Username']");
-    const passwordInput = form.querySelector("input[aria-label='Password']");
+const form = document.querySelector("#login");
+const usernameInput = document.querySelector("#username");
+const passwordInput = document.querySelector("#password");
 
-    form.addEventListener("submit", async function(event) {
-        event.preventDefault();
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
+async function login(username, password) { //ใช้ในการ login เข้า session
+    const loginData = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+        },
 
-        if (!username) {
-            showCustomAlert("Please enter your username.");
-            usernameInput.focus();
-            return;
-        }
+        body: JSON.stringify({
+            "username": username,
+            "password": password
+        })
+    })
+    return loginData;
+}
 
-        if (!password) {
-            showCustomAlert("Please enter your password.");
-            passwordInput.focus();
-            return;
-        }
-
-        if (!(username.length == 10)) {
-            showCustomAlert("Your username or password is not correct.");
-            usernameInput.focus();
-            return;
-        }
-
-        if (!(password.length == 13)) {
-            showCustomAlert("Your username or password is not correct.");
-            passwordInput.focus();
-            return;
-        }
-        const result = await fetch("http://localhost:3000/api/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: 'include',
-            body: JSON.stringify({ username, password }),
-        });
-
-        if (!result.ok) {
-            return showCustomAlert("Login failed. Invalid credentials.");
-        }
-
-        const json = await result.json();
-        if (json) {
-            localStorage.setItem("user", JSON.stringify(json.user));
-            window.location.href = json.redirectTo;
-        }
-        // }).then((data) => {
-        //     if (data.status === 200) {
-        //         showCustomAlert("Login successful!");
-        //     } else {
-        //         showCustomAlert("Login failed. Invalid credentials.");
-        //     }
-        // })
-        //     .catch((error) => {
-        //         console.error("Error:", error);
-        //         showCustomAlert("An error occurred. Please try again.");
-        //     });
-    });
-});
 function showCustomAlert(message) {
     const alertBox = document.getElementById("custom-alert");
     const alertMessage = document.getElementById("alert-message");
@@ -74,3 +29,46 @@ function closeCustomAlert() {
     const alertBox = document.getElementById("custom-alert");
     alertBox.classList.add("hidden");
 }
+
+form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!username) { //เช็ค username ว่าง
+        showCustomAlert("Please enter your username.");
+        usernameInput.focus();
+        return;
+    }
+
+    if (!password) {//เช็ค password ว่าง
+        showCustomAlert("Please enter your password.");
+        passwordInput.focus();
+        return;
+    }
+
+    if (!(username.length == 10)) { //เช็ค username ต้องมี 10 หลัก
+        showCustomAlert("Your username or password is not correct.");
+        usernameInput.focus();
+        return;
+    }
+
+    if (!(password.length == 13)) { //เช็ค password ต้องมี 13 หลัก
+        showCustomAlert("Your username or password is not correct.");
+        passwordInput.focus();
+        return;
+    }
+
+    const result = await login(username, password); // login
+
+    if (!result.ok) {// ถ้า promise reject ให้ขึ้นเติม
+        return showCustomAlert("Login failed. Invalid credentials.");
+    }
+
+    const json = await result.json(); // แปลง promise เป็น JSON
+    console.log(json);
+    if (json) {
+        localStorage.setItem("user", JSON.stringify(json.user));// set ข้อมูล user ไว้ที่
+        window.location.href = json.redirectTo; //redirect ไปหน้า profile
+    }
+});
