@@ -19,8 +19,8 @@
             <h1 class="welcome-text">ยินดีต้อนรับ!</h1>
             <p class="subtitle">โปรดเข้าสู่ระบบก่อน</p>
         </div>
-        
-        <form class="login-form" onsubmit="handleSubmit(event)">
+
+        <form class="login-form" id="login">
             <div class="form-group">
                 <label for="username">ชื่อผู้ใช้</label>
                 <input type="text" id="username" name="username" required>
@@ -36,13 +36,21 @@
                 <label for="remember">จดจำรหัสผ่าน</label>
             </div>
 
+            <div id="custom-alert">
+                <span id="alert-message">
+
+                </span>
+            </div>
+
             <button type="submit" class="submit-button">เข้าสู่ระบบ</button>
             <footer class="footer">
                 สำหรับมหาวิทยาลัยธรรมศาสตร์
             </footer>
         </form>
-        
+
     </div>
+
+    <script src="../js/login_varifile.js"></script>
 </body>
 
 </html>

@@ -7,32 +7,43 @@
 
 body {
     background-color: #f5f6fa;
-    padding: 30px; /* เพิ่มระยะห่างจากขอบด้านนอก */
+    padding: 30px;
+    /* เพิ่มระยะห่างจากขอบด้านนอก */
 }
 
 .layout {
     display: flex;
-    gap: 30px; /* เพิ่มระยะห่างระหว่าง sidebar และ main-container */
+    gap: 30px;
+    /* เพิ่มระยะห่างระหว่าง sidebar และ main-container */
 }
 
 .sidebar {
-    width: 384px;
-    height: auto; /* ให้ขนาดสูงตามเนื้อหา */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 500px;
+    height: auto;
+    /* ให้ขนาดสูงตามเนื้อหา */
     background-color: #ffffff;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    margin-top: 30px; /* เว้นระยะห่างด้านบน */
+    margin-top: 30px;
+
+    position: relative;
+    /* เว้นระยะห่างด้านบน */
 }
 
 .main-container {
     flex-grow: 1;
-    padding: 30px; /* เพิ่มระยะห่างภายในเนื้อหา */
+    padding: 30px;
+    /* เพิ่มระยะห่างภายในเนื้อหา */
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 30px; /* เว้นระยะห่างด้านบน */
+    margin-top: 30px;
+    /* เว้นระยะห่างด้านบน */
 }
 
 .header {
@@ -65,9 +76,11 @@ body {
 }
 
 .sidebar .Petition {
-    font-size: 36px; /* ปรับขนาดตัวอักษรตามต้องการ */
-    font-weight: bold; /* ทำให้ตัวหนา */
-  }
+    font-size: 36px;
+    /* ปรับขนาดตัวอักษรตามต้องการ */
+    font-weight: bold;
+    /* ทำให้ตัวหนา */
+}
 
 .sidebar .menu {
     list-style: none;
@@ -93,18 +106,48 @@ body {
     color: white;
 }
 
+.user-info {
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    padding-top: 40px;
+    border-top: 1px solid rgb(198, 189, 189);
+
+}
+
+#user-info-name,
+#user-info-id {
+    margin: 2px;
+}
+
+#user-info-id {
+    color: #86868A;
+}
+
+.user-info a {
+    align-self: center;
+}
+
+
 @media (max-width: 768px) {
     .sidebar {
+        display: flex;
+        justify-content: space-between;
         position: fixed;
         left: -384px;
-        top: 30px; /* คงระยะห่าง 30px ด้านบน */
-        bottom: 30px; /* เว้นระยะด้านล่าง */
+        top: 30px;
+        /* คงระยะห่าง 30px ด้านบน */
+        bottom: 30px;
+        /* เว้นระยะด้านล่าง */
         z-index: 1000;
         transition: left 0.3s ease;
     }
 
     .sidebar.active {
-        left: 30px; /* เมื่อ sidebar แสดง */
+        left: 30px;
+        /* เมื่อ sidebar แสดง */
     }
 
     .sidebar-toggle {
