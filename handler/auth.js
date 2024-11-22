@@ -36,11 +36,12 @@ router.post('/api/login', async (req, res) => {
         }
 
         const result = await response.json();
+
         delete result.status;
         delete result.message;
         req.session.user = result
 
-        return res.redirect('/profile');
+        return res.redirect('/petition');
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
