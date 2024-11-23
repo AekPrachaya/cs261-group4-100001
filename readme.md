@@ -50,7 +50,7 @@ User Profile page and displaying user information
 
 Online Petition Submission page, allowing users to create and submit petitions directly through the platform.
 
-## Request %% return
+## Request && return
 
 ### Auth
 
