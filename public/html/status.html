@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TU Petition</title>
     <link rel="stylesheet" href="../css/status.css">
-    <link rel="stylesheet" href="../css/nav.css" </head>
+    <link rel="stylesheet" href="../css/nav.css">
+ </head>
 
 <body>
     <div class="container">
@@ -17,12 +18,17 @@
                 <span class="petition-title">TU Petition</span>
             </div>
             <ul class="menu">
-                <li><a href="#">ยื่นคำร้อง</a></li>
-                <li><a href="#">ตรวจสอบสถานะคำร้อง</a></li>
+                <li><a href="request">ยื่นคำร้อง</a></li>
+                <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
             </ul>
             <footer class="user-info">
-                <p>ชื่อผู้ใช้งาน: หลอดไฟ</p>
-                <p>669xxxxxxx</p>
+                <div>
+                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-id"></p>
+                </div>
+                <a href="/profile">
+                    <img src="../img/CogOutline.png" alt="gear_img">
+                </a>
             </footer>
         </aside>
 
@@ -64,6 +70,8 @@
 
         </main>
     </div>
+    <script src="../js/nav.js"></script>
+    <script src="../js/status.js"></script>
 </body>
 
 </html>
