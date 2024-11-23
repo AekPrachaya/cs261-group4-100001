@@ -93,6 +93,7 @@ input[type="password"] {
     margin-right: 8px;
     width: 20px;
     height: 20px;
+    cursor: pointer;
 }
   
 .submit-button {
