@@ -68,6 +68,27 @@ log current user out
 
 get current session
 
+### File
+
+POST `/api/files`
+
+> [!require]
+>
+> - petition_id: String
+> - files: array of files {via multer}
+
+GET `/api/files/:petition_id`
+
+> [!require]
+>
+> - petition_id: String
+
+DELETE `/api/files`
+
+> [!require]
+>
+> - public_ids: array of String {IDs of files}
+
 ### User
 
 POST `/api/user`
@@ -133,7 +154,7 @@ GET `/api/petitions/:student_id`
 
 > [!require]
 >
-> - student_id: int {student id}
+> - student_id: String {student id}
 
 > [!return]
 >
