@@ -104,7 +104,7 @@ POST /api/comment inserts a new comment to database
 
 > [!return]
 >
-> Success
+> Success //contain inserted comment data
 >
 > - id: comment_id
 > - comment: comment_text
@@ -113,13 +113,22 @@ POST /api/comment inserts a new comment to database
 
 GET /api/comment/:id
 
-> [!require]
+> [!return]
 >
-> Success
+> Success //contain fetched comment data
 >
 > - id: comment_id
 > - comment: comment_text
 >   Error
 > - error: ID is required
+
+PUT /api/comment
+
+> [!return]
+>
+> Success //contain updated comment data
+>
+> - id: comment_id
+> - comment: Update_comment_text
 
 [View type](https://github.com/AekPrachaya/cs261-group4-100001/blob/d9ac45c16d3f981ee151895be2e6221db2021a79/server/type.js)
