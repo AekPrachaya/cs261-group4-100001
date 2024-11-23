@@ -70,6 +70,51 @@ get current session
 
 ### Petition
 
+POST `/api/petition`
+
+> [!return]
+>
+> Success //contain inserted petition data
+>
+> - id: petition_id
+> - type: petition_type
+> - content: petition_content
+
+GET `api/petition/:id`
+
+> [!return]
+>
+> Success
+>
+> - id: petition_id
+> - type: petition_type
+> - content: petition_content
+
+GET `/api/petitions/:student_id`
+
+> [!return]
+>
+> Success
+>
+> - id: petition_id
+> - type: petition_type
+> - content: petition_content
+
+DELETE `/api/petition/:id`
+
+> [!return]
+>
+> - id: petition_id
+> - status : "Deleted successfully"
+
+PUT `/api/petition`
+
+> [!return]
+>
+> - id: petition_id
+> - type: updated_type
+> - content: updated_content
+
 `POST /api/petition/upload`
 
 type: string
@@ -96,7 +141,7 @@ id: string (petition_id)
 
 ### Comment
 
-POST /api/comment inserts a new comment to database
+POST `/api/comment` inserts a new comment to database
 
 > [!require]
 >
@@ -111,7 +156,7 @@ POST /api/comment inserts a new comment to database
 >   Error
 > - error: comment is required
 
-GET /api/comment/:id
+GET `/api/comment/:id`
 
 > [!return]
 >
@@ -122,7 +167,7 @@ GET /api/comment/:id
 >   Error
 > - error: ID is required
 
-PUT /api/comment
+PUT `/api/comment`
 
 > [!return]
 >
