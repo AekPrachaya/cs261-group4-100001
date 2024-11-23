@@ -50,7 +50,7 @@ User Profile page and displaying user information
 
 Online Petition Submission page, allowing users to create and submit petitions directly through the platform.
 
-## Request
+## Request %% return
 
 ### Auth
 
@@ -68,6 +68,12 @@ log current user out
 
 get current session
 
+> [!return]
+>
+> Success
+>
+> - user: session_data
+
 ### File
 
 POST `/api/files`
@@ -77,17 +83,35 @@ POST `/api/files`
 > - petition_id: String
 > - files: array of files {via multer}
 
+> [!return]
+>
+> Success
+>
+> - insertPublicIDs
+
 GET `/api/files/:petition_id`
 
 > [!require]
 >
 > - petition_id: String
 
+> [!return]
+>
+> Success
+>
+> - petition_id
+
 DELETE `/api/files`
 
 > [!require]
 >
 > - public_ids: array of String {IDs of files}
+
+> [!return]
+>
+> Success
+>
+> - public_ids
 
 ### User
 
