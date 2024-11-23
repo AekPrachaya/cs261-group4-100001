@@ -186,6 +186,10 @@ POST `/api/comment` inserts a new comment to database
 
 GET `/api/comment/:id`
 
+> [!require]
+>
+> - id: int
+
 > [!return]
 >
 > Success //contain fetched comment data
@@ -196,6 +200,10 @@ GET `/api/comment/:id`
 > - error: ID is required
 
 PUT `/api/comment`
+
+> [!require]
+>
+> - comment: String
 
 > [!return]
 >
