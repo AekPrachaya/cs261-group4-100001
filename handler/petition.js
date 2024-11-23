@@ -1,122 +1,125 @@
-import express from 'express';
+import express from "express";
 import {
-    insertPetition, deletePetition, updatePetition, getPetitions, getPetition
-} from '../server/db/petition.js';
+	insertPetition,
+	deletePetition,
+	updatePetition,
+	getPetitions,
+	getPetition,
+} from "../server/db/petition.js";
 
-import { deleteDocumentsByPublicIDs, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
-import { insertComment } from '../server/db/comment.js';
-import { getDocumentsByPetitionId } from '../server/db/document.js';
+import {
+	deleteDocumentsByPublicIDs,
+	deleteDocumentsInDatabaseByPublicIDs,
+} from "../server/document.js";
+import { insertComment } from "../server/db/comment.js";
+import { getDocumentsByPetitionId } from "../server/db/document.js";
 
 const router = express.Router();
 
-router.post('/api/petition', async (req, res) => {
-    const { type, content } = req.body;
-    if (!type || !content) {
-        return res.status(400).json({ error: 'Type and content are required' });
-    }
-    try {
-        let result
-        if (type === 'add/remove') {
-            result = await addOrRemoveCourses(content);
+router.post("/api/petition", async (req, res) => {
+	const { type, content } = req.body;
+	if (!type || !content) {
+		return res.status(400).json({ error: "Type and content are required" });
+	}
+	try {
+		let result;
+		if (type === "add/remove") {
+			result = await addOrRemoveCourses(content);
+		}
 
-        }
+		if (result) {
+			insertComment({
+				petition_id: result.data.id,
+			});
+			return res.status(200).json({ data: result.data });
+		}
+		return res.status(400).json({ error: "Invalid type" });
+	} catch (error) {
+		console.error("Fetch error:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+});
 
-        if (result) {
-            insertComment({
-                petition_id: result.data.id,
-            })
-            return res.status(200).json({ data: result.data });
-        }
-        return res.status(400).json({ error: 'Invalid type' });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
+router.get("/api/petition/:id", async (req, res) => {
+	const { id } = req.params;
+	if (!id) {
+		return res.status(400).json({ error: "ID is required" });
+	}
+	try {
+		const result = await getPetition(id);
+		if (result) {
+			return res.status(200).json({ data: result });
+		}
+		return res.status(400).json({ error: "Invalid ID" });
+	} catch (error) {
+		console.error("Fetch error:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+});
 
-router.get('/api/petition/:id', async (req, res) => {
-    const { id } = req.params;
-    if (!id) {
-        return res.status(400).json({ error: 'ID is required' });
-    }
-    try {
-        const result = await getPetition(id);
-        if (result) {
-            return res.status(200).json({ data: result });
-        }
-        return res.status(400).json({ error: 'Invalid ID' });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
+router.get("/api/petitions/:student_id", async (req, res) => {
+	const { student_id } = req.params;
+	if (!student_id) {
+		return res.status(400).json({ error: "student_id is required" });
+	}
 
+	try {
+		const result = await getPetitions(student_id);
+		if (result) {
+			return res.status(200).json({ data: result });
+		}
+		return res.status(400).json({ error: "Invalid student_id" });
+	} catch (error) {
+		console.error("Fetch error:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+});
 
-router.get('/api/petitions/:student_id', async (req, res) => {
-    const { student_id } = req.params;
-    if (!student_id) {
-        return res.status(400).json({ error: 'student_id is required' });
-    }
+router.delete("/api/petition/:id", async (req, res) => {
+	const { id } = req.params;
 
-    try {
-        const result = await getPetitions(student_id);
-        if (result) {
-            return res.status(200).json({ data: result });
-        }
-        return res.status(400).json({ error: 'Invalid student_id' });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
+	if (!id) {
+		return res.status(400).json({ error: "id is required" });
+	}
 
-router.delete('/api/petition/:id', async (req, res) => {
-    const { id } = req.params;
+	try {
+		const documents = await getDocumentsByPetitionId(id);
 
-    if (!id) {
-        return res.status(400).json({ error: 'id is required' });
-    }
+		const result = await deletePetition(id);
+		if (documents.length > 0 && result) {
+			// Delete on Cloudinary
+			const public_ids = documents.map((document) => document.public_id);
+			await deleteDocumentsByPublicIDs(public_ids);
 
-    try {
-        const documents = await getDocumentsByPetitionId(id);
+			// Delete on db
+			await deleteDocumentsInDatabaseByPublicIDs(public_ids);
+			return res.status(200).json({ data: result });
+		}
+		return res.status(400).json({ error: "Invalid student_id" });
+	} catch (error) {
+		console.error("Fetch error:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+});
 
-        const result = await deletePetition(id);
-        if (documents.length > 0 && result) {
-            // Delete on Cloudinary
-            const public_ids = documents.map(document => document.public_id);
-            await deleteDocumentsByPublicIDs(public_ids);
+router.put("/api/petition", async (req, res) => {
+	const { id, petition } = req.body;
 
-            // Delete on db
-            await deleteDocumentsInDatabaseByPublicIDs(public_ids);
-            return res.status(200).json({ data: result });
-        }
-        return res.status(400).json({ error: 'Invalid student_id' });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
+	if (!id || !petition) {
+		return res.status(400).json({ error: "ID, type and content are required" });
+	}
 
-
-router.put('/api/petition', async (req, res) => {
-    const { id, petition } = req.body;
-
-    if (!id || !petition) {
-        return res.status(400).json({ error: 'ID, type and content are required' });
-    }
-
-    try {
-        const result = await updatePetition(id, petition);
-        if (result) {
-            return res.status(200).json({ data: result });
-        }
-        return res.status(400).json({ error: 'Invalid type' });
-    } catch (error) {
-        console.error("Fetch error:", error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-})
-
+	try {
+		const result = await updatePetition(id, petition);
+		if (result) {
+			return res.status(200).json({ data: result });
+		}
+		return res.status(400).json({ error: "Invalid type" });
+	} catch (error) {
+		console.error("Fetch error:", error);
+		return res.status(500).json({ error: "Internal server error" });
+	}
+});
 
 /**
  * @typedef {Object} StudentInfo
@@ -167,20 +170,19 @@ router.put('/api/petition', async (req, res) => {
  * @param {Content} content - The content object containing course details.
  */
 const addOrRemoveCourses = async (content) => {
-    if (!content) {
-        throw new Error('Content is required');
-    }
+	if (!content) {
+		throw new Error("Content is required");
+	}
 
-    try {
-        // Parse and validate the content using Zod
-        const row = await insertPetition(content);
-        return {
-            data: row[0]
-        }
-    } catch (error) {
-        throw new Error('Error inserting petition');
-    }
-}
-
+	try {
+		// Parse and validate the content using Zod
+		const row = await insertPetition(content);
+		return {
+			data: row[0],
+		};
+	} catch (error) {
+		throw new Error("Error inserting petition");
+	}
+};
 
 export default router;

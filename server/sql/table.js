@@ -5,7 +5,7 @@ export const CREATE_PETITION_TABLE = `CREATE TABLE IF NOT EXISTS petitions (
     advisor TEXT NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('pending', 'approved', 'rejected')) DEFAULT 'pending',
     content JSONB NOT NULL
-)`
+)`;
 
 export const CREATE_COMMENT_TABLE = `CREATE TABLE IF NOT EXISTS comments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -25,17 +25,17 @@ export const CREATE_COMMENT_TABLE = `CREATE TABLE IF NOT EXISTS comments (
     dean_comment TEXT,
     dean_signature TEXT,
     dean_date TIMESTAMP
-)`
+)`;
 
 export const CREATE_DOCUMENT_TABLE = `CREATE TABLE IF NOT EXISTS documents (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     petition_id UUID NOT NULL REFERENCES petitions(id) ON DELETE CASCADE,
     public_id TEXT NOT NULL
-)`
+)`;
 
 export const CREATE_USER_TABLE = `CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     role TEXT NOT NULL CHECK (role IN ('advisor', 'staff', 'instructor', 'dean'))
-)`
+)`;
