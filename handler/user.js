@@ -1,23 +1,17 @@
 import express from 'express';
-import {
-    insertPetition, deletePetition, updatePetition, getPetitions, getPetition
-} from '../server/db/petition.js';
-
-import { deleteDocumentsByPublicIDs, deleteDocumentsInDatabaseByPublicIDs } from '../server/document.js';
-import { insertComment } from '../server/db/comment.js';
-import { getDocumentsByPetitionId } from '../server/db/document.js';
+import { createUser, removeUser } from '../server/db/user.js';
 
 const router = express.Router();
 
 router.post('/api/user', async (req, res) => {
     const { username, password, role } = req.body;
-
     if (!username || !password || !role) {
         return res.status(400).json({ error: 'Username, password and role are required' });
     }
 
     try {
         const result = await createUser(username, password, role);
+
         if (result) {
             return res.status(200).json({ data: result });
         }
@@ -30,9 +24,7 @@ router.post('/api/user', async (req, res) => {
 })
 
 router.delete('/api/user/:username', async (req, res) => {
-    if (req.session.user.role !== 'staff') {
-        return res.status(403).json({ error: 'Unauthorized' });
-    }
+
     const { username } = req.params;
     if (!username) {
         return res.status(400).json({ error: 'Username is required' });

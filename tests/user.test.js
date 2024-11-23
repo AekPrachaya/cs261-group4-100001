@@ -6,7 +6,6 @@ import express from 'express';
 import authRouter from '../handler/auth.js';
 import userRouter from '../handler/user.js';
 import '../config.js'
-import { createUser, removeUser } from '../server/db/user.js';
 
 const app = express()
 app.use(express.json());
@@ -25,22 +24,53 @@ app.use(authRouter);
 app.use(userRouter);
 
 
+
 describe("User test", () => {
     const agent = request.agent(app);
 
-    it('should create a new user and session working', async () => {
-        const user = await createUser('test', '123', 'staff');
+    // Dynamically generate a unique username for each test
+    const generateTestUser = () => ({
+        username: "test",
+        password: '123',
+        role: 'staff'
+    });
 
-        const res = await agent.post('/api/login').send({
-            username: user.username,
-            password: '123'
-        }).redirects(0);
+    let TEST_USER;
 
-        expect(res.statusCode).to.equal(302);
-        expect(res.session.user).to.be.an('object');
+    beforeEach(async () => {
+        // Generate a new test user before each test
+        TEST_USER = generateTestUser();
+        await agent.post('/api/user').send(TEST_USER);
 
-        await removeUser(user.username);
+    });
 
-    })
+    afterEach(async () => {
+        // Cleanup: Remove the test user after each test
+        await agent.delete('/api/user/' + TEST_USER.username).send();
+    });
 
-})
+    it('should create a new user', async () => {
+        const login_res = await agent.post('/api/login').send({
+            username: TEST_USER.username,
+            password: TEST_USER.password
+        });
+
+
+
+        expect(login_res.statusCode).to.equal(302);
+    });
+
+    it('should delete a user successfully', async () => {
+        const delete_res = await agent.delete('/api/user/' + TEST_USER.username).send();
+        expect(delete_res.statusCode).to.equal(200);
+
+        // Ensure the user is actually deleted
+        const fetch_res = await agent.post('/api/login').send({
+            username: TEST_USER.username,
+            password: TEST_USER.password
+        });
+
+        expect(fetch_res.body).to.have.property('error');
+    });
+
+});

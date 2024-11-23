@@ -18,16 +18,15 @@ router.post('/api/login', async (req, res) => {
     }
 
     // WARNING: This is for development only. Remove this in production
-    const testUser = ['advisor', 'staff', 'instructor', 'dean', 'test']
+    const devUser = ['advisor', 'staff', 'instructor', 'dean', 'test']
 
-    if (testUser.includes(username)) {
+    if (devUser.includes(username)) {
         try {
             const user = await getUser(username, password)
             req.session.user = user;
             return res.redirect('/petition');
         } catch (error) {
-            console.error("Fetch error:", error);
-            return res.status(500).json({ error: 'Internal server error' });
+            return res.status(500).json({ error: 'Invalid credentials' });
         }
     }
 
@@ -40,20 +39,20 @@ router.post('/api/login', async (req, res) => {
                 "Application-Key": process.env.TU_API_KEY
             },
             body: JSON.stringify({
-                "UserName": username,
-                "PassWord": password
+                UserName: username,
+                PassWord: password
             })
         });
 
         // Handle API response statuses
         if (!response.ok) {
             const errorText = await response.text();
-            console.error(`API Error: ${errorText}`);
-            return res.status(response.status).json({ error: errorText });
+            console.error(`TU API Error [${response.status}]: ${errorText}`);
+            return res.status(response.status).json({ error: 'Authentication failed' });
         }
 
         const result = await response.json();
-
+        result['role'] = 'student';
         delete result.status;
         delete result.message;
         req.session.user = result
