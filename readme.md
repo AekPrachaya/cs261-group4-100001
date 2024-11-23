@@ -68,6 +68,24 @@ log current user out
 
 get current session
 
+### User
+
+POST `/api/user`
+
+> [!require]
+>
+> - username: String {username}
+> - password: String {password}
+> - role: String {user role}
+
+DELETE `/api/user/:username`
+
+> [!require]
+>
+> Success
+>
+> - username: String {if role = staff}
+
 ### Petition
 
 POST `/api/petition`
