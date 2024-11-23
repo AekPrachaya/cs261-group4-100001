@@ -1,18 +1,15 @@
-function fetchAndUpdate() {
+async function fetchAndUpdate() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.username) {
         console.error('User not logged in or missing username');
         return;
     }
 
-    fetch('/api/petition/get_all', {
-        method: 'POST',
+    await fetch(`/api/petition/${user.username}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            student_id: user.username,
-        }),
     })
         .then(response => response.json())
         .then(data => {
@@ -49,7 +46,7 @@ function fetchAndUpdate() {
                     }
                 });
 
-                // Update tabs
+                // Store petition status globally
                 window.petitionStatus = {
                     approved,
                     inProgress,
@@ -59,7 +56,7 @@ function fetchAndUpdate() {
                     all: data.data,
                 };
 
-                // Display all by default
+                // Display all petitions by default
                 updatePetitionStatus('ทั้งหมด', data.data);
             } else {
                 console.error('No petitions found or incorrect data format');
@@ -74,7 +71,8 @@ function updatePetitionStatus(statusLabel, petitions) {
         console.warn('No requests container found!');
         return;
     }
-    container.innerHTML = '';
+    container.innerHTML = ''; // Clear the container
+
     if (petitions.length > 0) {
         petitions.forEach(petition => {
             const petitionCard = document.createElement('div');
@@ -83,6 +81,7 @@ function updatePetitionStatus(statusLabel, petitions) {
             petitionCard.innerHTML = `
                 <div class="request-content">
                     <p class="request-title">${petition.type}</p>
+                    <p class="request-status">สถานะ: ${petition.status}</p>
                 </div>
                 <div class="request-actions">
                     <button class="edit-btn">แก้ไข</button>
@@ -93,11 +92,11 @@ function updatePetitionStatus(statusLabel, petitions) {
             container.appendChild(petitionCard);
         });
     } else {
-        container.innerHTML = '';
+        container.innerHTML = '<p>ไม่มีคำร้องในสถานะนี้</p>';
     }
 }
 
-// tab switching
+// Tab switching logic
 document.querySelectorAll('.tab-btn').forEach(tab => {
     tab.addEventListener('click', () => {
         const status = tab.dataset.tab;
@@ -138,4 +137,3 @@ document.querySelectorAll('.tab-btn').forEach(tab => {
 
 // Fetch data when the page loads
 document.addEventListener('DOMContentLoaded', fetchAndUpdate);
-
