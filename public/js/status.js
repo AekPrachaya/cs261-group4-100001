@@ -4,8 +4,9 @@ async function fetchAndUpdate() {
         console.error('User not logged in or missing username');
         return;
     }
+    const id =parseInt(user.username);
 
-    await fetch(`/api/petition/${user.username}`, {
+    await fetch(`/api/petitions/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
