@@ -78,13 +78,25 @@ POST `/api/user`
 > - password: String {password}
 > - role: String {user role}
 
+> [!return]
+>
+> Success
+>
+> - username: username
+> - role: role
+
 DELETE `/api/user/:username`
 
 > [!require]
 >
+> - username: String {if role = staff}
+
+> [!return]
+>
 > Success
 >
-> - username: String {if role = staff}
+> - username: username
+> - status: "Deleted successfully"
 
 ### Petition
 
