@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TU Petition</title>
+    <link rel="stylesheet" href="../css/status.css">
+    <link rel="stylesheet" href="../css/nav.css" </head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="../img/TUlogo.png" alt="TU Logo" class="tu-logo">
+                <span class="petition-title">TU Petition</span>
+            </div>
+            <ul class="menu">
+                <li><a href="#">ยื่นคำร้อง</a></li>
+                <li><a href="#">ตรวจสอบสถานะคำร้อง</a></li>
+            </ul>
+            <footer class="user-info">
+                <p>ชื่อผู้ใช้งาน: หลอดไฟ</p>
+                <p>669xxxxxxx</p>
+            </footer>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h2>คำร้องของฉัน</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="all">ทั้งหมด</button>
+                <button class="tab-btn" data-tab="in-progress">อยู่ระหว่างดำเนินการ</button>
+                <button class="tab-btn" data-tab="waiting">รอดำเนินการ</button>
+                <button class="tab-btn" data-tab="documents">รอเอกสาร</button>
+                <button class="tab-btn" data-tab="rejected">ปฏิเสธคำร้อง</button>
+                <button class="tab-btn" data-tab="completed">เสร็จสิ้น</button>
+            </div>
+
+            <div class="requests-wrapper">
+                <h3 class="requests-title">คำร้องทั้งหมด</h3>
+                <div class="requests-container">
+                    <div class="request-card">
+                        <div class="request-content">
+                            <p class="request-title">คำร้องที่ 1</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="edit-btn">แก้ไข</button>
+                            <button class="delete-btn">ยกเลิก</button>
+                        </div>
+                    </div>
+                    <div class="request-card">
+                        <div class="request-content">
+                            <p class="request-title">คำร้องที่ 2</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="edit-btn">แก้ไข</button>
+                            <button class="delete-btn">ยกเลิก</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>

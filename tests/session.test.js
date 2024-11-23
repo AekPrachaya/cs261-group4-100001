@@ -27,8 +27,8 @@ describe("Session Test", () => {
         const res = await agent
             .post('/api/login')
             .send({
-                username: "6609611816",
-                password: "1102200218882"
+                username: "test_username",
+                password: "test_password"
             }).redirects(0);
 
         expect(res.statusCode).to.equal(302);

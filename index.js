@@ -11,8 +11,10 @@ import authRouter from './handler/auth.js';
 import petitionRouter from './handler/petition.js';
 import commentRouter from './handler/comment.js';
 import fileRouter from './handler/file.js';
+
 import userRouter from './handler/user.js';
 import { createUser } from './server/db/user.js';
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -48,8 +50,9 @@ app.use(petitionRouter);
 app.use(commentRouter);
 app.use(userRouter);
 
-app.get('/', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
 })
 
 app.use(isAuthenticated);

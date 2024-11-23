@@ -21,6 +21,4 @@ await POOL.query(CREATE_COMMENT_TABLE);
 await POOL.query(CREATE_DOCUMENT_TABLE);
 await POOL.query(CREATE_USER_TABLE);
 
-
-
 export { POOL }

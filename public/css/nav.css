@@ -1,64 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background-color: #f5f6fa;
+    padding: 30px;
+    /* เพิ่มระยะห่างจากขอบด้านนอก */
+}
+
+.layout {
+    display: flex;
+    gap: 30px;
+    /* เพิ่มระยะห่างระหว่าง sidebar และ main-container */
+}
+
 .sidebar {
-    width: 250px;
-    background: linear-gradient(to bottom, #D8A25E, #A04747);
-    padding: 25px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 500px;
+    height: auto;
+    /* ให้ขนาดสูงตามเนื้อหา */
+    background-color: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    margin-top: 30px;
+
+    position: relative;
+    /* เว้นระยะห่างด้านบน */
 }
 
-.logo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* จัดให้อยู่ตรงกลาง */
-    margin-bottom: 30px;
-    margin-top: 25px;
-}
-
-.logo img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 10px;
-    /* เว้นระยะห่างระหว่างโลโก้และข้อความ */
-}
-
-.logo-text {
-    font-size: 18px;
-    color: white;
-    text-align: center;
-    /* จัดข้อความให้อยู่ตรงกลาง */
-}
-
-.logo h2 {
-    font-size: 18px;
-    color: white;
-}
-
-.nav-links {
-    list-style-type: none;
-}
-
-.nav-links li {
-    margin-bottom: 15px;
-}
-
-.nav-links a {
-    color: black;
-    text-decoration: none;
-    font-size: 16px;
-    display: block;
-    padding: 5px 0;
-}
-
-.nav-links a.active {
-    font-weight: bold;
-    border: white solid 1px;
-    border-radius: 10px;
+.main-container {
+    flex-grow: 1;
+    padding: 30px;
+    /* เพิ่มระยะห่างภายในเนื้อหา */
     background-color: white;
-    padding-left: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    /* เว้นระยะห่างด้านบน */
 }
 
-.bottom-links {
-    margin-top: auto;
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.sidebar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.sidebar .logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 15px;
+}
+
+.sidebar .logo img {
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
+}
+
+.sidebar .Petition {
+    font-size: 36px;
+    /* ปรับขนาดตัวอักษรตามต้องการ */
+    font-weight: bold;
+    /* ทำให้ตัวหนา */
+}
+
+.sidebar .menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar .menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar .menu li a {
+    color: #1D1D1F;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+}
+
+.sidebar .menu li a.active,
+.sidebar .menu li a:hover {
+    background-color: #625CFF;
+    color: white;
+}
+
+.user-info {
+    position: sticky;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    padding-top: 40px;
+    border-top: 1px solid rgb(198, 189, 189);
+
+}
+
+#user-info-name,
+#user-info-id {
+    margin: 2px;
+}
+
+#user-info-id {
+    color: #86868A;
+}
+
+.user-info a {
+    align-self: center;
+}
+
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        left: -384px;
+        top: 30px;
+        /* คงระยะห่าง 30px ด้านบน */
+        bottom: 30px;
+        /* เว้นระยะด้านล่าง */
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 30px;
+        /* เมื่อ sidebar แสดง */
+    }
+
+    .sidebar-toggle {
+        display: block;
+    }
+
+    .layout {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .btn {
+        width: 100%;
+    }
 }
