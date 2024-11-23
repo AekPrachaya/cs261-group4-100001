@@ -1,24 +1,30 @@
 const fileUpload = document.getElementById('fileUpload');
 
-document.getElementById("requestForm").addEventListener("submit", async function(event) {
+document.getElementById("petitionForm").addEventListener("submit", async function(event) {
     event.preventDefault();
 
     const formData = new FormData(this);
+    try {
+        info = await getUserInformation();        
+    } catch (e) {
+        console.error(e);
+        id.textContent = "เกิดข้อผิดพลาด";
+    }
 
     const petitionData = {
-        student_id: formData.get("student_id"),
-        type: "add/remove",
+        student_id: info["username"],
+        type: formData.get("petitionType"),
         advisor: formData.get("advisor"),
         status: "pending",
         content: {
             topic: formData.get("topic"),
             date: new Date().toISOString(),
-            person_in_charge: formData.get("firstName" + "lastName"),
+            person_in_charge: info["displayname_th"],
             student_info: {
                 name_title: formData.get("title"),
-                student_id: formData.get("student_id"),
+                student_id: info["username"],
                 year: formData.get("year"),
-                major: formData.get("major"),
+                major: info["department"],
             },
             location: {
                 house_no: formData.get("houseNumber"),
@@ -63,8 +69,6 @@ document.getElementById("requestForm").addEventListener("submit", async function
         const responseData = await uploadResponse.json();
         // Assign it to petitionId
         const petitionId = responseData.data.id;
-
-
         const fileData = new FormData();
 
         fileData.append('files', formData.get('fileInput'));
@@ -88,61 +92,26 @@ document.getElementById("requestForm").addEventListener("submit", async function
 
 });
 
-fileUpload.addEventListener('change', function(e) {
-    const files = e.target.files;
-    const allowedTypes = ['application/pdf', 'image/png'];
-
-    // ตรวจสอบจำนวนไฟล์
-    if (files.length > 5) {
-        alert('กรุณาอัปโหลดไม่เกิน 5 ไฟล์');
-        e.target.value = '';  // รีการเลือกไฟล์
-        e.target.nextElementSibling.textContent = 'No file chosen';
-        return;
-    }
-
-    // ตรวจสอบชนิดไฟล์
-    for (let file of files) {
-        if (!allowedTypes.includes(file.type)) {
-            alert('กรุณาเลือกไฟล์ PDF หรือ PNG เท่านั้น');
-            e.target.value = '';  // รีการเลือกไฟล์
-            e.target.nextElementSibling.textContent = 'No file chosen';
-            return;
+async function getUserInformation() {
+    const userInfo = await fetch("/api/session", {
+        headers: {
         }
-    }
+    });
+    return userInfo.json() // return promise ของข้อมูล session ใน รูปแบบ JSON
+}
 
-    // แสดงชื่อไฟล์ทั้งหมด
-    const fileNames = Array.from(files).map(file => file.name).join(', ');
-    e.target.nextElementSibling.textContent = fileNames;
-});
-
-//ส่วนปุ่มเปลี่ยนภาษา
-const languageButton = document.querySelector(".language-switch");
-
-function switchLanguage() {// เปลี่่ยน hash ที่ url เพื่อใช้กำหนดภาษา
-    if (location.hash === "#th") {
-        location.hash = "en";
-        location.reload();
-    } else if (location.hash === "#en") {
-        location.hash = "th";
-        location.reload();
-    } else {
-        location.hash = "en";
-        location.reload();
+async function displayUserInfomation() {
+    const id = document.querySelector("#student-info-id")
+    
+    try {
+        const info = await getUserInformation(); // เก็บข้อมูล user ที่ดึงมาจาก api/session
+        
+        id.textContent = `${info["displayname_th"]} รหัสนักศึกษา ${info["username"]} ${info["faculty"]} ${info["department"]}`;
+    } catch (e) {
+        console.error(e);
+        id.textContent = "เกิดข้อผิดพลาด";
     }
 }
 
-languageButton.addEventListener("click", switchLanguage)//เพิ่ม event ที่ปุ่มเปลี่ยนภาษาด้วย function switchlanguage()
 
-//หลัง reload ให้เช็คค่า hash และเปลี่ยนภาษาตาม
-if (location.hash) {
-    if (location.hash == "#en") {
-        changeRequestLang();
-        changeSidebarLang();
-        languageButton.textContent = "TH";
-    }
-    else if (location.hash == "#th") {
-        changeRequestLang(language.th);
-        changeSidebarLang(language.th);
-        languageButton.textContent = "EN";
-    }
-}
+document.addEventListener("DOMContentLoaded", displayUserInfomation); 

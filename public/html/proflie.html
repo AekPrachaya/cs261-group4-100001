@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="../css/nav.css">
+    <link rel="stylesheet" href="../css/proflie.css">
+</head>
+
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <div>
+                <div class="logo">
+                    <img src="../img/TUlogo.png" alt="TU Logo">
+                    <span class="Petition">TU Petition</span>
+                </div>
+                <ul class="menu">
+                    <li><a href="request">ยื่นคำร้อง</a></li>
+                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                </ul>
+            </div>
+            <footer class="user-info">
+                <div>
+                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-id"></p>
+                </div>
+                <a href="/profile">
+                    <img src="../img/CogOutline.png" alt="gear_img">
+                </a>
+            </footer>
+        </aside>
+        <div class="content">
+            <!-- Main Content -->
+            <main class="container">
+                <h2>ข้อมูลส่วนตัว</h2>
+                <div class="personal-info">
+                    <div class="info-row">
+                        <span class="label">ชื่อ นามสกุล</span>
+                        <span class="value" id="user-name">displayname_th</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">รหัสนักศึกษา</span>
+                        <span class="value" id="user-username">userName</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">คณะที่กำลังศึกษา</span>
+                        <span class="value" id="user-faculty">faculty</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">สาขาที่กำลังศึกษา</span>
+                        <span class="value" id="user-department">department</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Tu-Email</span>
+                        <span class="value" id="user-email">email</span>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+    <script src="../js/nav.js"></script>
+    <script src="../js/profile.js"></script>
+</body>
+
+</html>

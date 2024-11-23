@@ -4,181 +4,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>เขียนคำร้องออนไลน์</title>
-    <link rel="stylesheet" href="../css/nav.css">
+    <title>TU Petition</title>
     <link rel="stylesheet" href="../css/request.css">
+    <link rel="stylesheet" href="../css/nav.css">
 </head>
 
 <body>
-    <div class="container">
-        <nav class="sidebar">
-            <div class="logo">
-                <img src="../img/TUlogo.png" alt="Thammasat University Logo">
-                <div class="logo-text">มหาวิทยาลัยธรรมศาสตร์</div>
-            </div>
-            <ul class="nav-links">
-
-            </ul>
-            <ul class="nav-links bottom-links">
-                <li><a href="/profile">ข้อมูลส่วนตัว</a></li>
-                <li><a href="#" class="active">เขียนคำร้อง</a></li>
-                <li><a href="/petition">ตรวจสอบสถานะคำร้อง</a></li>
-                <li><a href="#">ออกจากระบบ</a></li>
-            </ul>
-        </nav>
-        <main class="content">
-            <header>
-                <section class="form-header">
-                    <h1>เขียนคำร้องออนไลน์</h1>
-                </section>
-                <button class="preview-btn">Preview Form</button>
-                <button class="language-switch">EN</button>
-            </header>
-            <form id="requestForm">
-                <section class="form-section">
-                    <h2>ข้อมูลส่วนตัว</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <select name="title" required>
-                                <option value="">คำนำหน้าชื่อ</option>
-                                <option value="mr">นาย</option>
-                                <option value="mrs">นาง</option>
-                                <option value="miss">นางสาว</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="firstName" placeholder="ชื่อ" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="lastName" placeholder="นามสกุล" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <select name="education" required>
-                                <option value="">ปีการศึกษา</option>
-                                <option value="2567">2567</option>
-                                <option value="2566">2566</option>
-                                <option value="2565">2565</option>
-                                <option value="2564">2564</option>
-                                <option value="2563">2563</option>
-                                <option value="2562">2562</option>
-                                <option value="2561">2561</option>
-                                <option value="2560">2560</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select name="faculty" required>
-                                <option value="">คณะที่กำลังศึกษาอยู่</option>
-                                <option value="law">คณะนิติศาสตร์</option>
-                                <option value="commerce">คณะพาณิชยศาสตร์และการบัญชี</option>
-                                <option value="political_science">คณะรัฐศาสตร์</option>
-                                <option value="economics">คณะเศรษฐศาสตร์</option>
-                                <option value="social_work">คณะสังคมสงเคราะห์ศาสตร์</option>
-                                <option value="journalism">คณะวารสารศาสตร์และสื่อสารมวลชน</option>
-                                <option value="sociology_anthropology">คณะสังคมวิทยาและมานุษยวิทยา</option>
-                                <option value="puey_ungphakorn">วิทยาลัยพัฒนศาสตร์ ป๋วย อึ๊งภากรณ์</option>
-                                <option value="innovation">วิทยาลัยนวัตกรรม</option>
-                                <option value="interdisciplinary">วิทยาลัยสหวิทยาการ</option>
-                                <option value="pridi_banomyong">วิทยาลัยนานาชาติ ปรีดี พนมยงค์</option>
-                                <option value="learning_sciences">คณะวิทยาการเรียนรู้และศึกษาศาสตร์</option>
-                                <option value="global_studies">วิทยาลัยโลกคดีศึกษา</option>
-                                <option value="liberal_arts">คณะศิลปศาสตร์</option>
-                                <option value="fine_arts">คณะศิลปกรรมศาสตร์</option>
-                                <option value="science_technology">คณะวิทยาศาสตร์และเทคโนโลยี</option>
-                                <option value="engineering">คณะวิศวกรรมศาสตร์</option>
-                                <option value="architecture">คณะสถาปัตยกรรมศาสตร์และการผังเมือง</option>
-                                <option value="siit">สถาบันเทคโนโลยีนานาชาติสิรินธร</option>
-                                <option value="medicine">คณะแพทยศาสตร์</option>
-                                <option value="dentistry">คณะทันตแพทยศาสตร์</option>
-                                <option value="allied_health_sciences">คณะสหเวชศาสตร์</option>
-                                <option value="nursing">คณะพยาบาลศาสตร์</option>
-                                <option value="public_health">คณะสาธารณสุขศาสตร์</option>
-                                <option value="pharmacy">คณะเภสัชศาสตร์</option>
-                                <option value="cicm">วิทยาลัยแพทยศาสตร์นานาชาติจุฬาภรณ์</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="student_id" placeholder="รหัสนักศึกษา" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="tel" name="phone_no" placeholder="เบอร์โทรศัพท์ที่ติดต่อ" required>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>ที่อยู่อาศัย</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" name="houseNumber" placeholder="บ้านเลขที่" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="village" placeholder="หมู่" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="subDistrict" placeholder="แขวง/ตำบล" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="district" placeholder="เขต/อำเภอ" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" name="province" placeholder="จังหวัด" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="postal_code" placeholder="รหัสไปรษณีย์" required>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="form-section">
-                    <h2>วิชาที่ต้องการเพิ่ม/ถอน</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" name="course_id" placeholder="รหัสวิชา" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="courseName" placeholder="ชื่อวิชา" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="section" placeholder="Section" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="text" name="advisor" placeholder="อาจารย์ที่ปรึกษา" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <textarea name="reason" placeholder="เหตุผลที่ยื่นคำร้อง" rows="4" required></textarea>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <div class="file-upload">
-
-                                <input type="file" id="fileUpload" name="fileInput">
-                                <p>No file chosen</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <div class="button-group">
-                    <button type="button" class="btn btn-draft">บันทึกแบบร่าง</button>
-                    <button type="button" class="btn btn-cancel">ยกเลิก</button>
-                    <button type="submit" class="btn btn-next">ถัดไป</button>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo">
+                    <img src="../img/TUlogo.png" alt="TU Logo">
+                    <span class="Petition">TU Petition</span>
                 </div>
-            </form>
-        </main>
+                <ul class="menu">
+                    <li><a href="request">ยื่นคำร้อง</a></li>
+                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                </ul>
+            </div>
+            <footer class="user-info">
+                <div>
+                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-id"></p>
+                </div>
+                <a href="/profile">
+                    <img src="../img/CogOutline.png" alt="gear_img">
+                </a>
+            </footer>
+        </aside>
+        <div class="main-container">
+            <header class="header">
+                <button id="sidebarToggle" class="sidebar-toggle">☰</button>
+                <h2>เขียนคำร้อง</h2>
+            </header>
+            <div class="student-info">
+                <p id="student-info-id">dddddddd</p>
+            </div>
+            <main class="main-content">
+                <form id="petitionForm">
+                    <div class="form-group">
+                        <label>เบอร์โทรศัพท์ติดต่อ</label>
+                        <input type="text" class="form-control" name="phone_no">
+                    </div>
+
+                    <div class="form-group">
+                        <label>อาจารย์ที่ปรึกษา</label>
+                        <input type="text" class="form-control" name="advisor">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>บ้านเลขที่</label>
+                            <input type="text" class="form-control" name="houseNumber">
+                        </div>
+                        <div class="form-group half">
+                            <label>หมู่</label>
+                            <input type="text" class="form-control" name="village">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>แขวง/ตำบล</label>
+                            <input type="text" class="form-control" name="subDistrict">
+                        </div>
+                        <div class="form-group half">
+                            <label>เขต/อำเภอ</label>
+                            <input type="text" class="form-control" name="district">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>จังหวัด</label>
+                            <input type="text" class="form-control" name="province">
+                        </div>
+                        <div class="form-group half">
+                            <label>รหัสไปรษณีย์</label>
+                            <input type="text" class="form-control" name="postal_code">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>ข้อมูลคำร้อง</label>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="petitionType" value="add"> เพิ่มรายวิชา
+                            </label>
+                            <label>
+                                <input type="checkbox" name="petitionType" value="drop"> ถอนรายวิชา
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>ปีการศึกษา</label>
+                            <select class="form-control" name="year">
+                                <option value="">เลือก</option>
+                                <option value="2560">2560</option>
+                                <option value="2561">2561</option>
+                                <option value="2562">2562</option>
+                                <option value="2563">2563</option>
+                                <option value="2564">2564</option>
+                                <option value="2565">2565</option>
+                                <option value="2566">2566</option>
+                                <option value="2567">2567</option>
+                            </select>
+                        </div>
+                        <div class="form-group half">
+                            <label>ภาคการศึกษา</label>
+                            <select class="form-control" name="semester">
+                                <option value="">เลือก</option>
+                                <option value="midterm">กลางภาคเรียน</option>
+                                <option value="final">ปลายภาคเรียน</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>รหัสวิชา</label>
+                            <input type="text" class="form-control" name="course_id">
+                        </div>
+                        <div class="form-group half">
+                            <label>Section</label>
+                            <input type="text" class="form-control" name="section">
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label>ชื่อวิชา</label>
+                        <input type="text" class="form-control" name="courseName">
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="petitionType" value="resign"> ลาออก ตั้งแต่
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label>ปีการศึกษา</label>
+                            <select class="form-control" name="Year">
+                                <option value="">เลือก</option>
+                                <option value="2566">2566</option>
+                                <option value="2567">2567</option>
+                            </select>
+                        </div>
+                        <div class="form-group half">
+                            <label>ภาคการศึกษา</label>
+                            <select class="form-control" name="semester">
+                                <option value="">เลือก</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="summer">ภาคฤดูร้อน</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="petitionType" value="other"> อื่น ๆ
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>เรื่องที่ต้องการยื่นคำร้อง</label>
+                        <input type="text" class="form-control" name="topic">
+                    </div>
+
+                    <div class="form-group">
+                        <label>สาเหตุที่ยื่นคำร้อง</label>
+                        <textarea class="form-control" rows="6" name="reason"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>แนบไฟล์</label>
+                        <button type="button" class="btn btn-secondary" id="attachFileBtn">แนบไฟล์</button>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
+                        <button type="button" class="btn btn-outline">บันทึกแบบร่าง</button>
+                        <button type="button" class="btn btn-danger">ยกเลิก</button>
+                        <button type="submit" class="btn btn-success">บันทึกคำร้อง</button>
+                    </div>
+                </form>
+            </main>
+        </div>
     </div>
-    <script src="../js/language.js"></script>
-    <script src="../js/change_language_login.js"></script>
+    <script src="../js/nav.js"></script>
     <script src="../js/request.js"></script>
 </body>
 

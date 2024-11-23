@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* General Styles */
+body {
+  background-color: #f5f6fa;
+}
+
+.sidebar {
+  min-height: 90vh;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+/* Container */
+.main-container {
+  max-width: fit-content;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.content {
+  width: fit-content;
+  background-color: none;
+  padding: 30px;
+  border-radius: 8px;
+  margin-top: 30px;
+}
+
+h2 {
+  margin-bottom: 40px;
+  font-size: 36px;
+}
+
+.personal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* ระยะห่างระหว่างบรรทัด */
+  font-size: 28;
+}
+
+.info-row {
+  display: flex;
+  padding: 0px;
+}
+
+.label {
+  flex: auto;
+  /* ให้ label กินพื้นที่เท่ากันทุกบรรทัด */
+}
+
+.value {
+  color: #000080;
+  /* ข้อความ value เป็นสีน้ำเงิน */
+  text-align: left;
+  /* จัดข้อความไปทางซ้าย */
+  margin-left: 50px;
+}
