@@ -6,6 +6,7 @@ async function login(username, password) { //ใช้ในการ login เ�
     const loginData = await fetch("/api/login", {
         method: "POST",
         headers: {
+            'accept': 'application/json',
             'Content-Type': 'application/json',
         },
 
@@ -60,15 +61,17 @@ form.addEventListener("submit", async function (event) {
     }
 
     const result = await login(username, password); // login
+    console.log(result);
 
     if (!result.ok) {// ถ้า promise reject ให้ขึ้นเติม
         return showCustomAlert("Login failed. Invalid credentials.");
     }
 
-    const json = await result.json(); // แปลง promise เป็น JSON
-    console.log(json);
-    if (json) {
-        localStorage.setItem("user", JSON.stringify(json.user));// set ข้อมูล user ไว้ที่
-        window.location.href = json.redirectTo; //redirect ไปหน้า profile
-    }
+    window.location.href = result.url;
+    // const json = await result.json(); // แปลง promise เป็น JSON
+    // console.log(json);
+    // if (json) {
+    //     localStorage.setItem("user", JSON.stringify(json.user));// set ข้อมูล user ไว้ที่ 
+    //     window.location.href = json.redirectTo; //redirect ไปหน้า profile
+    // }
 });

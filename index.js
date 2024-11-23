@@ -49,12 +49,12 @@ app.use(commentRouter);
 
 
 app.get('/', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
 
 })
 app.use(isAuthenticated);
 
-app.get('/petition', (_, res) => {
+app.get('/status', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'status.html'));
 })
 

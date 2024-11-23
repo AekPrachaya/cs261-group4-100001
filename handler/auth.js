@@ -41,7 +41,8 @@ router.post('/api/login', async (req, res) => {
         delete result.message;
         req.session.user = result
 
-        return res.redirect('/petition');
+        // return res.status(200).json({ user: result, redirectTo: '/status' });
+        return res.redirect('/status');
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: 'Internal server error' });
