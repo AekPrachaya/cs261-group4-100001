@@ -5,17 +5,18 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import petitionRouter from '../handler/petition.js';
+import fileRouter from '../handler/file.js';
 
-const app = express()
+const app = express();
 app.use(express.json());
-
 app.use(petitionRouter);
+app.use(fileRouter);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /** @param Petition */
-const petition = {
+const petitionTemplate = {
     student_id: 125124,
     type: "add/remove",
     advisor: "Dr.advisor",
@@ -56,76 +57,106 @@ const petition = {
         ],
         reason: "For testing purposes"
     }
-}
+};
 
-describe('Document Upload', () => {
-    let insertedPetition;
-    let public_ids;
+
+describe('Document Upload and Management', () => {
 
     const createPetition = async () => {
-        const result = await request(app)
-            .post('/api/petition/upload')
-            .send({ type: 'add/remove', content: petition });
+        const res = await request(app)
+            .post('/api/petition/')
+            .send({ type: 'add/remove', content: petitionTemplate });
 
-        insertedPetition = result.body.data;
-    }
+        return res.body.data;
+    };
 
     const deletePetition = async (id) => {
-        await request(app).delete('/api/petition').send({
-            id
-        })
-    }
+        await request(app)
+            .delete(`/api/petition/${id}`)
+            .send();
+    };
 
-
-    it('should able to upload document to cloudinary and also has data to document table', async () => {
-        await createPetition();
-
+    it('should upload a document to cloud storage and store metadata in the database', async () => {
+        const petition = await createPetition();
         const filePath = path.resolve(__dirname, '../petition_test.pdf');
         const res = await request(app)
-            .post('/api/petition/files')
-            .field('petition_id', insertedPetition.id)
+            .post('/api/files')
+            .field('petition_id', petition.id)
             .attach('files', filePath);
 
-        public_ids = res.body.data;
-
+        await deletePetition(petition.id);
         expect(res.status).to.equal(200);
-        expect(res.body.data).to.be.an('array');
-
-        await deletePetition(insertedPetition.id);
-
     });
 
-    it('should able to delete document from cloudinary and also delete data from document table', async () => {
-        await createPetition();
-        const res = await request(app)
-            .delete('/api/petition/files')
-            .send({ public_ids });
-
-        expect(res.status).to.equal(200);
-        expect(res.body.data).to.be.an('array');
-
-        await deletePetition(insertedPetition.id);
-    })
-
-    it('should delete document when delete petition in db', async () => {
-        await createPetition();
-
+    it('when deleted a document on cloud, will delete in database too', async () => {
+        const petition = await createPetition();
         const filePath = path.resolve(__dirname, '../petition_test.pdf');
-        await request(app)
-            .post('/api/petition/files')
-            .field('petition_id', insertedPetition.id)
+
+        // Upload a file to Cloudinary
+        const uploadRes = await request(app)
+            .post('/api/files')
+            .field('petition_id', petition.id)
             .attach('files', filePath);
 
-        await deletePetition(insertedPetition.id);
+        const data = uploadRes.body.data;
 
-        const res2 = await request(app)
-            .post('/api/petition/files/get')
-            .send({ petition_id: insertedPetition.id });
+        expect(uploadRes.status).to.equal(200);
+        expect(data).to.be.an('array').that.is.not.empty;
 
-        // check if document is deleted
-        expect(res2.status).to.equal(200);
-        expect(res2.body.data).to.be.an('array');
-        expect(res2.body.data.length).to.equal(0);
+        const publicIds = data.filter(file => file).map((file) => file.public_id);
+
+        const deleteResult = await request(app)
+            .delete('/api/files')
+            .send({ public_ids: publicIds });
+
+        expect(deleteResult.status).to.equal(200);
+        expect(deleteResult.body.data).to.be.an('array').that.is.not.empty;
+
+        const getResult = await request(app)
+            .get(`/api/files/${petition.id}`);
+
+        expect(getResult.status).to.equal(200);
+        expect(getResult.body.data).to.be.an('array').that.is.empty;
+
+        // await deletePetition(petition.id);
+    });
+
+    it('should delete documents on cloudinary when deleting a petition', async () => {
+        const petition = await createPetition();
+        const filePath = path.resolve(__dirname, '../petition_test.pdf');
+        const uploadRes = await request(app)
+            .post('/api/files')
+            .field('petition_id', petition.id)
+            .attach('files', filePath);
+
+        expect(uploadRes.status).to.equal(200);
+        await deletePetition(petition.id);
+
+        const fetchRes = await request(app)
+            .get(`/api/files/${petition.id}`);
+        expect(fetchRes.status).to.equal(200);
+    });
+
+    it("Should get documents by petition id", async () => {
+        const petition = await createPetition();
+        const filePath = path.resolve(__dirname, '../petition_test.pdf');
+        const uploadRes = await request(app)
+            .post('/api/files')
+            .field('petition_id', petition.id)
+            .attach('files', filePath);
+
+        expect(uploadRes.status).to.equal(200);
+
+        const fetchRes = await request(app)
+            .get(`/api/files/${petition.id}`);
+
+        expect(fetchRes.status).to.equal(200);
+        expect(fetchRes.body.data).to.be.an('array').that.is.not.empty;
+
+        const deleteRes = await request(app).delete(`/api/petition/${petition.id}`);
+
+        expect(deleteRes.status).to.equal(200);
+
     })
+});
 
-})

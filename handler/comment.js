@@ -1,9 +1,9 @@
 import express from 'express';
-import { getComment, insertComment, updateComment } from '../server/db.js';
+import { getComment, insertComment, updateComment } from '../server/db/comment.js';
 
 const router = express.Router();
 
-router.post('/api/comment/add', async (req, res) => {
+router.post('/api/comment', async (req, res) => {
     const { comment } = req.body;
     if (!comment) {
         return res.status(400).json({ error: 'Comment is required' });
@@ -18,13 +18,13 @@ router.post('/api/comment/add', async (req, res) => {
     }
 })
 
-router.post('/api/comment/get', async (req, res) => {
-    const { petition_id } = req.body;
-    if (!petition_id) {
-        return res.status(400).json({ error: 'Petition ID is required' });
+router.get('/api/comment/:id', async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ error: 'ID is required' });
     }
     try {
-        const result = await getComment(petition_id);
+        const result = await getComment(id);
         if (result) {
             return res.status(200).json({ data: result });
         }
@@ -36,7 +36,7 @@ router.post('/api/comment/get', async (req, res) => {
 })
 
 
-router.post('/api/comment/update', async (req, res) => {
+router.put('/api/comment', async (req, res) => {
     const { comment } = req.body;
     if (!comment) {
         return res.status(400).json({ error: 'Comment is required' });
