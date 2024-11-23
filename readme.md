@@ -99,9 +99,11 @@ id: string (petition_id)
 POST /api/comment inserts a new comment to database
 
 > [!require]
+>
 > comment: A string
 
 > [!return]
+>
 > Success
 >
 > - id: comment_id
@@ -112,6 +114,7 @@ POST /api/comment inserts a new comment to database
 GET /api/comment/:id
 
 > [!require]
+>
 > Success
 >
 > - id: comment_id
