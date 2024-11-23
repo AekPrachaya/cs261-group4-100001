@@ -6,12 +6,13 @@ import { fileURLToPath } from 'url';
 import { isAuthenticated } from './middleware.js';
 import cors from 'cors';
 
-
-
+// Handlers
 import authRouter from './handler/auth.js';
 import petitionRouter from './handler/petition.js';
 import commentRouter from './handler/comment.js';
 import fileRouter from './handler/file.js';
+import userRouter from './handler/user.js';
+import { createUser } from './server/db/user.js';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -30,7 +31,7 @@ app.use(session({
 }))
 
 app.use(cors({
-    origin: 'http://127.0.0.1:3000',  // ต้องเป็นโดเมนที่คุณต้องการอนุญาต
+    origin: `http://127.0.0.1:${PORT || 3000}`,  // ต้องเป็นโดเมนที่คุณต้องการอนุญาต
     credentials: true  // อนุญาตให้ส่งข้อมูลประจำตัว (cookies, HTTP authentication)
 }));
 
@@ -41,28 +42,35 @@ app.use(express.json());
 
 
 // handlers
-
 app.use(authRouter);
 app.use(fileRouter);
 app.use(petitionRouter);
 app.use(commentRouter);
+app.use(userRouter);
 
 app.get('/', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'index.html'));
 })
+
 app.use(isAuthenticated);
 
 app.get('/petition', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'petition.html'));
 })
 
-app.get('/profile', (req, res) => {
+app.get('/profile', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'profile.html'));
 })
 
 app.get('/request', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'request.html'));
 })
+
+// DEMO: Create new advisor, staff, instructor, dean
+await createUser('advisor', '123', 'advisor');
+await createUser('staff', '123', 'staff');
+await createUser('instructor', '123', 'instructor');
+await createUser('dean', '123', 'dean');
 
 
 const LISTENING_PORT = PORT || 3000;
