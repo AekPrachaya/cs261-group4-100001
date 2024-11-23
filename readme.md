@@ -72,6 +72,11 @@ get current session
 
 POST `/api/petition`
 
+> [!require]
+>
+> - type: String {add/remove}
+> - content: Object {petition}
+
 > [!return]
 >
 > Success //contain inserted petition data
@@ -81,6 +86,10 @@ POST `/api/petition`
 > - content: petition_content
 
 GET `api/petition/:id`
+
+> [!require]
+>
+> - id: int {petition id}
 
 > [!return]
 >
@@ -92,6 +101,10 @@ GET `api/petition/:id`
 
 GET `/api/petitions/:student_id`
 
+> [!require]
+>
+> - student_id: int {student id}
+
 > [!return]
 >
 > Success
@@ -102,6 +115,10 @@ GET `/api/petitions/:student_id`
 
 DELETE `/api/petition/:id`
 
+> [!require]
+>
+> - id: int {petition id}
+
 > [!return]
 >
 > - id: petition_id
@@ -109,35 +126,16 @@ DELETE `/api/petition/:id`
 
 PUT `/api/petition`
 
+> [!require]
+>
+> - id: int {petition id}
+> - petition: object {updated petition}
+
 > [!return]
 >
 > - id: petition_id
 > - type: updated_type
 > - content: updated_content
-
-`POST /api/petition/upload`
-
-type: string
-
-content: Petition
-
-`POST /api/petition/get`
-
-id: string
-
-`POST /api/petition/get_all`
-
-student_id: string
-
-`PUT /api/petition/`
-
-id: string (petition_id)
-
-content: Content
-
-`DELETE /api/petition/`
-
-id: string (petition_id)
 
 ### Comment
 
@@ -145,7 +143,7 @@ POST `/api/comment` inserts a new comment to database
 
 > [!require]
 >
-> comment: A string
+> comment: String
 
 > [!return]
 >
