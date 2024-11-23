@@ -1,5 +1,5 @@
 import pg from 'pg'
-import { CREATE_COMMENT_TABLE, CREATE_DOCUMENT_TABLE, CREATE_PETITION_TABLE } from './sql/table.js'
+import { CREATE_USER_TABLE, CREATE_COMMENT_TABLE, CREATE_DOCUMENT_TABLE, CREATE_PETITION_TABLE } from './sql/table.js'
 import { POSTGRESQL_URL } from '../config.js'
 if (!POSTGRESQL_URL) {
     throw new Error('Please set POSTGRESQL_URL environment variable')
@@ -19,5 +19,6 @@ try {
 await POOL.query(CREATE_PETITION_TABLE);
 await POOL.query(CREATE_COMMENT_TABLE);
 await POOL.query(CREATE_DOCUMENT_TABLE);
+await POOL.query(CREATE_USER_TABLE);
 
 export { POOL }

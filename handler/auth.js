@@ -1,4 +1,5 @@
 import express from 'express';
+import { getUser } from '../server/db/user.js';
 
 const router = express.Router();
 
@@ -10,10 +11,26 @@ router.post('/api/login', async (req, res) => {
     }
 
     const { username, password } = req.body;
+
     // Validate request body
     if (!username || !password) {
         return res.status(400).json({ error: 'Username and password are required' });
     }
+
+    // WARNING: This is for development only. Remove this in production
+    const testUser = ['advisor', 'staff', 'instructor', 'dean', 'test']
+
+    if (testUser.includes(username)) {
+        try {
+            const user = await getUser(username, password)
+            req.session.user = user;
+            return res.redirect('/petition');
+        } catch (error) {
+            console.error("Fetch error:", error);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+    }
+
 
     try {
         const response = await fetch('https://restapi.tu.ac.th/api/v1/auth/Ad/verify', {

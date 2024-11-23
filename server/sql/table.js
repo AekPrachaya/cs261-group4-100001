@@ -32,3 +32,10 @@ export const CREATE_DOCUMENT_TABLE = `CREATE TABLE IF NOT EXISTS documents (
     petition_id UUID NOT NULL REFERENCES petitions(id) ON DELETE CASCADE,
     public_id TEXT NOT NULL
 )`
+
+export const CREATE_USER_TABLE = `CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL CHECK (role IN ('advisor', 'staff', 'instructor', 'dean'))
+)`
