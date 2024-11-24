@@ -28,9 +28,15 @@
                     <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
-                <a href="/profile">
-                    <img src="../img/CogOutline.png" alt="gear_img">
+                <a href="#">
+                    <img src="../img/CogOutline.png" alt="gear_img" id="gearIcon">
                 </a>
+                <!-- Popup -->
+                <div id="popupMenu" class="popup hidden">
+                    <button id="profileButton" class="popup-btn profile-btn">Profile</button>
+                    <hr class="divider">
+                    <button id="logoutButton" class="popup-btn logout-btn">Logout</button>
+                </div>
             </footer>
         </aside>
         <div class="main-container">

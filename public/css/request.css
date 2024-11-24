@@ -161,6 +161,52 @@ textarea.form-control {
     opacity: 0.9;
 }
 
+/* Pop up */
+.popup {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    z-index: 100;
+  }
+  
+  /* ซ่อนป๊อปอัพ */
+  .hidden {
+    display: none;
+  }
+  
+  /* ปุ่มในป๊อปอัพ */
+  .popup-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  /* สไตล์สำหรับปุ่ม Profile */
+  .profile-btn {
+    color: black;
+  }
+  
+  /* สไตล์สำหรับปุ่ม Logout */
+  .logout-btn {
+    color: #F26868;
+  }
+  
+  /* เส้นแบ่งระหว่างปุ่ม */
+  .divider {
+    margin: 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
 @media (max-width: 768px) {
     .form-row {
         flex-direction: column;
