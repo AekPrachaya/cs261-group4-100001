@@ -47,6 +47,6 @@ profileBtn.addEventListener("click", () => {
 
 logoutBtn.addEventListener("click", async () => {
     const logoutData = await fetch("/api/logout");
-
+    sessionStorage.clear(); //clear data ที่เก็บไว้ใน session
     window.location.href = logoutData.url;
 });
