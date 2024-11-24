@@ -104,12 +104,7 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
     // If validation passes, proceed with form submission
     if (isValid) {
         console.log("Form is valid, proceeding with submission...");
-        try {
-            await submitPetition(formData);
-            showPopup(saveRequestPopup);
-        } catch (e) {
-            console.log(e);
-        }
+        submitPetition(formData);
     }
 });
 
@@ -289,7 +284,7 @@ async function submitPetition(formData) {
                     console.error('Failed to submit files:', await fileResponse.json());
                 }
             }
-
+            showPopup(saveRequestPopup);
             return petitionResponse;
 
         } else {
@@ -325,38 +320,96 @@ attachFileBtn.addEventListener('click', () => {
 
 
 // อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
-const saveDraftButton = document.getElementById('btnSaveDraft');
-const cancelButton = document.getElementById('btnCancel');
-const saveRequestButton = document.getElementById('btnSaveRequest');
-
 const saveDraftPopup = document.getElementById('saveDraftPopup');
 const cancelPopup = document.getElementById('cancelPopup');
 const saveRequestPopup = document.getElementById('saveRequestPopup');
 
-// ฟังก์ชันเปิดและปิด Popup
-function showPopup(popup) {
-    popup.classList.add('active'); // เพิ่มคลาส active เพื่อแสดง Popup
-    setTimeout(() => {
-        popup.classList.remove('active'); // ลบคลาส active เพื่อซ่อน Popup หลัง 3 วินาที
-    }, 3000);
+function hideAllPopups() {
+    const popups = [saveDraftPopup, cancelPopup, saveRequestPopup];
+
+    for (const popup of popups) {
+        popup.style.display = "none";
+    }
 }
 
-// กดปุ่ม "บันทึกแบบร่าง"
-saveDraftButton.addEventListener('click', () => {
-    showPopup(saveDraftPopup);
-});
-
-// กดปุ่ม "ยกเลิกสำเร็จ"
-cancelButton.addEventListener('click', () => {
-    showPopup(cancelPopup);
-});
-
-// กดปุ่ม "ส่งคำร้อง"
-// saveRequestButton.addEventListener('click', () => {
-//     showPopup(saveRequestPopup);
-// });
+// ฟังก์ชันเปิดและปิด Popup
+function showPopup(popup) {
+    hideAllPopups();
+    popup.style.display = "block";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 3000); // Hide the popup after 3 seconds
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     applyResetListeners();
     displayUserInformation();
+
+        // Handle other actions like save draft or cancel
+        const btnSaveDraft = document.getElementById("btnSaveDraft");
+        const btnCancel = document.getElementById("btnCancel");
+        const form = document.getElementById("petitionForm");
+    
+        if (btnSaveDraft) {
+            btnSaveDraft.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                showPopup(saveDraftPopup);
+            });
+        }
+    
+        if (btnCancel && form) {
+            btnCancel.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+    
+                form.reset();
+                const clearError = () => {
+                    const invalidFields = document.querySelectorAll(".error-border");
+    
+                    for (const invalidField of invalidFields) {
+                        invalidField.classList.remove("error-border");
+                    }
+                };
+                clearError();
+                const checkboxes = form.querySelectorAll(
+                    'input[type="checkbox"], input[type="radio"]',
+                );
+    
+                for (const checkbox of checkboxes) {
+                    checkbox.checked = false;
+                }
+    
+                for (const checkbox of petitionTypeCheckboxes) {
+                    checkbox.checked = false;
+                    checkbox.classList.remove("checked-checkbox");
+                    checkbox.classList.remove("disabled-checkbox");
+                    checkbox.removeAttribute("data-disabled");
+                }
+                showPopup(cancelPopup);
+            });
+        }
+    
+        // Prevent popups from closing when clicked inside
+        for (popup of [saveDraftPopup, cancelPopup, saveRequestPopup]) {
+            popup.addEventListener("click", (event) => {
+                event.stopPropagation();
+            });
+        }
+    
+        document.addEventListener("click", hideAllPopups);
+    
+        const viewStatusButton = document.getElementById("viewStatus");
+    
+        if (viewStatusButton) {
+            viewStatusButton.addEventListener("click", (event) => {
+                event.preventDefault();
+                event.stopPropagation();
+    
+                hideAllPopups();
+    
+                // Redirect
+                window.location.href = "/petition";
+            });
+        }
 });
