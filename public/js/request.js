@@ -108,7 +108,6 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
     }
 });
 
-//reset error borders
 const resetErrorBorders = () => {
     document.querySelectorAll(".error-border").forEach((element) => {
         element.classList.remove("error-border");
@@ -125,7 +124,6 @@ const markPetitionTypeError = () => {
 
 // Apply event listeners to form fields and checkboxes for real-time reset
 const applyResetListeners = () => {
-    // Add listeners to all input fields
     document.querySelectorAll("input, textarea, select").forEach((field) => {
         field.addEventListener("focus", () => {
             field.classList.remove("error-border");
@@ -134,7 +132,6 @@ const applyResetListeners = () => {
 
     petitionTypeCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
-            // Remove error border on this checkbox
             checkbox.classList.remove("error-border");
 
             if (checkbox.checked) {
@@ -157,7 +154,6 @@ const applyResetListeners = () => {
         });
     });
 };
-
 
 // Get all the petitiontype checkboxes
 const petitionTypeCheckboxes = document.querySelectorAll('.petition-type-checkbox');
@@ -281,7 +277,7 @@ async function submitPetition(formData) {
                 console.error('Failed to submit files:', await fileResponse.json());
             }
         }
-
+        showPopup(saveRequestPopup);
         } else {
             const errorData = await petitionResponse.json();
             console.error('Failed to submit petition:', errorData);
@@ -313,40 +309,67 @@ attachFileBtn.addEventListener('click', () => {
     fileInput.click();
 });
 
+const saveDraftPopup = document.getElementById("saveDraftPopup");
+const cancelPopup = document.getElementById("cancelPopup");
+const saveRequestPopup = document.getElementById("saveRequestPopup");
 
-// อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
-const saveDraftButton = document.getElementById('btnSaveDraft');
-const cancelButton = document.getElementById('btnCancel');
-const saveRequestButton = document.getElementById('btnSaveRequest');
-
-const saveDraftPopup = document.getElementById('saveDraftPopup');
-const cancelPopup = document.getElementById('cancelPopup');
-const saveRequestPopup = document.getElementById('saveRequestPopup');
-
-// ฟังก์ชันเปิดและปิด Popup
-function showPopup(popup) {
-    popup.classList.add('active'); // เพิ่มคลาส active เพื่อแสดง Popup
-    setTimeout(() => {
-        popup.classList.remove('active'); // ลบคลาส active เพื่อซ่อน Popup หลัง 3 วินาที
-    }, 3000);
+function hideAllPopups() {
+    const popups = [saveDraftPopup, cancelPopup, saveRequestPopup];
+    popups.forEach(popup => (popup.style.display = "none"));
 }
 
-// กดปุ่ม "บันทึกแบบร่าง"
-saveDraftButton.addEventListener('click', () => {
-    showPopup(saveDraftPopup);
-});
-
-// กดปุ่ม "ยกเลิกสำเร็จ"
-cancelButton.addEventListener('click', () => {
-    showPopup(cancelPopup);
-});
-
-// กดปุ่ม "ส่งคำร้อง"
-saveRequestButton.addEventListener('click', () => {
-    showPopup(saveRequestPopup);
-});
+function showPopup(popup) {
+    hideAllPopups();
+    popup.style.display = "block";
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 3000); // Hide the popup after 3 seconds
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     applyResetListeners();
     displayUserInformation();
+
+    // Handle other actions like save draft or cancel
+    const btnSaveDraft = document.getElementById("btnSaveDraft");
+    const btnCancel = document.getElementById("btnCancel");
+
+    if (btnSaveDraft) {
+        btnSaveDraft.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            showPopup(saveDraftPopup);
+        });
+    }
+
+    if (btnCancel) {
+        btnCancel.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            showPopup(cancelPopup);
+        });
+    }
+ 
+    // Prevent popups from closing when clicked inside
+    [saveDraftPopup, cancelPopup, saveRequestPopup].forEach((popup) => {
+        popup.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+    });
+ 
+     document.addEventListener("click", hideAllPopups);
+
+    const viewStatusButton = document.getElementById("viewStatus");
+
+    if (viewStatusButton) {
+        viewDraftButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+           
+            hideAllPopups();
+
+            // Redirect
+            window.location.href = '/petition';
+        });
+    }
 });
