@@ -54,7 +54,7 @@ app.get('/', (_, res) => {
 })
 app.use(isAuthenticated);
 
-app.get('/status', (_, res) => {
+app.get('/petition', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'status.html'));
 })
 

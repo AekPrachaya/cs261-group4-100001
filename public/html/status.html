@@ -7,28 +7,34 @@
     <title>TU Petition</title>
     <link rel="stylesheet" href="../css/status.css">
     <link rel="stylesheet" href="../css/nav.css">
- </head>
+</head>
 
 <body>
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="logo">
-                <img src="../img/TUlogo.png" alt="TU Logo" class="tu-logo">
-                <span class="petition-title">TU Petition</span>
+            <div>
+                <div class="logo">
+                    <img src="../img/TUlogo.png" alt="TU Logo">
+                    <span class="Petition">TU Petition</span>
+                </div>
+                <ul class="menu">
+                    <li><a href="request">ยื่นคำร้อง</a></li>
+                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                </ul>
             </div>
-            <ul class="menu">
-                <li><a href="request">ยื่นคำร้อง</a></li>
-                <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
-            </ul>
             <footer class="user-info">
                 <div>
                     <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
-                <a href="/profile">
-                    <img src="../img/CogOutline.png" alt="gear_img">
-                </a>
+                <div>
+                    <div class="pop-up">
+                        <button id="pop-up-profile">Profile</button>
+                        <button id="pop-up-logout">Logout</button>
+                    </div>
+                    <img src="../img/CogOutline.png" alt="gear_img" id="pop-up-icon">
+                </div>
             </footer>
         </aside>
 

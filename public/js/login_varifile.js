@@ -74,4 +74,5 @@ form.addEventListener("submit", async function (event) {
     //     localStorage.setItem("user", JSON.stringify(json.user));// set ข้อมูล user ไว้ที่ 
     //     window.location.href = json.redirectTo; //redirect ไปหน้า profile
     // }
+
 });

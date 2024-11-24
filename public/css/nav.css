@@ -22,18 +22,21 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 500px;
-    height: auto;
+    height: 95vh;
     /* ให้ขนาดสูงตามเนื้อหา */
     background-color: #ffffff;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
+    /* overflow-y: auto; */
     margin-top: 30px;
 
-    position: relative;
+    position: sticky;
+    top: 60px;
+
     /* เว้นระยะห่างด้านบน */
 }
+
 
 .main-container {
     flex-grow: 1;
@@ -107,13 +110,13 @@ body {
 }
 
 .user-info {
-    position: sticky;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
     padding-top: 40px;
     border-top: 1px solid rgb(198, 189, 189);
+    position: relative;
 
 }
 
@@ -122,12 +125,77 @@ body {
     margin: 2px;
 }
 
+#user-info-name {
+    color: #1D1D1F;
+}
+
 #user-info-id {
     color: #86868A;
 }
 
 .user-info a {
     align-self: center;
+}
+
+/* pop up profile and logout button */
+
+.pop-up {
+    display: none;
+    width: 80px;
+    flex-direction: column;
+    position: absolute;
+
+    top: 1%;
+    transform: translateX(10%) translateY(-30%);
+
+}
+
+.pop-up button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    background-color: white;
+    cursor: pointer;
+    height: 30px;
+}
+
+.pop-up button:hover {
+    background-color: #86868A;
+}
+
+#pop-up-profile {
+    color: #625CFF;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    box-shadow: 0 4px 8px #0000004a;
+}
+
+#pop-up-profile:hover {
+    background-color: #625CFF;
+    color: white;
+}
+
+#pop-up-logout {
+    color: red;
+    border-radius: 0 0 5px 5px;
+    border: none;
+    box-shadow: 0 4px 8px #0000004a;
+
+}
+
+#pop-up-logout:hover {
+    background-color: red;
+    color: white;
+}
+
+#pop-up-icon {
+    cursor: pointer;
+    transition: transform 1s;
+}
+
+.pop-up-icon-spin {
+    transform: rotate(180deg);
 }
 
 

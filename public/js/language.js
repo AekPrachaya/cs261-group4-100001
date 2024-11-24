@@ -1,15 +1,15 @@
 let language = {
     en: {
         // language of login page(en)
-        login:{
+        login: {
             //for welcome section
-            welcome:{
+            welcome: {
                 header: "Welcome to petition submission service",
                 paragrraph: "Fill in username and password\nto enter the petition",
             },
 
             //for form section
-            form:{
+            form: {
                 header: "Login petition submission"
             }
         },
@@ -19,17 +19,17 @@ let language = {
             header: "Thammasat University",
 
             //for anchor link section
-            link:{
+            link: {
                 personalInfo: "Personal information",
                 requestForm: "Request form",
                 requestStatus: "Request status",
                 logout: "Logout"
             }
-           
+
         },
 
         // language of request form page(en)
-        request:{
+        request: {
             header: "Petition Online",
             form: {
 
@@ -45,7 +45,7 @@ let language = {
 
                     firstName: "First name",
                     LastName: "Last name",
-                    
+
                     educationYear: "Year",
 
                     faculty: {
@@ -86,10 +86,10 @@ let language = {
 
                     phone: "Telephone number"
                 },
-                
+
                 //for addrress section
-                location:{
-                    header:"Location",
+                location: {
+                    header: "Location",
 
                     houseNo: "House no.",
                     villageNo: "Village no.",
@@ -100,8 +100,8 @@ let language = {
                 },
 
                 //for subject section
-                courses:{
-                    header:"Courses to add/drop",
+                courses: {
+                    header: "Courses to add/drop",
 
                     courseId: "Course ID",
                     courseName: "Course Name",
@@ -111,9 +111,9 @@ let language = {
                 },
 
                 //for form button
-                button:{
-                    draft:"Draft",
-                    cancel:"Cancel",
+                button: {
+                    draft: "Draft",
+                    cancel: "Cancel",
                     next: "Next"
                 }
             }
@@ -121,7 +121,7 @@ let language = {
 
         pettition: {
             header: "Check Status",
-            
+
             //status of request
             status: {
                 approved: "Approved",
@@ -136,16 +136,16 @@ let language = {
             header: "User information",
 
             //for user information section
-            personalInfo:{
+            personalInfo: {
                 name: "Name",
                 studentId: "Student ID",
                 faculty: "Faculty",
-                major: "Major", 
+                major: "Major",
             },
 
             //for request status section
-            requestInfo:{
-                header:"My Petition",
+            requestInfo: {
+                header: "My Petition",
             }
         }
     },
@@ -153,15 +153,15 @@ let language = {
 
     th: {
         // language of login page(en)
-        login:{
+        login: {
             //for welcome section
-            welcome:{
+            welcome: {
                 header: "ยินดีต้อนรับสู่ระบบยื่นคำร้อง",
                 paragrraph: "กรุณากรอก Username และ Password\nเพื่อเข้าสู่ระบบยื่นคำร้อง",
             },
 
             //for form section
-            form:{
+            form: {
                 header: "เข้าสู่ระบบยื่นคำร้อง"
             }
         },
@@ -171,17 +171,17 @@ let language = {
             header: "มหาวิทยาลัยธรรมศาสตร์",
 
             //for anchor link section
-            link:{
+            link: {
                 personalInfo: "ข้อมูลส่วนตัว",
                 requestForm: "เขียนคำร้อง",
                 requestStatus: "ตรวจสอบสถานะคำร้อง",
                 logout: "ออกจากระบบ"
             }
-           
+
         },
 
         // language of request form page(en)
-        request:{
+        request: {
             header: "เขียนคำร้องออนไลน์",
             form: {
 
@@ -197,7 +197,7 @@ let language = {
 
                     firstName: "ชื่อ",
                     LastName: "นามสกุล",
-                    
+
                     educationYear: "ปีการศึกษา",
 
                     faculty: {
@@ -238,10 +238,10 @@ let language = {
 
                     phone: "เบอร์โทรศัพท์ที่ติดต่อ"
                 },
-                
+
                 //for addrress section
-                location:{
-                    header:"ที่อยู่อาศัย",
+                location: {
+                    header: "ที่อยู่อาศัย",
 
                     houseNo: "บ้านเลขที่",
                     villageNo: "หมู่",
@@ -252,8 +252,8 @@ let language = {
                 },
 
                 //for subject section
-                courses:{
-                    header:"วิชาที่ต้องการเพิ่ม/ถอน",
+                courses: {
+                    header: "วิชาที่ต้องการเพิ่ม/ถอน",
 
                     courseId: "รหัสวิชา",
                     courseName: "ชื่อวิชา",
@@ -263,9 +263,9 @@ let language = {
                 },
 
                 //for form button
-                button:{
-                    draft:"บันทึกแบบร่าง",
-                    cancel:"ยกเลิก",
+                button: {
+                    draft: "บันทึกแบบร่าง",
+                    cancel: "ยกเลิก",
                     next: "ถัดไป"
                 }
             }
@@ -273,7 +273,7 @@ let language = {
 
         pettition: {
             header: "สถานะคำร้อง",
-            
+
             //status of request
             status: {
                 approved: "อนุมัติแล้ว",
@@ -288,18 +288,18 @@ let language = {
             header: "ข้อมูลของผู้ใช้งาน",
 
             //for user information section
-            personalInfo:{
+            personalInfo: {
                 name: "ชื่อ นามสกุล",
                 studentId: "รหัสนักศึกษา",
                 faculty: "คณะที่กำลังศึกษา",
-                major: "สาขาที่กำลังศึกษา", 
+                major: "สาขาที่กำลังศึกษา",
             },
 
             //for request status section
-            requestInfo:{
-                header:"คำร้องของฉัน",
+            requestInfo: {
+                header: "คำร้องของฉัน",
             }
         }
     }
-    
+
 };
