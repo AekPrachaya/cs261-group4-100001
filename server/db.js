@@ -4,6 +4,7 @@ import {
 	CREATE_COMMENT_TABLE,
 	CREATE_DOCUMENT_TABLE,
 	CREATE_PETITION_TABLE,
+	CREATE_APPROVAL_TABLE,
 } from "./sql/table.js";
 import { POSTGRESQL_URL } from "../config.js";
 if (!POSTGRESQL_URL) {
@@ -25,5 +26,6 @@ await POOL.query(CREATE_PETITION_TABLE);
 await POOL.query(CREATE_COMMENT_TABLE);
 await POOL.query(CREATE_DOCUMENT_TABLE);
 await POOL.query(CREATE_USER_TABLE);
+await POOL.query(CREATE_APPROVAL_TABLE);
 
 export { POOL };
