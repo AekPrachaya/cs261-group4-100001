@@ -79,10 +79,6 @@ function updatePetitionStatus(statusLabel, petitions) {
         petitions.forEach(petition => {
             const petitionCard = document.createElement('div');
             petitionCard.classList.add('request-card');
-            // petitionCard.id = petition.id;
-        for (const petition of petitions) {
-            const petitionCard = document.createElement("div");
-            petitionCard.classList.add("request-card");
 
             petitionCard.innerHTML = `
                 <div class="request-content">
@@ -107,7 +103,7 @@ function updatePetitionStatus(statusLabel, petitions) {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            id: 6609681249,
+                            id: petition.id,
                         })
                     });
                     console.log(deleteRes.json());
@@ -115,10 +111,9 @@ function updatePetitionStatus(statusLabel, petitions) {
                 } catch (e) {
                     console.log(e);
                 }
-            })
-
+            });
             container.appendChild(petitionCard);
-        }
+        });
     } else {
         container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
     }
