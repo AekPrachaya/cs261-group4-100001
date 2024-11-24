@@ -115,6 +115,40 @@ select.form-control {
     cursor: pointer;
 }
 
+/* Default styling for checkboxes */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    appearance: none;
+    border-radius: 5px;
+    background-color: white;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Checked checkbox style */
+input[type="checkbox"].checked-checkbox {
+    background-color: blue;
+    border-color: rgb(0, 0, 206);
+}
+
+/* Visually disable checkboxes */
+input[type="checkbox"].disabled-checkbox {
+    background-color: lightgray;
+    border-color: gray;
+    pointer-events: all; /* Allow clicks on disabled checkboxes */
+}
+
+/* Error border for when a disabled checkbox is clicked */
+input[type="checkbox"].error-border {
+    border-color: red;
+}
+
+.error-border {
+    border: 2px solid red;
+    outline: none;
+}
+
 textarea.form-control {
     resize: vertical;
     min-height: 120px;
@@ -175,4 +209,5 @@ textarea.form-control {
         width: 100%;
     }
 }
+
 

@@ -81,8 +81,8 @@ function updatePetitionStatus(statusLabel, petitions) {
 
             petitionCard.innerHTML = `
                 <div class="request-content">
-                    <p class="request-title">${petition.type}</p>
-                    <p class="request-status">สถานะ: ${petition.status}</p>
+                    <p class="request-title">${petition.content.topic}</p>
+                    <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
                 </div>
                 <div class="request-actions">
                     <button class="edit-btn">แก้ไข</button>

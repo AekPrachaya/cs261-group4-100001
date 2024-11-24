@@ -1,12 +1,219 @@
 const fileUpload = document.getElementById('fileInput');
 
-document.getElementById("petitionForm").addEventListener("submit", async function(event) {
+document.getElementById("petitionForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const formData = new FormData(this);
 
+    const selectedPetitionType = formData.getAll("petitionType");
+    const petitionDefault = {
+        phone_no: formData.get("phone_no"),
+        advisor: formData.get("advisor"),
+        location: {
+            houseNumber: formData.get("houseNumber"),
+            village: formData.get("village"),
+            subDistrict: formData.get("subDistrict"),
+            district: formData.get("district"),
+            province: formData.get("province"),
+            postal_code: formData.get("postal_code"),
+        },
+        topic: formData.get("topic"),
+        reason: formData.get("reason"),
+    };
+    
+    // Helper function to mark a field as invalid
+    const markInvalid = (fieldName) => {
+        const field = document.querySelector(`[name="${fieldName}"]`);
+        if (field) {
+            field.classList.add("error-border");
+        }
+    };
+
+    const petitionType = selectedPetitionType[0];
+    
+    let isValid = true;
+    
+    // Ensure only one petition type is checked
+    if (selectedPetitionType.length !== 1) {
+        alert("กรุณาเลือกประเภทคำร้องเพียงหนึ่งประเภท");
+        markPetitionTypeError();
+    }
+
+    if (petitionType === "add/remove" || petitionType === "drop") {
+        // Validate add/remove or drop-specific fields
+        const year = formData.get("year");
+        const semester = formData.get("semester");
+        const courseId = formData.get("course_id");
+        const section = formData.get("section");
+        const courseName = formData.get("courseName");
+
+        if (!year) {
+            isValid = false;
+            markInvalid("year");
+        }
+        if (!semester) {
+            isValid = false;
+            markInvalid("semester");
+        }
+        if (!courseId) {
+            isValid = false;
+            markInvalid("course_id");
+        }
+        if (!section) {
+            isValid = false;
+            markInvalid("section");
+        }
+        if (!courseName) {
+            isValid = false;
+            markInvalid("courseName");
+        }
+        if (!isValid) {
+            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
+        }
+    } else if (petitionType === "resign") {
+        // Validate resign-specific fields
+        const year = formData.get("Year");
+        const semester = formData.get("semester");
+
+        if (!year) {
+            isValid = false;
+            markInvalid("Year");
+        }
+        if (!semester) {
+            isValid = false;
+            markInvalid("semester");
+        }
+        if (!isValid) {
+            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการลาออก");
+        }
+    }
+
+    // Validate petition default fields
+    for (const [key, value] of Object.entries(petitionDefault)) {
+        if (key === "location") {
+            // Check each property inside location object
+            for (const [locationKey, locationValue] of Object.entries(value)) {
+                if (!locationValue) {
+                    isValid = false;
+                    markInvalid(locationKey);
+                }
+            }
+        } else if (!value) {
+            isValid = false;
+            markInvalid(key);
+        }
+    }
+
+    // If validation passes, proceed with form submission
+    if (isValid) {
+        console.log("Form is valid, proceeding with submission...");
+        submitPetition(formData);
+    }
+});
+
+//reset error borders
+const resetErrorBorders = () => {
+    document.querySelectorAll(".error-border").forEach((element) => {
+        element.classList.remove("error-border");
+    });
+};
+
+// Helper function to mark petition type as invalid
+const markPetitionTypeError = () => {
+    const petitionTypeInputs = document.querySelectorAll('input[name="petitionType"]');
+    petitionTypeInputs.forEach((input) => {
+            input.classList.add("error-border");
+    });
+};
+
+// Apply event listeners to form fields and checkboxes for real-time reset
+const applyResetListeners = () => {
+    // Add listeners to all input fields
+    document.querySelectorAll("input, textarea, select").forEach((field) => {
+        field.addEventListener("focus", () => {
+            field.classList.remove("error-border");
+        });
+    });
+
+    petitionTypeCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener("change", () => {
+            // Remove error border on this checkbox
+            checkbox.classList.remove("error-border");
+
+            if (checkbox.checked) {
+                // Uncheck all other checkboxes
+                petitionTypeCheckboxes.forEach((otherCheckbox) => {
+                    if (otherCheckbox !== checkbox) {
+                        otherCheckbox.checked = false;
+                        otherCheckbox.classList.remove("error-border");
+                    }
+                });
+            }
+        });
+
+        checkbox.addEventListener("click", function (event) {
+            if (this.getAttribute("data-disabled") === "true") {
+                event.preventDefault(); // Prevent the checkbox from being checked
+                this.classList.add("error-border");
+
+                // Optional: Flash red border briefly
+                setTimeout(() => this.classList.remove("error-border"), 500);
+            }
+        });
+    });
+};
+
+
+// Get all the petition type checkboxes
+const petitionTypeCheckboxes = document.querySelectorAll('.petition-type-checkbox');
+
+petitionTypeCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function () {
+        if (this.checked) {
+            // Disable all other checkboxes
+            petitionTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.classList.add('disabled-checkbox'); // Add disabled style
+                    otherCheckbox.setAttribute('data-disabled', 'true'); // Mark as disabled
+                }
+            });
+
+            // Add a checked style to the selected checkbox
+            this.classList.add('checked-checkbox');
+        } else {
+            // If this checkbox is unchecked, re-enable all checkboxes if no other is selected
+            const anyChecked = Array.from(petitionTypeCheckboxes).some(cb => cb.checked);
+
+            if (!anyChecked) {
+                petitionTypeCheckboxes.forEach(otherCheckbox => {
+                    otherCheckbox.classList.remove('disabled-checkbox'); // Remove disabled style
+                    otherCheckbox.removeAttribute('data-disabled'); // Remove disabled marker
+                });
+            }
+
+            // Remove the checked style
+            this.classList.remove('checked-checkbox');
+        }
+    });
+
+    // Handle clicks on disabled checkboxes
+    checkbox.addEventListener('click', function (event) {
+        if (this.getAttribute('data-disabled') === 'true') {
+            event.preventDefault(); // Prevent the checkbox from being checked
+
+            // Add a red border to indicate an error
+            this.classList.add('error-border');
+
+            // Remove the red border after a short delay (optional)
+            setTimeout(() => {
+                this.classList.remove('error-border');
+            }, 500);
+        }
+    });
+});
+
+async function submitPetition(formData) {
     try {
-        // Get user information
         const info = await getUserInformation();
 
         // Construct petition data
@@ -31,7 +238,7 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
                     sub_district: formData.get("subDistrict"),
                     district: formData.get("district"),
                     province: formData.get("province"),
-                    postal_code: formData.get("postal_code")
+                    postal_code: formData.get("postal_code"),
                 },
                 phone_no: formData.get("phone_no"),
                 telephone_no: formData.get("telephone_no"),
@@ -45,11 +252,11 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
                         date: new Date().toISOString(),
                         credit: formData.get("credit"),
                         lecturer: formData.get("lecturer"),
-                        approve_by: formData.get("approve_by")
-                    }
+                        approve_by: formData.get("approve_by"),
+                    },
                 ],
                 reason: formData.get("reason"),
-            }
+            },
         };
 
         // Send petition data to the server
@@ -97,7 +304,7 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
         console.error('Error occurred:', error);
         alert('There was an error submitting your petition. Please try again later.');
     }
-});
+};
 
 async function displayUserInformation() {
     const id = document.querySelector("#student-info-id");
@@ -127,4 +334,7 @@ fileInput.addEventListener('change', () => {
     fileNameSpan.textContent = fileName ? `ไฟล์ที่เลือก: ${fileName}` : '';
 });
 
-document.addEventListener("DOMContentLoaded", displayUserInformation);
+document.addEventListener("DOMContentLoaded", () => {
+    applyResetListeners();
+    displayUserInformation();
+});
