@@ -28,9 +28,15 @@
                     <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
-                <a href="/profile">
-                    <img src="../img/CogOutline.png" alt="gear_img">
+                <a href="#">
+                    <img src="../img/CogOutline.png" alt="gear_img" id="gearIcon">
                 </a>
+                <!-- Popup -->
+                <div id="popupMenu" class="popup hidden">
+                    <button id="profileButton" class="popup-btn profile-btn">Profile</button>
+                    <hr class="divider">
+                    <button id="logoutButton" class="popup-btn logout-btn">Logout</button>
+                </div>
             </footer>
         </aside>
         <div class="main-container">
@@ -193,11 +199,38 @@
                     </div>
 
                     <div class="button-group">
-                        <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
-                        <button type="button" class="btn btn-outline">บันทึกแบบร่าง</button>
-                        <button type="button" class="btn btn-danger">ยกเลิก</button>
-                        <button type="submit" class="btn btn-success">บันทึกคำร้อง</button>
+                        <button type="button"  class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
+                        <button type="button" id="btnSaveDraft" class="btn btn-outline">บันทึกแบบร่าง</button>
+                        <button type="button" id="btnCancel" class="btn btn-danger">ยกเลิก</button>
+                        <button type="submit" id="btnSaveRequest" class="btn btn-success">บันทึกคำร้อง</button>
                     </div>
+
+                    <!-- Popup: Save Draft -->
+                    <div id="saveDraftPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">บันทึกแบบร่างแล้ว</p>
+                            <button class="view-btn">ดูแบบร่างของฉัน</button>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Cancel Success -->
+                    <div id="cancelPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ยกเลิกสำเร็จ</p>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Save Request -->
+                    <div id="saveRequestPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ส่งคำร้องแล้ว</p>
+                            <button class="view-btn">ดูคำร้องของฉัน</button>
+                        </div>
+                    </div>
+
                 </form>
             </main>
         </div>
