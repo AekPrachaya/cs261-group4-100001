@@ -21,7 +21,7 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
         reason: formData.get("reason"),
     };
     
-    // Helper function to mark a field as invalid
+    // Mark a field as invalid
     const markInvalid = (fieldName) => {
         const field = document.querySelector(`[name="${fieldName}"]`);
         if (field) {
@@ -35,12 +35,10 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
     
     // Ensure only one petition type is checked
     if (selectedPetitionType.length !== 1) {
-        alert("กรุณาเลือกประเภทคำร้องเพียงหนึ่งประเภท");
         markPetitionTypeError();
     }
 
     if (petitionType === "add/remove" || petitionType === "drop") {
-        // Validate add/remove or drop-specific fields
         const year = formData.get("year");
         const semester = formData.get("semester");
         const courseId = formData.get("course_id");
@@ -71,7 +69,6 @@ document.getElementById("petitionForm").addEventListener("submit", async functio
             alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
         }
     } else if (petitionType === "resign") {
-        // Validate resign-specific fields
         const year = formData.get("Year");
         const semester = formData.get("semester");
 
@@ -118,7 +115,7 @@ const resetErrorBorders = () => {
     });
 };
 
-// Helper function to mark petition type as invalid
+// mark petitiontype as invalid
 const markPetitionTypeError = () => {
     const petitionTypeInputs = document.querySelectorAll('input[name="petitionType"]');
     petitionTypeInputs.forEach((input) => {
@@ -153,18 +150,16 @@ const applyResetListeners = () => {
 
         checkbox.addEventListener("click", function (event) {
             if (this.getAttribute("data-disabled") === "true") {
-                event.preventDefault(); // Prevent the checkbox from being checked
+                event.preventDefault();
                 this.classList.add("error-border");
 
-                // Optional: Flash red border briefly
-                setTimeout(() => this.classList.remove("error-border"), 500);
             }
         });
     });
 };
 
 
-// Get all the petition type checkboxes
+// Get all the petitiontype checkboxes
 const petitionTypeCheckboxes = document.querySelectorAll('.petition-type-checkbox');
 
 petitionTypeCheckboxes.forEach(checkbox => {
@@ -173,38 +168,32 @@ petitionTypeCheckboxes.forEach(checkbox => {
             // Disable all other checkboxes
             petitionTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
-                    otherCheckbox.classList.add('disabled-checkbox'); // Add disabled style
-                    otherCheckbox.setAttribute('data-disabled', 'true'); // Mark as disabled
+                    otherCheckbox.classList.add('disabled-checkbox');
+                    otherCheckbox.setAttribute('data-disabled', 'true');
                 }
             });
 
-            // Add a checked style to the selected checkbox
             this.classList.add('checked-checkbox');
         } else {
-            // If this checkbox is unchecked, re-enable all checkboxes if no other is selected
             const anyChecked = Array.from(petitionTypeCheckboxes).some(cb => cb.checked);
 
             if (!anyChecked) {
                 petitionTypeCheckboxes.forEach(otherCheckbox => {
-                    otherCheckbox.classList.remove('disabled-checkbox'); // Remove disabled style
-                    otherCheckbox.removeAttribute('data-disabled'); // Remove disabled marker
+                    otherCheckbox.classList.remove('disabled-checkbox');
+                    otherCheckbox.removeAttribute('data-disabled');
                 });
             }
 
-            // Remove the checked style
             this.classList.remove('checked-checkbox');
         }
     });
 
-    // Handle clicks on disabled checkboxes
     checkbox.addEventListener('click', function (event) {
         if (this.getAttribute('data-disabled') === 'true') {
-            event.preventDefault(); // Prevent the checkbox from being checked
+            event.preventDefault();
 
-            // Add a red border to indicate an error
             this.classList.add('error-border');
 
-            // Remove the red border after a short delay (optional)
             setTimeout(() => {
                 this.classList.remove('error-border');
             }, 500);
@@ -273,27 +262,25 @@ async function submitPetition(formData) {
 
         if (petitionResponse.ok) {
             const responseData = await petitionResponse.json();
-            const petitionId = responseData.data.id;
+            const petitionId = responseData.data.id; 
+
+        // Check if there's a file to upload
+        if (fileInput.files.length > 0) {
+            const fileData = new FormData();
+            fileData.append('files', fileInput.files[0]); // File from file input
+            fileData.append('petition_id', petitionId);
             
-
-            // Check if there's a file to upload
-            if (fileInput.files.length > 0) {
-                const fileData = new FormData();
-                fileData.append('files', fileInput.files[0]); // File from file input
-                fileData.append('petition_id', petitionId);
-
-                const fileResponse = await fetch('/api/files', {
-                    method: 'POST',
-                    body: fileData
-                });
-
-                if (fileResponse.ok) {
-                    const fileDataResponse = await fileResponse.json();
-                    console.log('Files submitted successfully:', fileDataResponse);
-                } else {
-                    console.error('Failed to submit files:', await fileResponse.json());
-                }
+            const fileResponse = await fetch('/api/files', {
+                method: 'POST',
+                body: fileData
+            });
+            if (fileResponse.ok) {
+                const fileDataResponse = await fileResponse.json();
+                console.log('Files submitted successfully:', fileDataResponse);
+            } else {
+                console.error('Failed to submit files:', await fileResponse.json());
             }
+        }
 
         } else {
             const errorData = await petitionResponse.json();
@@ -318,7 +305,6 @@ async function displayUserInformation() {
     }
 }
 
-// Get the file input and button elements
 const fileInput = document.getElementById('fileInput');
 const attachFileBtn = document.getElementById('attachFileBtn');
 const fileNameSpan = document.getElementById('fileName');
@@ -326,7 +312,6 @@ const fileNameSpan = document.getElementById('fileName');
 attachFileBtn.addEventListener('click', () => {
     fileInput.click();
 });
-
 
 
 // อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
