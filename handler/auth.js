@@ -25,7 +25,7 @@ router.post("/api/login", async (req, res) => {
         try {
             const user = await getUser(username, password);
             req.session.user = user;
-            return res.redirect("/petition");
+            return res.redirect("/advisor");
         } catch (error) {
             return res.status(500).json({ error: "Invalid credentials" });
         }

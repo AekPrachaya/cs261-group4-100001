@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TU Petition Status</title>
+    <link rel="stylesheet" href="../css/status.css">
+    <link rel="stylesheet" href="../css/nav.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <div class="logo">
+                    <img src="../img/TUlogo.png" alt="TU Logo">
+                    <span class="Petition">TU Petition</span>
+                </div>
+                <ul class="menu">
+                    <li><a href="request">ยื่นคำร้อง</a></li>
+                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                </ul>
+            </div>
+            <footer class="user-info">
+                <div>
+                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-id"></p>
+                </div>
+                <div>
+                    <div class="pop-up">
+                        <button id="pop-up-profile">Profile</button>
+                        <button id="pop-up-logout">Logout</button>
+                    </div>
+                    <img src="../img/CogOutline.png" alt="gear_img" id="pop-up-icon">
+                </div>
+            </footer>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h2>คำร้องของฉัน</h2>
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="all">ทั้งหมด</button>
+                <button class="tab-btn" data-tab="in-progress">อยู่ระหว่างดำเนินการ</button>
+                <button class="tab-btn" data-tab="waiting">รอดำเนินการ</button>
+                <button class="tab-btn" data-tab="documents">รอเอกสาร</button>
+                <button class="tab-btn" data-tab="rejected">ปฏิเสธคำร้อง</button>
+                <button class="tab-btn" data-tab="completed">เสร็จสิ้น</button>
+            </div>
+
+            <div class="requests-wrapper">
+                <h3 class="requests-title">คำร้องทั้งหมด</h3>
+                <div class="requests-container">
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script src="../js/nav.js"></script>
+    <script src="../js/status.js"></script>
+</body>
+
+</html>
