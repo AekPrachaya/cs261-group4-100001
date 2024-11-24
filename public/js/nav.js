@@ -26,3 +26,35 @@ async function displayUserInfomation() {
 
 
 document.addEventListener("DOMContentLoaded", displayUserInfomation);
+
+
+
+
+const profileBtn = document.querySelector("#pop-up-profile"); // ปุ่ม pop-up profile
+const logoutBtn = document.querySelector("#pop-up-logout"); // ปุ่ม pop-up logout
+const iconBtn = document.querySelector("#pop-up-icon");// ปุ่ม icon
+const popUp = document.querySelector(".pop-up"); // div ของ pop up
+
+iconBtn.addEventListener('click', () => { // function แสดง pop up หากกดที่ไอคอน   
+    iconBtn.classList.toggle("pop-up-icon-spin");
+    if (popUp.style.display === "flex") {
+        popUp.style.display = "none";
+    } else {
+        popUp.style.display = "flex"
+    }
+})
+
+
+
+profileBtn.addEventListener('click', () => { // function เมื่อกดที่ปุ่ม profile ให้ส่งไปที่หน้า /profile
+    window.location.href = "/profile";
+})
+
+logoutBtn.addEventListener('click', async function () {
+    const logoutData = await fetch("/api/logout");
+
+    window.location.href = logoutData.url;
+
+})
+
+

@@ -28,17 +28,16 @@
                     <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
-                <a href="#">
-                    <img src="../img/CogOutline.png" alt="gear_img" id="gearIcon">
-                </a>
-                <!-- Popup -->
-                <div id="popupMenu" class="popup hidden">
-                    <button id="profileButton" class="popup-btn profile-btn">Profile</button>
-                    <hr class="divider">
-                    <button id="logoutButton" class="popup-btn logout-btn">Logout</button>
+                <div>
+                    <div class="pop-up">
+                        <button id="pop-up-profile">Profile</button>
+                        <button id="pop-up-logout">Logout</button>
+                    </div>
+                    <img src="../img/CogOutline.png" alt="gear_img" id="pop-up-icon">
                 </div>
             </footer>
         </aside>
+
         <div class="main-container">
             <header class="header">
                 <button id="sidebarToggle" class="sidebar-toggle">☰</button>
@@ -96,10 +95,12 @@
                         <label>ข้อมูลคำร้อง</label>
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="add/remove" class="petition-type-checkbox"> เพิ่มรายวิชา
+                                <input type="checkbox" name="petitionType" value="add/remove"
+                                    class="petition-type-checkbox"> เพิ่มรายวิชา
                             </label>
                             <label>
-                                <input type="checkbox" name="petitionType" value="drop" class="petition-type-checkbox"> ถอนรายวิชา
+                                <input type="checkbox" name="petitionType" value="drop" class="petition-type-checkbox">
+                                ถอนรายวิชา
                             </label>
                         </div>
                     </div>
@@ -149,7 +150,8 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="resign" class="petition-type-checkbox"> ลาออก ตั้งแต่
+                                <input type="checkbox" name="petitionType" value="resign"
+                                    class="petition-type-checkbox"> ลาออก ตั้งแต่
                             </label>
                         </div>
                     </div>
@@ -177,7 +179,8 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="other" class="petition-type-checkbox"> อื่น ๆ
+                                <input type="checkbox" name="petitionType" value="other" class="petition-type-checkbox">
+                                อื่น ๆ
                             </label>
                         </div>
                     </div>
@@ -199,7 +202,7 @@
                     </div>
 
                     <div class="button-group">
-                        <button type="button"  class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
+                        <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
                         <button type="button" id="btnSaveDraft" class="btn btn-outline">บันทึกแบบร่าง</button>
                         <button type="button" id="btnCancel" class="btn btn-danger">ยกเลิก</button>
                         <button type="submit" id="btnSaveRequest" class="btn btn-success">บันทึกคำร้อง</button>
