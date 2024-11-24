@@ -128,3 +128,35 @@ fileInput.addEventListener('change', () => {
 });
 
 document.addEventListener("DOMContentLoaded", displayUserInformation);
+
+// อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
+const saveDraftButton = document.getElementById('btnSaveDraft');
+const cancelButton = document.getElementById('btnCancel');
+const saveRequestButton = document.getElementById('btnSaveRequest');
+
+const saveDraftPopup = document.getElementById('saveDraftPopup');
+const cancelPopup = document.getElementById('cancelPopup');
+const saveRequestPopup = document.getElementById('saveRequestPopup');
+
+// ฟังก์ชันเปิดและปิด Popup
+function showPopup(popup) {
+    popup.classList.add('active'); // เพิ่มคลาส active เพื่อแสดง Popup
+    setTimeout(() => {
+        popup.classList.remove('active'); // ลบคลาส active เพื่อซ่อน Popup หลัง 3 วินาที
+    }, 3000);
+}
+
+// กดปุ่ม "บันทึกแบบร่าง"
+saveDraftButton.addEventListener('click', () => {
+    showPopup(saveDraftPopup);
+});
+
+// กดปุ่ม "ยกเลิกสำเร็จ"
+cancelButton.addEventListener('click', () => {
+    showPopup(cancelPopup);
+});
+
+// กดปุ่ม "ส่งคำร้อง"
+saveRequestButton.addEventListener('click', () => {
+    showPopup(saveRequestPopup);
+});

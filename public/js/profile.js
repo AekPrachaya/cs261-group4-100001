@@ -33,3 +33,24 @@ async function updateUserInfomation() { //ใช้แสดงข้อมู�
 
 // เรียกฟังก์ชัน updateUserInformation เมื่อโหลดหน้าเสร็จสมบูรณ์
 document.addEventListener("DOMContentLoaded", updateUserInfomation);
+
+// Elements ใช้เพื่อดูสำหรับตกแต่งCss
+const gearIcon = document.getElementById('gearIcon');
+const popupMenu = document.getElementById('popupMenu');
+
+// เปิด/ปิดป๊อปอัพเมื่อกดไอคอนฟันเฟือง
+gearIcon.addEventListener('click', () => {
+    popupMenu.classList.toggle('hidden');
+});
+
+// ตัวอย่างการใช้งานปุ่ม Profile และ Logout
+const profileButton = document.getElementById('profileButton');
+const logoutButton = document.getElementById('logoutButton');
+
+profileButton.addEventListener('click', () => {
+    alert('คุณเลือก Profile');
+});
+
+logoutButton.addEventListener('click', () => {
+    alert('คุณเลือก Logout');
+});
