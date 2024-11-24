@@ -4,7 +4,7 @@ async function fetchAndUpdate() {
         console.error('User not logged in or missing username');
         return;
     }
-    const id =parseInt(user.username);
+    const id = parseInt(user.username);
 
     await fetch(`/api/petitions/${id}`, {
         method: 'GET',
@@ -78,7 +78,7 @@ function updatePetitionStatus(statusLabel, petitions) {
         petitions.forEach(petition => {
             const petitionCard = document.createElement('div');
             petitionCard.classList.add('request-card');
-
+            // petitionCard.id = petition.id;
             petitionCard.innerHTML = `
                 <div class="request-content">
                     <p class="request-title">${petition.content.topic}</p>
@@ -89,6 +89,28 @@ function updatePetitionStatus(statusLabel, petitions) {
                     <button class="delete-btn">ยกเลิก</button>
                 </div>
             `;
+
+            petitionCard.querySelector(".edit-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
+                sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
+                window.location.href = "/edit"; //ส่งไปหน้าแก้คำร้อง
+            });
+            petitionCard.querySelector(".delete-btn").addEventListener("click", async function () {//function ปุ่มลบคำร้อง
+                try {
+                    const deleteRes = await fetch(`api/petition/${petition.id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: 6609681249,
+                        })
+                    });
+                    console.log(deleteRes.json());
+                    window.location.reload();
+                } catch (e) {
+                    console.log(e);
+                }
+            })
 
             container.appendChild(petitionCard);
         });
@@ -138,3 +160,13 @@ document.querySelectorAll('.tab-btn').forEach(tab => {
 
 // Fetch data when the page loads
 document.addEventListener('DOMContentLoaded', fetchAndUpdate);
+
+
+
+
+
+
+
+
+
+

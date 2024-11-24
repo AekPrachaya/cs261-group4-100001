@@ -66,6 +66,10 @@ app.get('/request', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'request.html'));
 })
 
+app.get('/edit', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'request_edit.html'));
+})
+
 
 const LISTENING_PORT = PORT || 3000;
 app.listen(LISTENING_PORT, () => {
