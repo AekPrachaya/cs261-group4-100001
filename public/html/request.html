@@ -11,16 +11,16 @@
 
 <body>
     <div class="layout">
+        <!-- Sidebar -->
         <aside class="sidebar">
             <div>
-
                 <div class="logo">
                     <img src="../img/TUlogo.png" alt="TU Logo">
                     <span class="Petition">TU Petition</span>
                 </div>
                 <ul class="menu">
-                    <li><a href="#" class="active">ยื่นคำร้อง</a></li>
-                    <li><a href="#">ตรวจสอบสถานะคำร้อง</a></li>
+                    <li><a href="request">ยื่นคำร้อง</a></li>
+                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
                 </ul>
             </div>
             <footer class="user-info">
@@ -28,60 +28,66 @@
                     <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
-                <a href="/profile">
-                    <img src="../img/CogOutline.png" alt="gear_img">
-                </a>
+                <div>
+                    <div class="pop-up">
+                        <button id="pop-up-profile">Profile</button>
+                        <button id="pop-up-logout">Logout</button>
+                    </div>
+                    <img src="../img/CogOutline.png" alt="gear_img" id="pop-up-icon">
+                </div>
             </footer>
         </aside>
+
         <div class="main-container">
             <header class="header">
                 <button id="sidebarToggle" class="sidebar-toggle">☰</button>
                 <h2>เขียนคำร้อง</h2>
             </header>
-            <p class="student-info">นายสมชาย หลงอไฟ รหัสนักศึกษา 6609000000 คณะวิทยาศาสตร์และเทคโนโลยี
-                สาขาวิชาการคอมพิวเตอร์</p>
+            <div class="student-info">
+                <p id="student-info-id">dddddddd</p>
+            </div>
             <main class="main-content">
                 <form id="petitionForm">
                     <div class="form-group">
                         <label>เบอร์โทรศัพท์ติดต่อ</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="phone_no">
                     </div>
 
                     <div class="form-group">
                         <label>อาจารย์ที่ปรึกษา</label>
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" name="advisor">
                     </div>
 
                     <div class="form-row">
                         <div class="form-group half">
                             <label>บ้านเลขที่</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="houseNumber">
                         </div>
                         <div class="form-group half">
                             <label>หมู่</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="village">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group half">
                             <label>แขวง/ตำบล</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="subDistrict">
                         </div>
                         <div class="form-group half">
                             <label>เขต/อำเภอ</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="district">
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group half">
                             <label>จังหวัด</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="province">
                         </div>
                         <div class="form-group half">
                             <label>รหัสไปรษณีย์</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="postal_code">
                         </div>
                     </div>
 
@@ -89,10 +95,12 @@
                         <label>ข้อมูลคำร้อง</label>
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="add"> เพิ่มรายวิชา
+                                <input type="checkbox" name="petitionType" value="add/remove"
+                                    class="petition-type-checkbox"> เพิ่มรายวิชา
                             </label>
                             <label>
-                                <input type="checkbox" name="petitionType" value="drop"> ถอนรายวิชา
+                                <input type="checkbox" name="petitionType" value="drop" class="petition-type-checkbox">
+                                ถอนรายวิชา
                             </label>
                         </div>
                     </div>
@@ -100,7 +108,7 @@
                     <div class="form-row">
                         <div class="form-group half">
                             <label>ปีการศึกษา</label>
-                            <select class="form-control">
+                            <select class="form-control" name="year">
                                 <option value="">เลือก</option>
                                 <option value="2560">2560</option>
                                 <option value="2561">2561</option>
@@ -114,7 +122,7 @@
                         </div>
                         <div class="form-group half">
                             <label>ภาคการศึกษา</label>
-                            <select class="form-control">
+                            <select class="form-control" name="semester">
                                 <option value="">เลือก</option>
                                 <option value="midterm">กลางภาคเรียน</option>
                                 <option value="final">ปลายภาคเรียน</option>
@@ -125,24 +133,25 @@
                     <div class="form-row">
                         <div class="form-group half">
                             <label>รหัสวิชา</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="course_id">
                         </div>
                         <div class="form-group half">
                             <label>Section</label>
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="section">
                         </div>
                     </div>
 
 
                     <div class="form-group">
                         <label>ชื่อวิชา</label>
-                        <input type="text" class="form-control" name="subjectName">
+                        <input type="text" class="form-control" name="courseName">
                     </div>
 
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="resign"> ลาออก ตั้งแต่
+                                <input type="checkbox" name="petitionType" value="resign"
+                                    class="petition-type-checkbox"> ลาออก ตั้งแต่
                             </label>
                         </div>
                     </div>
@@ -150,7 +159,7 @@
                     <div class="form-row">
                         <div class="form-group half">
                             <label>ปีการศึกษา</label>
-                            <select class="form-control" name="academicYear">
+                            <select class="form-control" name="Year">
                                 <option value="">เลือก</option>
                                 <option value="2566">2566</option>
                                 <option value="2567">2567</option>
@@ -170,38 +179,67 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="other"> อื่น ๆ
+                                <input type="checkbox" name="petitionType" value="other" class="petition-type-checkbox">
+                                อื่น ๆ
                             </label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label>เรื่องที่ต้องการยื่นคำร้อง</label>
-                        <input type="text" class="form-control" name="petitionSubject">
+                        <input type="text" class="form-control" name="topic">
                     </div>
 
                     <div class="form-group">
                         <label>สาเหตุที่ยื่นคำร้อง</label>
-                        <textarea class="form-control" rows="6"></textarea>
+                        <textarea class="form-control" rows="6" name="reason"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label>แนบไฟล์</label>
                         <button type="button" class="btn btn-secondary" id="attachFileBtn">แนบไฟล์</button>
+                        <input type="file" id="fileInput" style="display:none;" name="fileInput">
                     </div>
 
                     <div class="button-group">
                         <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
-                        <button type="button" class="btn btn-outline">บันทึกแบบร่าง</button>
-                        <button type="button" class="btn btn-danger">ยกเลิก</button>
-                        <button type="submit" class="btn btn-success">บันทึกคำร้อง</button>
+                        <button type="button" id="btnSaveDraft" class="btn btn-outline">บันทึกแบบร่าง</button>
+                        <button type="button" id="btnCancel" class="btn btn-danger">ยกเลิก</button>
+                        <button type="submit" id="btnSaveRequest" class="btn btn-success">บันทึกคำร้อง</button>
                     </div>
+
+                    <!-- Popup: Save Draft -->
+                    <div id="saveDraftPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">บันทึกแบบร่างแล้ว</p>
+                            <button type="button" class="view-btn" id="viewDraft">ดูแบบร่างของฉัน</button>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Cancel Success -->
+                    <div id="cancelPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ยกเลิกสำเร็จ</p>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Save Request -->
+                    <div id="saveRequestPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ส่งคำร้องแล้ว</p>
+                            <button type="button" class="view-btn" id="viewStatus">ดูคำร้องของฉัน</button>
+                        </div>
+                    </div>
+
                 </form>
             </main>
         </div>
     </div>
     <script src="../js/nav.js"></script>
-    <!-- <script src="request.js"></script> -->
+    <script src="../js/request.js"></script>
 </body>
 
 </html>

@@ -62,7 +62,16 @@ router.post("/api/login", async (req, res) => {
         req.session.user = filteredResult;
         req.session.user = result;
 
+<<<<<<< HEAD
         return res.redirect("/petition");
+=======
+        delete result.status;
+        delete result.message;
+        req.session.user = result
+
+        // return res.status(200).json({ user: result, redirectTo: '/status' });
+        return res.redirect('/petition');
+>>>>>>> 1d81fd3f179bf928773f954c2f0093f379e76ed0
     } catch (error) {
         console.error("Fetch error:", error);
         return res.status(500).json({ error: "Internal server error" });

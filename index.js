@@ -55,6 +55,7 @@ app.get("/", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
+<<<<<<< HEAD
 app.use(isAuthenticated);
 
 app.get("/petition", (_, res) => {
@@ -64,6 +65,22 @@ app.get("/petition", (_, res) => {
 app.get("/profile", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "profile.html"));
 });
+=======
+
+app.get('/', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'login.html'));
+
+})
+app.use(isAuthenticated);
+
+app.get('/petition', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'status.html'));
+})
+
+app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'proflie.html'));
+})
+>>>>>>> 1d81fd3f179bf928773f954c2f0093f379e76ed0
 
 app.get("/request", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "request.html"));
