@@ -333,6 +333,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Handle other actions like save draft or cancel
     const btnSaveDraft = document.getElementById("btnSaveDraft");
     const btnCancel = document.getElementById("btnCancel");
+    const form = document.getElementById("petitionForm");
+
 
     if (btnSaveDraft) {
         btnSaveDraft.addEventListener("click", (event) => {
@@ -342,10 +344,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (btnCancel) {
+    if (btnCancel && form) {
         btnCancel.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
+
+            form.reset();
+            const clearError = () => {
+                const invalidFields = document.querySelectorAll('.error-border');
+                invalidFields.forEach(field => {
+                    field.classList.remove('error-border');
+                });
+            };
+            clearError();
+            const checkboxes = form.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+            });
+            petitionTypeCheckboxes.forEach((checkbox) => {
+                checkbox.checked = false;
+                checkbox.classList.remove('checked-checkbox');
+                checkbox.classList.remove('disabled-checkbox'); 
+                checkbox.removeAttribute('data-disabled');
+            });
             showPopup(cancelPopup);
         });
     }
@@ -362,7 +383,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const viewStatusButton = document.getElementById("viewStatus");
 
     if (viewStatusButton) {
-        viewDraftButton.addEventListener("click", (event) => {
+        viewStatusButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
            

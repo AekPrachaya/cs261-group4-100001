@@ -39,7 +39,7 @@ async function fetchAndUpdate() {
                         case 'awaiting_documents':
                             awaitingDocuments.push(petition);
                             break;
-                        case 'denied':
+                        case 'rejected':
                             denied.push(petition);
                             break;
                         default:
