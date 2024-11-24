@@ -1,20 +1,20 @@
 async function fetchAndUpdate() {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.username) {
-        console.error('User not logged in or missing username');
+        console.error("User not logged in or missing username");
         return;
     }
-    const id =parseInt(user.username);
+    const id = Number.parseInt(user.username);
 
     await fetch(`/api/petitions/${id}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
         },
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Fetched petition data:', data);
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Fetched petition data:", data);
 
             if (Array.isArray(data.data)) {
                 // Arrays to hold petitions based on status
@@ -24,28 +24,28 @@ async function fetchAndUpdate() {
                 const awaitingDocuments = [];
                 const denied = [];
 
-                data.data.forEach(petition => {
-                    console.log('Processing petition:', petition); // Log each petition
+                for (const petition of data.data) {
+                    console.log("Processing petition:", petition); // Log each petition
                     switch (petition.status) {
-                        case 'approved':
+                        case "approved":
                             approved.push(petition);
                             break;
-                        case 'pending':
+                        case "pending":
                             inProgress.push(petition);
                             break;
-                        case 'awaiting_action':
+                        case "awaiting_action":
                             awaitingAction.push(petition);
                             break;
-                        case 'awaiting_documents':
+                        case "awaiting_documents":
                             awaitingDocuments.push(petition);
                             break;
-                        case 'rejected':
+                        case "rejected":
                             denied.push(petition);
                             break;
                         default:
                             console.warn(`Unknown petition status: ${petition.status}`);
                     }
-                });
+                }
 
                 // Store petition status globally
                 window.petitionStatus = {
@@ -58,26 +58,26 @@ async function fetchAndUpdate() {
                 };
 
                 // Display all petitions by default
-                updatePetitionStatus('ทั้งหมด', data.data);
+                updatePetitionStatus("ทั้งหมด", data.data);
             } else {
-                console.error('No petitions found or incorrect data format');
+                console.error("No petitions found or incorrect data format");
             }
         })
-        .catch(error => console.error('Error fetching petition data:', error));
+        .catch((error) => console.error("Error fetching petition data:", error));
 }
 
 function updatePetitionStatus(statusLabel, petitions) {
-    const container = document.querySelector('.requests-container');
+    const container = document.querySelector(".requests-container");
     if (!container) {
-        console.warn('No requests container found!');
+        console.warn("No requests container found!");
         return;
     }
-    container.innerHTML = ''; // Clear the container
+    container.innerHTML = ""; // Clear the container
 
     if (petitions.length > 0) {
-        petitions.forEach(petition => {
-            const petitionCard = document.createElement('div');
-            petitionCard.classList.add('request-card');
+        for (const petition of petitions) {
+            const petitionCard = document.createElement("div");
+            petitionCard.classList.add("request-card");
 
             petitionCard.innerHTML = `
                 <div class="request-content">
@@ -91,50 +91,63 @@ function updatePetitionStatus(statusLabel, petitions) {
             `;
 
             container.appendChild(petitionCard);
-        });
+        }
     } else {
-        container.innerHTML = '<p>ไม่มีคำร้องในสถานะนี้</p>';
+        container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
     }
 }
 
 // Tab switching logic
-document.querySelectorAll('.tab-btn').forEach(tab => {
-    tab.addEventListener('click', () => {
+for (const tab of document.querySelectorAll(".tab-btn")) {
+    tab.addEventListener("click", () => {
         const status = tab.dataset.tab;
 
         // Clear active state for tabs
-        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+
+        for (const t of document.querySelectorAll(".tab-btn")) {
+            t.classList.remove("active");
+        }
+
+        tab.classList.add("active");
 
         // Update title
-        const title = document.querySelector('.requests-title');
+        const title = document.querySelector(".requests-title");
         title.textContent = tab.textContent;
 
         // Update petitions based on selected tab
         switch (status) {
-            case 'all':
-                updatePetitionStatus('ทั้งหมด', window.petitionStatus.all);
+            case "all":
+                updatePetitionStatus("ทั้งหมด", window.petitionStatus.all);
                 break;
-            case 'in-progress':
-                updatePetitionStatus('อยู่ระหว่างดำเนินการ', window.petitionStatus.inProgress);
+            case "in-progress":
+                updatePetitionStatus(
+                    "อยู่ระหว่างดำเนินการ",
+                    window.petitionStatus.inProgress,
+                );
                 break;
-            case 'waiting':
-                updatePetitionStatus('รอดำเนินการ', window.petitionStatus.awaitingAction);
+            case "waiting":
+                updatePetitionStatus(
+                    "รอดำเนินการ",
+                    window.petitionStatus.awaitingAction,
+                );
                 break;
-            case 'documents':
-                updatePetitionStatus('รอเอกสาร', window.petitionStatus.awaitingDocuments);
+            case "documents":
+                updatePetitionStatus(
+                    "รอเอกสาร",
+                    window.petitionStatus.awaitingDocuments,
+                );
                 break;
-            case 'rejected':
-                updatePetitionStatus('ปฏิเสธคำร้อง', window.petitionStatus.denied);
+            case "rejected":
+                updatePetitionStatus("ปฏิเสธคำร้อง", window.petitionStatus.denied);
                 break;
-            case 'completed':
-                updatePetitionStatus('อนุมัติแล้ว', window.petitionStatus.approved);
+            case "completed":
+                updatePetitionStatus("อนุมัติแล้ว", window.petitionStatus.approved);
                 break;
             default:
-                console.warn('Unknown tab selected');
+                console.warn("Unknown tab selected");
         }
     });
-});
+}
 
 // Fetch data when the page loads
-document.addEventListener('DOMContentLoaded', fetchAndUpdate);
+document.addEventListener("DOMContentLoaded", fetchAndUpdate);

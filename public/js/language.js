@@ -1,4 +1,4 @@
-let language = {
+const language = {
     en: {
         // language of login page(en)
         login: {
@@ -10,8 +10,8 @@ let language = {
 
             //for form section
             form: {
-                header: "Login petition submission"
-            }
+                header: "Login petition submission",
+            },
         },
 
         // language of sidebar(en)
@@ -23,16 +23,14 @@ let language = {
                 personalInfo: "Personal information",
                 requestForm: "Request form",
                 requestStatus: "Request status",
-                logout: "Logout"
-            }
-
+                logout: "Logout",
+            },
         },
 
         // language of request form page(en)
         request: {
             header: "Petition Online",
             form: {
-
                 // for personal info section
                 personalInfo: {
                     header: "Personal informantion",
@@ -40,7 +38,7 @@ let language = {
                         header: "Title",
                         mr: "Mr.",
                         mrs: "Mrs.",
-                        miss: "Miss."
+                        miss: "Miss.",
                     },
 
                     firstName: "First name",
@@ -49,7 +47,6 @@ let language = {
                     educationYear: "Year",
 
                     faculty: {
-
                         // chocice of faculty
                         chocice: {
                             header: "Faculty currently studying",
@@ -78,13 +75,13 @@ let language = {
                             nursing: "Faculty of Nursing",
                             public_health: "Faculty of Public Health",
                             pharmacy: "Faculty of Pharmacy",
-                            cicm: "Chulabhorn International College of Medicine"
-                        }
+                            cicm: "Chulabhorn International College of Medicine",
+                        },
                     },
 
                     id: "ID",
 
-                    phone: "Telephone number"
+                    phone: "Telephone number",
                 },
 
                 //for addrress section
@@ -96,7 +93,7 @@ let language = {
                     subDistrict: "Sub district",
                     district: "District",
                     province: "Province",
-                    postolCode: "Postal code"
+                    postolCode: "Postal code",
                 },
 
                 //for subject section
@@ -114,9 +111,9 @@ let language = {
                 button: {
                     draft: "Draft",
                     cancel: "Cancel",
-                    next: "Next"
-                }
-            }
+                    next: "Next",
+                },
+            },
         },
 
         pettition: {
@@ -128,8 +125,8 @@ let language = {
                 consider: "Under consideration",
                 pending: "Pending",
                 doc: "Waiting for additional document",
-                reject: "Rejected"
-            }
+                reject: "Rejected",
+            },
         },
 
         profile: {
@@ -146,10 +143,9 @@ let language = {
             //for request status section
             requestInfo: {
                 header: "My Petition",
-            }
-        }
+            },
+        },
     },
-
 
     th: {
         // language of login page(en)
@@ -162,8 +158,8 @@ let language = {
 
             //for form section
             form: {
-                header: "เข้าสู่ระบบยื่นคำร้อง"
-            }
+                header: "เข้าสู่ระบบยื่นคำร้อง",
+            },
         },
 
         // language of sidebar(en)
@@ -175,16 +171,14 @@ let language = {
                 personalInfo: "ข้อมูลส่วนตัว",
                 requestForm: "เขียนคำร้อง",
                 requestStatus: "ตรวจสอบสถานะคำร้อง",
-                logout: "ออกจากระบบ"
-            }
-
+                logout: "ออกจากระบบ",
+            },
         },
 
         // language of request form page(en)
         request: {
             header: "เขียนคำร้องออนไลน์",
             form: {
-
                 // for personal info section
                 personalInfo: {
                     header: "ข้อมูลส่วนตัว",
@@ -192,7 +186,7 @@ let language = {
                         header: "คำนำหน้าชื่อ",
                         mr: "นาย",
                         mrs: "นาง",
-                        miss: "นางสาว"
+                        miss: "นางสาว",
                     },
 
                     firstName: "ชื่อ",
@@ -201,7 +195,6 @@ let language = {
                     educationYear: "ปีการศึกษา",
 
                     faculty: {
-
                         // chocice of faculty
                         chocice: {
                             header: "คณะที่กำลังศึกษาอยู่",
@@ -230,13 +223,13 @@ let language = {
                             nursing: "คณะพยาบาลศาสตร์",
                             public_health: "คณะสาธารณสุขศาสตร์",
                             pharmacy: "คณะเภสัชศาสตร์",
-                            cicm: "วิทยาลัยแพทยศาสตร์นานาชาติจุฬาภรณ์"
-                        }
+                            cicm: "วิทยาลัยแพทยศาสตร์นานาชาติจุฬาภรณ์",
+                        },
                     },
 
                     id: "รหัสนักศึกษา",
 
-                    phone: "เบอร์โทรศัพท์ที่ติดต่อ"
+                    phone: "เบอร์โทรศัพท์ที่ติดต่อ",
                 },
 
                 //for addrress section
@@ -248,7 +241,7 @@ let language = {
                     subDistrict: "แขวง/ตำบล",
                     district: "เขต/อำเภอ",
                     province: "จังหวัด",
-                    postolCode: "รหัสไปรษณีย์"
+                    postolCode: "รหัสไปรษณีย์",
                 },
 
                 //for subject section
@@ -266,9 +259,9 @@ let language = {
                 button: {
                     draft: "บันทึกแบบร่าง",
                     cancel: "ยกเลิก",
-                    next: "ถัดไป"
-                }
-            }
+                    next: "ถัดไป",
+                },
+            },
         },
 
         pettition: {
@@ -280,8 +273,8 @@ let language = {
                 consider: "อยู่ในระหว่างพิจารณา",
                 pending: "รอดำเนินการ",
                 doc: "รอเอกสาร",
-                reject: "ปฎิเสธคำร้อง"
-            }
+                reject: "ปฎิเสธคำร้อง",
+            },
         },
 
         profile: {
@@ -298,8 +291,7 @@ let language = {
             //for request status section
             requestInfo: {
                 header: "คำร้องของฉัน",
-            }
-        }
-    }
-
+            },
+        },
+    },
 };

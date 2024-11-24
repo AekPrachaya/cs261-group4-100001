@@ -1,31 +1,36 @@
 {
-    "name": "cs261-group4",
-    "version": "1.0.0",
-    "main": "index.js",
-    "type": "module",
-    "scripts": {
-        "dev": "node index.js",
-        "test": "mocha ./tests/index.test.js --timeout 10000"
-    },
-    "author": "",
-    "license": "ISC",
-    "description": "",
-    "dependencies": {
-        "cloudinary": "^2.5.1",
-        "cors": "^2.8.5",
-        "cookie-parser": "^1.4.7",
-        "dotenv": "^16.4.5",
-        "express": "^4.21.1",
-        "express-session": "^1.18.1",
-        "helmet": "^8.0.0",
-        "multer": "^1.4.5-lts.1",
-        "pg": "^8.13.1",
-        "streamifier": "^0.1.1",
-        "zod": "^3.23.8"
-    },
-    "devDependencies": {
-        "chai": "^5.1.2",
-        "mocha": "^10.8.2",
-        "supertest": "^7.0.0"
-    }
+	"name": "cs261-group4",
+	"version": "1.0.0",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "node index.js",
+		"test": "mocha ./tests/index.test.js --timeout 10000",
+		"format": "npx @biomejs/biome format --write ./*"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"argon2": "^0.41.1",
+		"cloudinary": "^2.5.1",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"dotenv": "^16.4.5",
+		"express": "^4.21.1",
+		"express-session": "^1.18.1",
+		"helmet": "^8.0.0",
+		"multer": "^1.4.5-lts.1",
+		"pg": "^8.13.1",
+		"streamifier": "^0.1.1",
+		"zod": "^3.23.8"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"chai": "^5.1.2",
+		"mocha": "^10.8.2",
+		"stylelint": "^16.10.0",
+		"stylelint-config-standard": "^36.0.1",
+		"supertest": "^7.0.0"
+	}
 }

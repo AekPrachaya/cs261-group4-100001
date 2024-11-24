@@ -1,6 +1,6 @@
-import { v2 as cloudinary } from 'cloudinary';
-import { deleteDocument, addDocument } from '../server/db/document.js';
-import streamifier from 'streamifier';
+import { v2 as cloudinary } from "cloudinary";
+import { deleteDocument, addDocument } from "../server/db/document.js";
+import streamifier from "streamifier";
 
 /* upload document
  * @param {Multer.File} file
@@ -12,21 +12,21 @@ export const uploadDocument = async (file, petitionID) => {
         const stream = cloudinary.uploader.upload_stream(
             {
                 folder: `${petitionID}`,
-                resource_type: 'raw',  // For non-image files like PDFs
+                resource_type: "raw", // For non-image files like PDFs
             },
             (error, result) => {
                 if (error) {
-                    reject(error);  // Reject if there's an error
+                    reject(error); // Reject if there's an error
                 } else {
-                    resolve(result.public_id);  // Resolve with the public_id
+                    resolve(result.public_id); // Resolve with the public_id
                 }
-            }
+            },
         );
 
         // Convert file buffer to a stream and pipe it to Cloudinary
         streamifier.createReadStream(file.buffer).pipe(stream);
     });
-}
+};
 /* upload documents
  * @param {Array<Multer.File>} files
  * @param {string} petitionID
@@ -38,21 +38,24 @@ export const uploadDocuments = async (fileBuffers, petitionID) => {
     }
     try {
         // Upload to Cloudinary
-        const promises = fileBuffers.map((file) => uploadDocument(file, petitionID));
+        const promises = fileBuffers.map((file) =>
+            uploadDocument(file, petitionID),
+        );
 
         const public_ids = await Promise.all(promises);
 
         // Insert to DB
-        const insertPromises = public_ids.map((public_id) => addDocument(petitionID, public_id));
+        const insertPromises = public_ids.map((public_id) =>
+            addDocument(petitionID, public_id),
+        );
         await Promise.all(insertPromises);
 
         return public_ids;
-
     } catch (error) {
-        console.error('error', error);
+        console.error("error", error);
     }
     return [];
-}
+};
 
 /* get documents by petition id
  * @param {string} petitionID
@@ -61,12 +64,12 @@ export const uploadDocuments = async (fileBuffers, petitionID) => {
 export const getDocumentsByPetitionID = async (petitionID) => {
     try {
         const searchOptions = {
-            type: 'upload', // Ensure you are looking at uploaded resources
+            type: "upload", // Ensure you are looking at uploaded resources
             prefix: petitionID, // Search in the specific folder based on petitionID
-            resource_type: 'raw',
+            resource_type: "raw",
         };
         const result = await cloudinary.api.resources(searchOptions);
-        const filteredResources = result.resources.map(resource => ({
+        const filteredResources = result.resources.map((resource) => ({
             public_id: resource.public_id,
             created_at: resource.created_at,
             bytes: resource.bytes,
@@ -93,7 +96,7 @@ const deleteDocumentByPublicID = async (public_id) => {
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 /* delete documents by public_ids
  * @param {Array<string>} public_ids
@@ -102,43 +105,47 @@ const deleteDocumentByPublicID = async (public_id) => {
 export const deleteDocumentsByPublicIDs = async (public_ids) => {
     try {
         if (!public_ids || !Array.isArray(public_ids) || public_ids.length === 0) {
-            console.error('No valid public IDs provided.');
+            console.error("No valid public IDs provided.");
             return [];
         }
         // Delete files and folder on Cloudinary
         const successDeletePublicIds = [];
-        await cloudinary.api.delete_resources(public_ids, { type: "upload", resource_type: "raw" }).then(async result => {
-            const key = Object.keys(result.deleted)[0];
-            const deleteFolderResult = await deleteFolderByPublicID(key)
-            if (deleteFolderResult) {
-                successDeletePublicIds.push(key);
-            }
-        });
+        await cloudinary.api
+            .delete_resources(public_ids, { type: "upload", resource_type: "raw" })
+            .then(async (result) => {
+                const key = Object.keys(result.deleted)[0];
+                const deleteFolderResult = await deleteFolderByPublicID(key);
+                if (deleteFolderResult) {
+                    successDeletePublicIds.push(key);
+                }
+            });
 
         return successDeletePublicIds;
     } catch (error) {
         console.error(error);
         return [];
     }
-}
+};
 
 export const deleteFolderByPublicID = async (public_id) => {
     try {
-        const folderId = "/" + public_id.split('/')[0];
+        const folderId = `/${public_id.split("/")[0]}`;
+
         const result = await cloudinary.api.delete_folder(folderId);
         return result;
     } catch (error) {
         console.error("folder delete", error);
     }
-}
-
+};
 
 export const deleteDocumentsInDatabaseByPublicIDs = async (public_ids) => {
     // Delete document on DB
-    const deleteDocumentPromises = public_ids.map((public_id) => deleteDocument(public_id));
+    const deleteDocumentPromises = public_ids.map((public_id) =>
+        deleteDocument(public_id),
+    );
     const deletedResult = await Promise.all(deleteDocumentPromises);
-    const deletedFiles = deletedResult.filter(item => item != undefined).map((result) => result);
+    const deletedFiles = deletedResult
+        .filter((item) => item !== undefined)
+        .map((result) => result);
     return deletedFiles;
-}
-
-
+};

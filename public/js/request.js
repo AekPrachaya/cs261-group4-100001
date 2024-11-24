@@ -1,201 +1,211 @@
-const fileUpload = document.getElementById('fileInput');
+const fileUpload = document.getElementById("fileInput");
 
-document.getElementById("petitionForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+document
+    .getElementById("petitionForm")
+    .addEventListener("submit", async function(event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
+        const formData = new FormData(this);
 
-    const selectedPetitionType = formData.getAll("petitionType");
-    const petitionDefault = {
-        phone_no: formData.get("phone_no"),
-        advisor: formData.get("advisor"),
-        location: {
-            houseNumber: formData.get("houseNumber"),
-            village: formData.get("village"),
-            subDistrict: formData.get("subDistrict"),
-            district: formData.get("district"),
-            province: formData.get("province"),
-            postal_code: formData.get("postal_code"),
-        },
-        topic: formData.get("topic"),
-        reason: formData.get("reason"),
-    };
-    
-    // Mark a field as invalid
-    const markInvalid = (fieldName) => {
-        const field = document.querySelector(`[name="${fieldName}"]`);
-        if (field) {
-            field.classList.add("error-border");
-        }
-    };
+        const selectedPetitionType = formData.getAll("petitionType");
+        const petitionDefault = {
+            phone_no: formData.get("phone_no"),
+            advisor: formData.get("advisor"),
+            location: {
+                houseNumber: formData.get("houseNumber"),
+                village: formData.get("village"),
+                subDistrict: formData.get("subDistrict"),
+                district: formData.get("district"),
+                province: formData.get("province"),
+                postal_code: formData.get("postal_code"),
+            },
+            topic: formData.get("topic"),
+            reason: formData.get("reason"),
+        };
 
-    const petitionType = selectedPetitionType[0];
-    
-    let isValid = true;
-    
-    // Ensure only one petition type is checked
-    if (selectedPetitionType.length !== 1) {
-        markPetitionTypeError();
-    }
-
-    if (petitionType === "add/remove" || petitionType === "drop") {
-        const year = formData.get("year");
-        const semester = formData.get("semester");
-        const courseId = formData.get("course_id");
-        const section = formData.get("section");
-        const courseName = formData.get("courseName");
-
-        if (!year) {
-            isValid = false;
-            markInvalid("year");
-        }
-        if (!semester) {
-            isValid = false;
-            markInvalid("semester");
-        }
-        if (!courseId) {
-            isValid = false;
-            markInvalid("course_id");
-        }
-        if (!section) {
-            isValid = false;
-            markInvalid("section");
-        }
-        if (!courseName) {
-            isValid = false;
-            markInvalid("courseName");
-        }
-        if (!isValid) {
-            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
-        }
-    } else if (petitionType === "resign") {
-        const year = formData.get("Year");
-        const semester = formData.get("semester");
-
-        if (!year) {
-            isValid = false;
-            markInvalid("Year");
-        }
-        if (!semester) {
-            isValid = false;
-            markInvalid("semester");
-        }
-        if (!isValid) {
-            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการลาออก");
-        }
-    }
-
-    // Validate petition default fields
-    for (const [key, value] of Object.entries(petitionDefault)) {
-        if (key === "location") {
-            // Check each property inside location object
-            for (const [locationKey, locationValue] of Object.entries(value)) {
-                if (!locationValue) {
-                    isValid = false;
-                    markInvalid(locationKey);
-                }
+        // Mark a field as invalid
+        const markInvalid = (fieldName) => {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.classList.add("error-border");
             }
-        } else if (!value) {
-            isValid = false;
-            markInvalid(key);
-        }
-    }
+        };
 
-    // If validation passes, proceed with form submission
-    if (isValid) {
-        console.log("Form is valid, proceeding with submission...");
-        submitPetition(formData);
-    }
-});
+        const petitionType = selectedPetitionType[0];
+
+        let isValid = true;
+
+        // Ensure only one petition type is checked
+        if (selectedPetitionType.length !== 1) {
+            markPetitionTypeError();
+        }
+
+        if (petitionType === "add/remove" || petitionType === "drop") {
+            const year = formData.get("year");
+            const semester = formData.get("semester");
+            const courseId = formData.get("course_id");
+            const section = formData.get("section");
+            const courseName = formData.get("courseName");
+
+            if (!year) {
+                isValid = false;
+                markInvalid("year");
+            }
+            if (!semester) {
+                isValid = false;
+                markInvalid("semester");
+            }
+            if (!courseId) {
+                isValid = false;
+                markInvalid("course_id");
+            }
+            if (!section) {
+                isValid = false;
+                markInvalid("section");
+            }
+            if (!courseName) {
+                isValid = false;
+                markInvalid("courseName");
+            }
+            if (!isValid) {
+                alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
+            }
+        } else if (petitionType === "resign") {
+            const year = formData.get("Year");
+            const semester = formData.get("semester");
+
+            if (!year) {
+                isValid = false;
+                markInvalid("Year");
+            }
+            if (!semester) {
+                isValid = false;
+                markInvalid("semester");
+            }
+            if (!isValid) {
+                alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการลาออก");
+            }
+        }
+
+        // Validate petition default fields
+        for (const [key, value] of Object.entries(petitionDefault)) {
+            if (key === "location") {
+                // Check each property inside location object
+                for (const [locationKey, locationValue] of Object.entries(value)) {
+                    if (!locationValue) {
+                        isValid = false;
+                        markInvalid(locationKey);
+                    }
+                }
+            } else if (!value) {
+                isValid = false;
+                markInvalid(key);
+            }
+        }
+
+        // If validation passes, proceed with form submission
+        if (isValid) {
+            console.log("Form is valid, proceeding with submission...");
+            submitPetition(formData);
+        }
+    });
 
 const resetErrorBorders = () => {
-    document.querySelectorAll(".error-border").forEach((element) => {
+    for (const element of document.querySelectorAll(".error-border")) {
         element.classList.remove("error-border");
-    });
+    }
 };
 
 // mark petitiontype as invalid
 const markPetitionTypeError = () => {
-    const petitionTypeInputs = document.querySelectorAll('input[name="petitionType"]');
-    petitionTypeInputs.forEach((input) => {
-            input.classList.add("error-border");
-    });
+    const petitionTypeInputs = document.querySelectorAll(
+        'input[name="petitionType"]',
+    );
+
+    for (const input of petitionTypeInputs) {
+        input.classList.add("error-border");
+    }
 };
 
 // Apply event listeners to form fields and checkboxes for real-time reset
 const applyResetListeners = () => {
-    document.querySelectorAll("input, textarea, select").forEach((field) => {
+    for (const field of document.querySelectorAll("input, textarea, select")) {
         field.addEventListener("focus", () => {
             field.classList.remove("error-border");
         });
-    });
+    }
 
-    petitionTypeCheckboxes.forEach((checkbox) => {
+    for (const checkbox of petitionTypeCheckboxes) {
         checkbox.addEventListener("change", () => {
             checkbox.classList.remove("error-border");
 
             if (checkbox.checked) {
                 // Uncheck all other checkboxes
-                petitionTypeCheckboxes.forEach((otherCheckbox) => {
+
+                for (const otherCheckbox of petitionTypeCheckboxes) {
                     if (otherCheckbox !== checkbox) {
                         otherCheckbox.checked = false;
                         otherCheckbox.classList.remove("error-border");
                     }
-                });
+                }
             }
         });
 
-        checkbox.addEventListener("click", function (event) {
+        checkbox.addEventListener("click", function(event) {
             if (this.getAttribute("data-disabled") === "true") {
                 event.preventDefault();
                 this.classList.add("error-border");
-
             }
         });
-    });
+    }
 };
 
 // Get all the petitiontype checkboxes
-const petitionTypeCheckboxes = document.querySelectorAll('.petition-type-checkbox');
+const petitionTypeCheckboxes = document.querySelectorAll(
+    ".petition-type-checkbox",
+);
 
-petitionTypeCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
+for (checkbox of petitionTypeCheckboxes) {
+    checkbox.addEventListener("change", function() {
         if (this.checked) {
             // Disable all other checkboxes
-            petitionTypeCheckboxes.forEach(otherCheckbox => {
+
+            for (const otherCheckbox of petitionTypeCheckboxes) {
                 if (otherCheckbox !== this) {
-                    otherCheckbox.classList.add('disabled-checkbox');
-                    otherCheckbox.setAttribute('data-disabled', 'true');
+                    otherCheckbox.classList.add("disabled-checkbox");
+                    otherCheckbox.setAttribute("data-disabled", "true");
                 }
-            });
-
-            this.classList.add('checked-checkbox');
-        } else {
-            const anyChecked = Array.from(petitionTypeCheckboxes).some(cb => cb.checked);
-
-            if (!anyChecked) {
-                petitionTypeCheckboxes.forEach(otherCheckbox => {
-                    otherCheckbox.classList.remove('disabled-checkbox');
-                    otherCheckbox.removeAttribute('data-disabled');
-                });
             }
 
-            this.classList.remove('checked-checkbox');
+            this.classList.add("checked-checkbox");
+        } else {
+            const anyChecked = Array.from(petitionTypeCheckboxes).some(
+                (cb) => cb.checked,
+            );
+
+            if (!anyChecked) {
+                for (const otherCheckbox of petitionTypeCheckboxes) {
+                    otherCheckbox.classList.remove("disabled-checkbox");
+                    otherCheckbox.removeAttribute("data-disabled");
+                }
+            }
+
+            this.classList.remove("checked-checkbox");
         }
     });
 
-    checkbox.addEventListener('click', function (event) {
-        if (this.getAttribute('data-disabled') === 'true') {
+    checkbox.addEventListener("click", function(event) {
+        if (this.getAttribute("data-disabled") === "true") {
             event.preventDefault();
 
-            this.classList.add('error-border');
+            this.classList.add("error-border");
 
             setTimeout(() => {
-                this.classList.remove('error-border');
+                this.classList.remove("error-border");
             }, 500);
         }
     });
-});
+}
 
 async function submitPetition(formData) {
     try {
@@ -245,49 +255,50 @@ async function submitPetition(formData) {
         };
 
         // Send petition data to the server
-        const petitionResponse = await fetch('/api/petition', {
-            method: 'POST',
+        const petitionResponse = await fetch("/api/petition", {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 type: petitionData.type,
-                content: petitionData
-            })
+                content: petitionData,
+            }),
         });
 
         if (petitionResponse.ok) {
             const responseData = await petitionResponse.json();
-            const petitionId = responseData.data.id; 
+            const petitionId = responseData.data.id;
 
-        // Check if there's a file to upload
-        if (fileInput.files.length > 0) {
-            const fileData = new FormData();
-            fileData.append('files', fileInput.files[0]); // File from file input
-            fileData.append('petition_id', petitionId);
-            
-            const fileResponse = await fetch('/api/files', {
-                method: 'POST',
-                body: fileData
-            });
-            if (fileResponse.ok) {
-                const fileDataResponse = await fileResponse.json();
-                console.log('Files submitted successfully:', fileDataResponse);
-            } else {
-                console.error('Failed to submit files:', await fileResponse.json());
+            // Check if there's a file to upload
+            if (fileInput.files.length > 0) {
+                const fileData = new FormData();
+                fileData.append("files", fileInput.files[0]); // File from file input
+                fileData.append("petition_id", petitionId);
+
+                const fileResponse = await fetch("/api/files", {
+                    method: "POST",
+                    body: fileData,
+                });
+                if (fileResponse.ok) {
+                    const fileDataResponse = await fileResponse.json();
+                    console.log("Files submitted successfully:", fileDataResponse);
+                } else {
+                    console.error("Failed to submit files:", await fileResponse.json());
+                }
             }
-        }
-        showPopup(saveRequestPopup);
+            showPopup(saveRequestPopup);
         } else {
             const errorData = await petitionResponse.json();
-            console.error('Failed to submit petition:', errorData);
+            console.error("Failed to submit petition:", errorData);
         }
-
     } catch (error) {
-        console.error('Error occurred:', error);
-        alert('There was an error submitting your petition. Please try again later.');
+        console.error("Error occurred:", error);
+        alert(
+            "There was an error submitting your petition. Please try again later.",
+        );
     }
-};
+}
 
 async function displayUserInformation() {
     const id = document.querySelector("#student-info-id");
@@ -301,11 +312,11 @@ async function displayUserInformation() {
     }
 }
 
-const fileInput = document.getElementById('fileInput');
-const attachFileBtn = document.getElementById('attachFileBtn');
-const fileNameSpan = document.getElementById('fileName');
+const fileInput = document.getElementById("fileInput");
+const attachFileBtn = document.getElementById("attachFileBtn");
+const fileNameSpan = document.getElementById("fileName");
 
-attachFileBtn.addEventListener('click', () => {
+attachFileBtn.addEventListener("click", () => {
     fileInput.click();
 });
 
@@ -315,7 +326,10 @@ const saveRequestPopup = document.getElementById("saveRequestPopup");
 
 function hideAllPopups() {
     const popups = [saveDraftPopup, cancelPopup, saveRequestPopup];
-    popups.forEach(popup => (popup.style.display = "none"));
+
+    for (const popup of popups) {
+        popup.style.display = "none";
+    }
 }
 
 function showPopup(popup) {
@@ -335,7 +349,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCancel = document.getElementById("btnCancel");
     const form = document.getElementById("petitionForm");
 
-
     if (btnSaveDraft) {
         btnSaveDraft.addEventListener("click", (event) => {
             event.preventDefault();
@@ -351,34 +364,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
             form.reset();
             const clearError = () => {
-                const invalidFields = document.querySelectorAll('.error-border');
-                invalidFields.forEach(field => {
-                    field.classList.remove('error-border');
-                });
+                const invalidFields = document.querySelectorAll(".error-border");
+
+                for (const invalidField of invalidFields) {
+                    invalidField.classList.remove("error-border");
+                }
             };
             clearError();
-            const checkboxes = form.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-            checkboxes.forEach((checkbox) => {
+            const checkboxes = form.querySelectorAll(
+                'input[type="checkbox"], input[type="radio"]',
+            );
+
+            for (const checkbox of checkboxes) {
                 checkbox.checked = false;
-            });
-            petitionTypeCheckboxes.forEach((checkbox) => {
+            }
+
+            for (const checkbox of petitionTypeCheckboxes) {
                 checkbox.checked = false;
-                checkbox.classList.remove('checked-checkbox');
-                checkbox.classList.remove('disabled-checkbox'); 
-                checkbox.removeAttribute('data-disabled');
-            });
+                checkbox.classList.remove("checked-checkbox");
+                checkbox.classList.remove("disabled-checkbox");
+                checkbox.removeAttribute("data-disabled");
+            }
             showPopup(cancelPopup);
         });
     }
- 
+
     // Prevent popups from closing when clicked inside
-    [saveDraftPopup, cancelPopup, saveRequestPopup].forEach((popup) => {
+    for (popup of [saveDraftPopup, cancelPopup, saveRequestPopup]) {
         popup.addEventListener("click", (event) => {
             event.stopPropagation();
         });
-    });
- 
-     document.addEventListener("click", hideAllPopups);
+    }
+
+    document.addEventListener("click", hideAllPopups);
 
     const viewStatusButton = document.getElementById("viewStatus");
 
@@ -386,11 +404,11 @@ document.addEventListener("DOMContentLoaded", () => {
         viewStatusButton.addEventListener("click", (event) => {
             event.preventDefault();
             event.stopPropagation();
-           
+
             hideAllPopups();
 
             // Redirect
-            window.location.href = '/petition';
+            window.location.href = "/petition";
         });
     }
 });
