@@ -95,10 +95,12 @@
                         <label>ข้อมูลคำร้อง</label>
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="add"> เพิ่มรายวิชา
+                                <input type="checkbox" name="petitionType" value="add/remove"
+                                    class="petition-type-checkbox"> เพิ่มรายวิชา
                             </label>
                             <label>
-                                <input type="checkbox" name="petitionType" value="drop"> ถอนรายวิชา
+                                <input type="checkbox" name="petitionType" value="drop" class="petition-type-checkbox">
+                                ถอนรายวิชา
                             </label>
                         </div>
                     </div>
@@ -148,7 +150,8 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="resign"> ลาออก ตั้งแต่
+                                <input type="checkbox" name="petitionType" value="resign"
+                                    class="petition-type-checkbox"> ลาออก ตั้งแต่
                             </label>
                         </div>
                     </div>
@@ -176,7 +179,8 @@
                     <div class="form-group">
                         <div class="checkbox-group">
                             <label>
-                                <input type="checkbox" name="petitionType" value="other"> อื่น ๆ
+                                <input type="checkbox" name="petitionType" value="other" class="petition-type-checkbox">
+                                อื่น ๆ
                             </label>
                         </div>
                     </div>
@@ -194,14 +198,42 @@
                     <div class="form-group">
                         <label>แนบไฟล์</label>
                         <button type="button" class="btn btn-secondary" id="attachFileBtn">แนบไฟล์</button>
+                        <input type="file" id="fileInput" style="display:none;" name="fileInput">
                     </div>
 
                     <div class="button-group">
                         <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
-                        <button type="button" class="btn btn-outline">บันทึกแบบร่าง</button>
-                        <button type="button" class="btn btn-danger">ยกเลิก</button>
-                        <button type="submit" class="btn btn-success">บันทึกคำร้อง</button>
+                        <button type="button" id="btnSaveDraft" class="btn btn-outline">บันทึกแบบร่าง</button>
+                        <button type="button" id="btnCancel" class="btn btn-danger">ยกเลิก</button>
+                        <button type="submit" id="btnSaveRequest" class="btn btn-success">บันทึกคำร้อง</button>
                     </div>
+
+                    <!-- Popup: Save Draft -->
+                    <div id="saveDraftPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">บันทึกแบบร่างแล้ว</p>
+                            <button class="view-btn">ดูแบบร่างของฉัน</button>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Cancel Success -->
+                    <div id="cancelPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ยกเลิกสำเร็จ</p>
+                        </div>
+                    </div>
+
+                    <!-- Popup: Save Request -->
+                    <div id="saveRequestPopup" class="Popupfinishrequest">
+                        <div class="popup-content">
+                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
+                            <p class="popup-message">ส่งคำร้องแล้ว</p>
+                            <button class="view-btn">ดูคำร้องของฉัน</button>
+                        </div>
+                    </div>
+
                 </form>
             </main>
         </div>
