@@ -11,6 +11,7 @@ import authRouter from "./handler/auth.js";
 import petitionRouter from "./handler/petition.js";
 import commentRouter from "./handler/comment.js";
 import fileRouter from "./handler/file.js";
+import approvalRouter from "./handler/approval.js";
 
 import userRouter from "./handler/user.js";
 import { createUser } from "./server/db/user.js";
@@ -48,8 +49,9 @@ app.use(fileRouter);
 app.use(petitionRouter);
 app.use(commentRouter);
 app.use(userRouter);
+app.use(approvalRouter);
 
-app.get("/", (req, res) => {
+app.get("/", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
