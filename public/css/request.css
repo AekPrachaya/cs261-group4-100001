@@ -1,7 +1,7 @@
 :root {
-    --primary-color: #625CFF;
-    --danger-color: #F26868;
-    --success-color: #625CFF;
+    --primary-color: #625cff;
+    --danger-color: #f26868;
+    --success-color: #625cff;
     --secondary-color: #a4b0be;
 }
 
@@ -136,7 +136,8 @@ input[type="checkbox"].checked-checkbox {
 input[type="checkbox"].disabled-checkbox {
     background-color: lightgray;
     border-color: gray;
-    pointer-events: all; /* Allow clicks on disabled checkboxes */
+    pointer-events: all;
+    /* Allow clicks on disabled checkboxes */
 }
 
 /* Error border for when a disabled checkbox is clicked */
@@ -180,7 +181,7 @@ textarea.form-control {
 }
 
 .btn-success {
-    background-color: var(--primary-color); 
+    background-color: var(--primary-color);
     color: white;
 }
 
@@ -200,46 +201,46 @@ textarea.form-control {
     position: absolute;
     top: 40px;
     right: 0;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     width: 80px;
     z-index: 100;
-  }
-  
-  /* ซ่อนป๊อปอัพ */
-  .hidden {
+}
+
+/* ซ่อนป๊อปอัพ */
+.hidden {
     display: none;
-  }
-  
-  /* ปุ่มในป๊อปอัพ */
-  .popup-btn {
+}
+
+/* ปุ่มในป๊อปอัพ */
+.popup-btn {
     background: none;
     border: none;
     font-size: 16px;
     padding: 10px 20px;
     text-align: center;
     cursor: pointer;
-  }
-  
-  /* สไตล์สำหรับปุ่ม Profile */
-  .profile-btn {
+}
+
+/* สไตล์สำหรับปุ่ม Profile */
+.profile-btn {
     color: black;
-  }
-  
-  /* สไตล์สำหรับปุ่ม Logout */
-  .logout-btn {
-    color: #F26868;
-  }
-  
-  /* เส้นแบ่งระหว่างปุ่ม */
-  .divider {
+}
+
+/* สไตล์สำหรับปุ่ม Logout */
+.logout-btn {
+    color: #f26868;
+}
+
+/* เส้นแบ่งระหว่างปุ่ม */
+.divider {
     margin: 0;
     border: none;
     border-top: 1px solid #ddd;
-  }
+}
 
 /* Popup หลัก */
 .Popupfinishrequest {
@@ -248,18 +249,20 @@ textarea.form-control {
     left: 50%;
     width: auto;
     height: auto;
-    display: none; /* ซ่อน Popup เริ่มต้น */
+    display: none;
+    /* ซ่อน Popup เริ่มต้น */
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 
 .Popupfinishrequest.active {
-    display: flex; /* แสดง Popup เมื่อมีคลาส active */
+    display: flex;
+    /* แสดง Popup เมื่อมีคลาส active */
 }
 
 .Popupfinishrequest .popup-content {
-    background-color: #FFFFFF;
+    background-color: #ffffff;
     border-radius: 10px;
     text-align: center;
     padding: 20px;
@@ -282,7 +285,7 @@ textarea.form-control {
 
 .Popupfinishrequest .view-btn {
     background-color: #000080;
-    color: #FFFFFF;
+    color: #ffffff;
     border: none;
     padding: 10px 20px;
     font-size: 14px;
@@ -296,14 +299,12 @@ textarea.form-control {
         flex-direction: column;
         gap: 10px;
     }
-    
+
     .button-group {
         flex-direction: column;
     }
-    
+
     .btn {
         width: 100%;
     }
 }
-
-

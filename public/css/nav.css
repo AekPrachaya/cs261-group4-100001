@@ -37,7 +37,6 @@ body {
     /* เว้นระยะห่างด้านบน */
 }
 
-
 .main-container {
     flex-grow: 1;
     padding: 30px;
@@ -96,7 +95,7 @@ body {
 }
 
 .sidebar .menu li a {
-    color: #1D1D1F;
+    color: #1d1d1f;
     text-decoration: none;
     padding: 10px;
     display: block;
@@ -105,7 +104,7 @@ body {
 
 .sidebar .menu li a.active,
 .sidebar .menu li a:hover {
-    background-color: #625CFF;
+    background-color: #625cff;
     color: white;
 }
 
@@ -117,7 +116,6 @@ body {
     padding-top: 40px;
     border-top: 1px solid rgb(198, 189, 189);
     position: relative;
-
 }
 
 #user-info-name,
@@ -126,11 +124,11 @@ body {
 }
 
 #user-info-name {
-    color: #1D1D1F;
+    color: #1d1d1f;
 }
 
 #user-info-id {
-    color: #86868A;
+    color: #86868a;
 }
 
 .user-info a {
@@ -147,7 +145,6 @@ body {
 
     top: 1%;
     transform: translateX(10%) translateY(-30%);
-
 }
 
 .pop-up button {
@@ -161,18 +158,18 @@ body {
 }
 
 .pop-up button:hover {
-    background-color: #86868A;
+    background-color: #86868a;
 }
 
 #pop-up-profile {
-    color: #625CFF;
+    color: #625cff;
     border-radius: 5px 5px 0 0;
     border: none;
     box-shadow: 0 4px 8px #0000004a;
 }
 
 #pop-up-profile:hover {
-    background-color: #625CFF;
+    background-color: #625cff;
     color: white;
 }
 
@@ -181,7 +178,6 @@ body {
     border-radius: 0 0 5px 5px;
     border: none;
     box-shadow: 0 4px 8px #0000004a;
-
 }
 
 #pop-up-logout:hover {
@@ -197,7 +193,6 @@ body {
 .pop-up-icon-spin {
     transform: rotate(180deg);
 }
-
 
 @media (max-width: 768px) {
     .sidebar {
