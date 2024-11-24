@@ -13,11 +13,13 @@ import {
 } from "../server/document.js";
 import { insertComment } from "../server/db/comment.js";
 import { getDocumentsByPetitionId } from "../server/db/document.js";
+import { createApproval } from "../server/db/approval.js";
 
 const router = express.Router();
 
 router.post("/api/petition", async (req, res) => {
 	const { type, content } = req.body;
+
 	if (!type || !content) {
 		return res.status(400).json({ error: "Type and content are required" });
 	}
@@ -28,9 +30,13 @@ router.post("/api/petition", async (req, res) => {
 		}
 
 		if (result) {
-			insertComment({
+			const comment = await insertComment({
 				petition_id: result.data.id,
 			});
+			if (!comment) {
+				return res.status(500).json({ error: "Failed to create comment" });
+			}
+			await createApproval(result.data.id, comment.id);
 			return res.status(200).json({ data: result.data });
 		}
 		return res.status(400).json({ error: "Invalid type" });
@@ -168,6 +174,7 @@ router.put("/api/petition", async (req, res) => {
 /**
  * Insert add/remove course document to the database.
  * @param {Content} content - The content object containing course details.
+ * @returns {Promise<Petition>} The inserted row data.
  */
 const addOrRemoveCourses = async (content) => {
 	if (!content) {
