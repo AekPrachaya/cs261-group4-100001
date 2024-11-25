@@ -116,11 +116,6 @@ body {
       width: 100%;
   }
   
-  .petition-title {
-      font-size: 1.2rem;
-      font-weight: bold;
-  }
-  
   .menu {
       list-style: none;
       padding: 0;
@@ -159,16 +154,6 @@ body {
     font-size: 2.25rem;
   }
   
-  .tabs {
-    display: flex;
-    justify-content: space-between;
-    gap: 5%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    background-color: none;
-    font-size: 10rem;
-  }
-  
   .tab-btn {
     background-color: transparent;
     border: none;
@@ -191,12 +176,12 @@ body {
   
   .tabs {
       display: flex;
-      justify-content: space-between;
-      gap: 5%;
+      gap: 127px;
       margin-top: 30px;
       margin-bottom: 30px;
       background-color: none;
-      font-size: 10rem;
+      font-size: 24px;
+      font-weight: 32;
   }
   
   .tab-btn {
