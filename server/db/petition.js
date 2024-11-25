@@ -36,6 +36,16 @@ export const getPetitions = async (student_id) => {
 	return rows;
 };
 
+export const getPetitionsByRole = async (role) => {
+	const { rows } = await POOL.query(
+		`SELECT p.*
+        FROM petitions p
+        JOIN approvals a ON p.id = a.petition_id
+        WHERE a.${role}_id IS NULL`,
+	);
+	return rows;
+};
+
 /** Get a petition by petition_id
  * @param {string} petition_id
  * @returns {Promise<Object>} petition
