@@ -14,6 +14,13 @@ body {
     flex-direction: column;
     gap: 10px;
     /* ระยะห่างระหว่างรายการเมนู */
+    list-style: none;
+    padding: 0;
+    margin-bottom: 64px;
+    height: 708px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
   
   .user-info {
@@ -37,13 +44,6 @@ body {
   .petition-title {
     font-size: 1.2rem;
     font-weight: bold;
-  }
-
-  .menu {
-    list-style: none;
-    padding: 0;
-    margin-bottom: 64px;
-    height: 708px;
   }
   
   .menu li {
@@ -72,50 +72,9 @@ body {
     background-color: #f9f9f9;
   }
   
-  .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      /* ระยะห่างระหว่างรายการเมนู */
-  }
-  
-  .user-info {
-      margin-top: auto;
-      /* ดันส่วน "ชื่อผู้ใช้งาน" ให้ลงไปด้านล่าง */
-      padding-top: 20px;
-      /* เพิ่มระยะห่างด้านบนของ "ชื่อผู้ใช้งาน" */
-      border-top: 1px solid #ddd;
-      /* เส้นแบ่งด้านบน */
-      font-size: 0.9rem;
-      color: gray;
-      text-align: left;
-      /* จัดข้อความชิดซ้าย */
-  }
-  
   .container {
       display: flex;
       width: 100%;
-  }
-  
-  .menu {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-  }
-  
-  .menu li {
-      margin-bottom: 15px;
-  }
-  
-  .menu li a {
-      text-decoration: none;
-      color: #333;
-      font-size: 1rem;
-  }
-  
-  .menu li a.active {
-      color: #007bff;
-      font-weight: bold;
   }
   
   .user-info {
