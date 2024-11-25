@@ -80,6 +80,10 @@ app.get('/advisor', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'advisor.html'));
 })
 
+app.get('/check', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'html', 'check.html'));
+})
+
 // DEMO: Create new advisor, staff, instructor, dean
 await createUser("advisor", "123", "advisor");
 await createUser("staff", "123", "staff");
