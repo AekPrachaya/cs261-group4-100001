@@ -4,8 +4,7 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  /* เปลี่ยน height เป็น fit content เพื่อให้ body ขยายตาม content */
-  height: fit-content;
+  height: 100vh;
   background-color: #f9f9f9;
 }
 
@@ -66,90 +65,17 @@ body {
 }
 
 .menu li a.active {
-  color: #007BFF;
+  color: #007bff;
   font-weight: bold;
 }
 
 .user-info {
   font-size: 0.9rem;
   color: gray;
-  font-family: "Open Sans", sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  height: 100vh;
-  background-color: #f9f9f9;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* ดันเนื้อหาด้านบนและด้านล่างให้ชิดขอบ */
-    height: 100%;
-    /* ให้ Sidebar ขยายเต็มความสูงของหน้าจอ */
-    padding: 20px;
-}
-
-.menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* ระยะห่างระหว่างรายการเมนู */
-}
-
-.user-info {
-    margin-top: auto;
-    /* ดันส่วน "ชื่อผู้ใช้งาน" ให้ลงไปด้านล่าง */
-    padding-top: 20px;
-    /* เพิ่มระยะห่างด้านบนของ "ชื่อผู้ใช้งาน" */
-    border-top: 1px solid #ddd;
-    /* เส้นแบ่งด้านบน */
-    font-size: 0.9rem;
-    color: gray;
-    text-align: left;
-    /* จัดข้อความชิดซ้าย */
-}
-
-.container {
-    display: flex;
-    width: 100%;
-}
-
-.petition-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
-.menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.menu li {
-    margin-bottom: 15px;
-}
-
-.menu li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1rem;
-}
-
-.menu li a.active {
-    color: #007bff;
-    font-weight: bold;
-}
-
-.user-info {
-    font-size: 0.9rem;
-    color: gray;
 }
 
 /* Main Content */
 .content {
-  height: fit-content;
   width: 80%;
   padding: 40px;
 }
@@ -180,36 +106,6 @@ h2 {
 .tab-btn.active {
   background-color: #000080;
   color: white;
-  width: 80%;
-  padding: 40px;
-}
-
-h2 {
-    margin-bottom: 20px;
-    font-size: 2.25rem;
-}
-
-.tabs {
-    display: flex;
-    justify-content: space-between;
-    gap: 5%;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    background-color: none;
-    font-size: 10rem;
-}
-
-.tab-btn {
-    background-color: transparent;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tab-btn.active {
-    background-color: #000080;
-    color: white;
 }
 
 /* กล่องใหญ่ครอบคำร้องทั้งหมด */
@@ -235,7 +131,8 @@ h2 {
 .requests-container {
   display: flex;
   flex-direction: column;
-  gap: 20px;/* ระยะห่างระหว่างคำร้อง */
+  gap: 20px;
+  /* ระยะห่างระหว่างคำร้อง */
 }
 
 /* กล่องคำร้องแต่ละอัน */
@@ -246,9 +143,12 @@ h2 {
   border-radius: 10px;
   padding: 15px;
   display: flex;
-  justify-content: space-between;/* เนื้อหาชิดซ้าย ปุ่มชิดขวา */
-  align-items: flex-start;/* จัดให้อยู่ในจุดเริ่มต้น */
-  height: 15rem;/* กำหนดความสูง */
+  justify-content: space-between;
+  /* เนื้อหาชิดซ้าย ปุ่มชิดขวา */
+  align-items: flex-start;
+  /* จัดให้อยู่ในจุดเริ่มต้น */
+  height: 15rem;
+  /* กำหนดความสูง */
 }
 
 /* ข้อความคำร้อง */
@@ -276,15 +176,15 @@ h2 {
 }
 
 .edit-btn {
-  background-color: #86868A;
+  background-color: #86868a;
   /* สีเทา */
-  color: #1D1D1F;
+  color: #1d1d1f;
   /* สีข้อความ */
   padding: 10px 20px;
   /* ระยะห่างภายในปุ่ม */
   border: none;
   /* ลบเส้นขอบ */
-  border-radius: 20px 0 0 20px;
+  border-radius: 8px ;
   /* มุมโค้งเฉพาะด้านซ้าย */
   font-size: 1rem;
   /* ขนาดตัวอักษร */
@@ -295,15 +195,15 @@ h2 {
 }
 
 .delete-btn {
-  background-color: #F26868;
+  background-color: #f26868;
   /* สีแดง */
-  color: #1D1D1F;
+  color: #1d1d1f;
   /* สีข้อความ */
   padding: 10px 20px;
   /* ระยะห่างภายในปุ่ม */
   border: none;
   /* ลบเส้นขอบ */
-  border-radius: 0 20px 20px 0;
+  border-radius: 8px;
   /* มุมโค้งเฉพาะด้านขวา */
   font-size: 1rem;
   /* ขนาดตัวอักษร */
@@ -315,46 +215,46 @@ h2 {
 
 /* Pop up */
 .popup {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    width: 80px;
-    z-index: 100;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+  z-index: 100;
 }
 
 /* ซ่อนป๊อปอัพ */
 .hidden {
-    display: none;
+  display: none;
 }
 
 /* ปุ่มในป๊อปอัพ */
 .popup-btn {
-    background: none;
-    border: none;
-    font-size: 16px;
-    padding: 10px 20px;
-    text-align: center;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 10px 20px;
+  text-align: center;
+  cursor: pointer;
 }
 
 /* สไตล์สำหรับปุ่ม Profile */
 .profile-btn {
-    color: black;
+  color: black;
 }
 
 /* สไตล์สำหรับปุ่ม Logout */
 .logout-btn {
-    color: #f26868;
+  color: #f26868;
 }
 
 /* เส้นแบ่งระหว่างปุ่ม */
 .divider {
-    margin: 0;
-    border: none;
-    border-top: 1px solid #ddd;
+  margin: 0;
+  border: none;
+  border-top: 1px solid #ddd;
 }
