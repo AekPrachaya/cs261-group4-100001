@@ -8,10 +8,7 @@ body {
     height: fit-content;
     background-color: #f9f9f9;
   }
-  .sidebar{
-    gap: 16px;
-    padding: 16px;
-  }
+  
   .menu {
     display: flex;
     flex-direction: column;
