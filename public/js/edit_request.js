@@ -345,71 +345,195 @@ document.addEventListener("DOMContentLoaded", () => {
     applyResetListeners();
     displayUserInformation();
 
-        // Handle other actions like save draft or cancel
-        const btnSaveDraft = document.getElementById("btnSaveDraft");
-        const btnCancel = document.getElementById("btnCancel");
-        const form = document.getElementById("petitionForm");
-    
-        if (btnSaveDraft) {
-            btnSaveDraft.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-                showPopup(saveDraftPopup);
-            });
-        }
-    
-        if (btnCancel && form) {
-            btnCancel.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-    
-                form.reset();
-                const clearError = () => {
-                    const invalidFields = document.querySelectorAll(".error-border");
-    
-                    for (const invalidField of invalidFields) {
-                        invalidField.classList.remove("error-border");
-                    }
-                };
-                clearError();
-                const checkboxes = form.querySelectorAll(
-                    'input[type="checkbox"], input[type="radio"]',
-                );
-    
-                for (const checkbox of checkboxes) {
-                    checkbox.checked = false;
+    // Handle other actions like save draft or cancel
+    const btnSaveDraft = document.getElementById("btnSaveDraft");
+    const btnCancel = document.getElementById("btnCancel");
+    const form = document.getElementById("petitionForm");
+
+    if (btnSaveDraft) {
+        btnSaveDraft.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            showPopup(saveDraftPopup);
+        });
+    }
+
+    if (btnCancel && form) {
+        btnCancel.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            form.reset();
+            const clearError = () => {
+                const invalidFields = document.querySelectorAll(".error-border");
+
+                for (const invalidField of invalidFields) {
+                    invalidField.classList.remove("error-border");
                 }
-    
-                for (const checkbox of petitionTypeCheckboxes) {
-                    checkbox.checked = false;
-                    checkbox.classList.remove("checked-checkbox");
-                    checkbox.classList.remove("disabled-checkbox");
-                    checkbox.removeAttribute("data-disabled");
-                }
-                showPopup(cancelPopup);
-            });
-        }
-    
-        // Prevent popups from closing when clicked inside
-        for (popup of [saveDraftPopup, cancelPopup, saveRequestPopup]) {
-            popup.addEventListener("click", (event) => {
-                event.stopPropagation();
-            });
-        }
-    
-        document.addEventListener("click", hideAllPopups);
-    
-        const viewStatusButton = document.getElementById("viewStatus");
-    
-        if (viewStatusButton) {
-            viewStatusButton.addEventListener("click", (event) => {
-                event.preventDefault();
-                event.stopPropagation();
-    
-                hideAllPopups();
-    
-                // Redirect
-                window.location.href = "/petition";
-            });
-        }
+            };
+            clearError();
+            const checkboxes = form.querySelectorAll(
+                'input[type="checkbox"], input[type="radio"]',
+            );
+
+            for (const checkbox of checkboxes) {
+                checkbox.checked = false;
+            }
+
+            for (const checkbox of petitionTypeCheckboxes) {
+                checkbox.checked = false;
+                checkbox.classList.remove("checked-checkbox");
+                checkbox.classList.remove("disabled-checkbox");
+                checkbox.removeAttribute("data-disabled");
+            }
+            showPopup(cancelPopup);
+        });
+    }
+
+    // Prevent popups from closing when clicked inside
+    for (popup of [saveDraftPopup, cancelPopup, saveRequestPopup]) {
+        popup.addEventListener("click", (event) => {
+            event.stopPropagation();
+        });
+    }
+
+    document.addEventListener("click", hideAllPopups);
+
+    const viewStatusButton = document.getElementById("viewStatus");
+
+    if (viewStatusButton) {
+        viewStatusButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+
+            hideAllPopups();
+
+            // Redirect
+            window.location.href = "/petition";
+        });
+    }
 });
+
+async function createFile(url) {
+    let response = await fetch(url);
+    let data = await response.blob();
+    let metadata = {
+        type: "image/png",
+    };
+    return new File([data], "input.png", metadata);
+}
+
+
+//function ดึงข้อมูลคำร้องด้วย uuid
+async function getPetitionData(id) {
+    const response = await fetch(`api/petition/${id}`);
+    console.log(response);
+    const petition = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
+    console.log(petition); //ใช้ test
+    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content 
+}
+
+//function ดึงข้อมูลไฟล์ของคำร้องด้วย uuid
+async function getPetitionFile(id) {
+    const response = await fetch(`api/files/${id}`);
+    console.log(response);
+    const petitionFile = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
+    console.log(petitionFile); //ใช้ test
+    const file = await createFile(petitionFile.data[0].url);
+    console.log(file);
+    return file; // return เป็น file obj
+}
+
+async function displayPetitionDataInForm() {
+    //text input form
+    const phoneInput = document.querySelector("#form-phone_no");
+    const advisorInput = document.querySelector("#form-advisor");
+    const houseNumberInput = document.querySelector("#form-houseNumber");
+    const villageInput = document.querySelector("#form-village");
+    const subDistrictInput = document.querySelector("#form-subDistrict");
+    const districtInput = document.querySelector("#form-district");
+    const provinceInput = document.querySelector("#form-province");
+    const postalCodeInput = document.querySelector("#form-postal_code");
+    const courseIdInput = document.querySelector("#form-course_id");
+    const sectionInput = document.querySelector("#form-section");
+    const courseNameInput = document.querySelector("#form-courseName");
+    const topicInput = document.querySelector("#form-topic");
+    const reasonTextarea = document.querySelector("#form-reason");
+
+    //select form
+    const yearSelect = document.querySelector("#form-year");
+    const semesterSelect = document.querySelector("#form-semester"); //ไม่มีใน response
+    const resignYearSelect = document.querySelector("#form-resign-year");//ไม่มีใน response
+    const resignSemesterSelect = document.querySelector("#form-resign-semester");//ไม่มีใน response
+
+    //checkbox form
+    const addRemoveCheck = document.querySelector("#form-check-add-remove");
+    const dropCheck = document.querySelector("#form-check-drop");
+    const resignCheck = document.querySelector("#form-check-resign");//ไม่มีใน response
+    const otherCheck = document.querySelector("#form-check-other");//ไม่มีใน response
+
+    //file input
+    const fileInput = document.querySelector("#fileInput");//ไม่เจอใน response
+
+    const petition = await getPetitionData(sessionStorage.getItem("editID"));
+    console.log(petition.data.content);
+
+    const content = petition.data.content; //ใช้เฉพาะรายละเอียดของคำร้อง
+
+    // ใส่ข้อมูลในแต่ละ input เรียงตาม content ในคำร้อง
+    advisorInput.value = content.advisor;
+
+    //courses
+    courseIdInput.value = content.courses[0].course_id;
+    sectionInput.value = content.courses[0].section;
+    courseNameInput.value = content.courses[0].course_name;
+
+    //location
+    districtInput.value = content.location.district;
+    houseNumberInput.value = content.location.house_no;
+    postalCodeInput.value = content.location.postal_code;
+    provinceInput.value = content.location.province;
+    subDistrictInput.value = content.location.sub_district;
+    villageInput.value = content.location.village_no;
+
+    //student info
+    yearSelect.value = content.student_info.year;
+
+
+
+    phoneInput.value = content.phone_no;
+    topicInput.value = content.topic;
+    reasonTextarea.value = content.reason;
+
+    //set file input from cloudinary
+    const dt = new DataTransfer();
+    const file = await getPetitionFile(sessionStorage.getItem("editID"));
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    updateFilename();
+}
+document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
+
+/******************************************/
+const fileI = document.querySelector("#fileInput");
+//function สำหรับอัพเดตชื่อไฟล์ข้างปุ่มอัพโหลดไฟล์
+function updateFilename() {
+    const fileInput = document.querySelector("#fileInput");
+    const fileName = document.querySelector("#file-name");
+    if (fileInput.files.length >= 1) {
+        fileName.textContent = fileInput.files[0].name;
+        fileName.href = window.URL.createObjectURL(fileInput.files[0]);
+        fileName.target = "_blank";
+        fileName.style.cursor = "grab";
+        fileName.style.textDecoration = "underline";
+        fileName.style.pointerEvents = "auto";
+    } else {
+        fileName.textContent = "No file choosen";
+        fileName.href = '';
+        fileName.style.cursor = "not-allowed";
+        fileName.style.textDecoration = "none";
+        fileName.style.pointerEvents = "none";
+    }
+}
+fileI.addEventListener("change", updateFilename);
+
