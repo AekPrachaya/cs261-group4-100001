@@ -69,17 +69,16 @@ function updatePetitionStatus(statusLabel, petitions) {
             petitionCard.classList.add('request-card');
 
             petitionCard.innerHTML = `
-                <div class="request-content">
-                    <p class="request-title">${petition.content.topic}</p>
-                    <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
-                </div>
-                <div class="request-actions">
-                    <button class="check-advisor-btn">เช็คคำร้อง</button>
-                </div>
-            `;
+            <div class="request-content">
+                <p class="request-title">${petition.content.topic}</p>
+                <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
+            </div>
+            <div class="request-actions">
+                <button class="check-advisor-btn">เช็คคำร้อง</button>
+            </div>`;    
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
                 try {
-                    const response = await fetch(`/api/approval/:${petition.id}`, {
+                    const response = await fetch(`/api/approval/${petition.id}`, {
                         method: "GET", 
                         headers: {
                             "Content-Type": "application/json",
@@ -99,26 +98,9 @@ function updatePetitionStatus(statusLabel, petitions) {
                     console.error(e);
                 }
             });
-            petitionCard.querySelector(".edit-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
+            petitionCard.querySelector(".check-advisor-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
                 sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
                 window.location.href = "/check"; //ส่งไปหน้าแก้คำร้อง
-            });
-            petitionCard.querySelector(".delete-btn").addEventListener("click", async function () {//function ปุ่มลบคำร้อง
-                try {
-                    const deleteRes = await fetch(`api/petition/${petition.id}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            id: petition.id, 
-                        })                            
-                    }); 
-                    console.log(deleteRes.json());
-                    window.location.reload();
-                } catch (e) {
-                    console.log(e);
-                }
             });
             container.appendChild(petitionCard);
         });

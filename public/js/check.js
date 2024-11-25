@@ -125,37 +125,31 @@ async function fetchAndUpdate() {
     const petitionId = sessionStorage.getItem("editID")
     console.log(petitionId);
 
-    await fetch(`/api/petitions/${petitionId}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        if (data.data && data.data.length > 0) {
-            const petitionData = data.data[0];  // Get the first petition object
-            console.log('Petition Data:', petitionData);
+    try {
+        const response = await fetch(`/api/petition/${petitionId}`, { 
+            method: "GET", 
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
     
-            // Fill form with fetched petition data
-            document.querySelector('input[name="phone_no"]').value = petitionData.content.phone_no;
-            document.querySelector('input[name="advisor"]').value = petitionData.content.advisor;
-            document.querySelector('input[name="houseNumber"]').value = petitionData.content.location.house_no;
-            document.querySelector('input[name="village"]').value = petitionData.content.location.village_no;
-            document.querySelector('input[name="subDistrict"]').value = petitionData.content.location.sub_district;
-            document.querySelector('input[name="district"]').value = petitionData.content.location.district;
-            document.querySelector('input[name="province"]').value = petitionData.content.location.province;
-            document.querySelector('input[name="postal_code"]').value = petitionData.content.location.postal_code;
-            document.querySelector('input[name="topic"]').value = petitionData.content.topic;
-            document.querySelector('textarea[name="reason"]').value = petitionData.content.reason;
-            // Continue mapping other fields similarly...
-        } else {
-            console.log('No petition data found.');
+        if (!response.ok) {
+            throw new Error(`Error fetching approval: ${response.statusText}`);
         }
-    })
-    .catch((error) => {
-        console.error('Error fetching petition data:', error);
-    });
+    
+        const data = await response.json();
+        console.log("Approval data:", data);
+    
+        // Store the data in petitionData
+        const petitionData = data.data;
+    
+        // Now you can use petitionData as needed, for example, alert it
+        alert(JSON.stringify(petitionData, null, 2));
+    
+    } catch (e) {
+        console.error(e);
+    }
+    
     
 }
 
