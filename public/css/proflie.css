@@ -1,42 +1,12 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-}
-
-/* General Styles */
-body {
-    background-color: #f5f6fa;
-}
-
-.sidebar {
-    min-height: 90vh;
-}
-
-.logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-}
-
-/* Container */
-.main-container {
-    margin: 0 auto;
-    padding: 10px;
-}
-
-.content {
-    width: fit-content;
-    background-color: none;
-    padding: 30px;
-    border-radius: 8px;
-    margin-top: 30px;
-}
-
 h2 {
     margin-bottom: 40px;
     font-size: 36px;
+}
+
+.profile-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .personal-info {
@@ -63,50 +33,4 @@ h2 {
     text-align: left;
     /* จัดข้อความไปทางซ้าย */
     margin-left: 50px;
-}
-
-/* Pop up */
-.popup {
-    position: absolute;
-    top: 40px;
-    right: 0;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    width: 80px;
-    z-index: 100;
-}
-
-/* ซ่อนป๊อปอัพ */
-.hidden {
-    display: none;
-}
-
-/* ปุ่มในป๊อปอัพ */
-.popup-btn {
-    background: none;
-    border: none;
-    font-size: 18px;
-    padding: 10px 20px;
-    text-align: center;
-    cursor: pointer;
-}
-
-/* สไตล์สำหรับปุ่ม Profile */
-.profile-btn {
-    color: black;
-}
-
-/* สไตล์สำหรับปุ่ม Logout */
-.logout-btn {
-    color: #f26868;
-}
-
-/* เส้นแบ่งระหว่างปุ่ม */
-.divider {
-    margin: 0;
-    border: none;
-    border-top: 1px solid #ddd;
 }

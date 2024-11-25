@@ -1,41 +1,7 @@
-:root {
-    --primary-color: #625cff;
-    --danger-color: #f26868;
-    --success-color: #625cff;
-    --secondary-color: #a4b0be;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-}
-
-body {
-    background-color: #f5f6fa;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.header {
-    margin-bottom: 5px;
-}
-
 .logo-container {
     display: flex;
     align-items: center;
     gap: 15px;
-}
-
-.logo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
 }
 
 h1 {
@@ -45,7 +11,6 @@ h1 {
 
 .main-content {
     background-color: white;
-    padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -62,7 +27,8 @@ h2 {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    width: 100%;
+    margin: 0.5rem auto;
 }
 
 .form-row {
@@ -86,7 +52,6 @@ label {
     padding: 8px 12px;
     border: 1px solid #dcdde1;
     border-radius: 4px;
-    font-size: 16px;
 }
 
 .form-control:focus {

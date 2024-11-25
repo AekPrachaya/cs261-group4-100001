@@ -1,9 +1,6 @@
 body {
 	display: flex;
 	justify-content: end;
-	height: 100%;
-	padding: 1rem;
-	background-color: var(--background-color);
 }
 
 .login-container {

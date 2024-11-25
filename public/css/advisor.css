@@ -1,306 +1,222 @@
-/* General Styles */
-body {
-    font-family: "Open Sans", sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    /* เปลี่ยน height เป็น fit content เพื่อให้ body ขยายตาม content */
-    height: fit-content;
-    background-color: #f9f9f9;
-  }
+.petition-title {
+	font-size: 1.2rem;
+	font-weight: bold;
+}
 
-  .menu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* ระยะห่างระหว่างรายการเมนู */
-    list-style: none;
-    padding: 0;
-    margin-bottom: 64px;
-    height: 708px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .user-info {
-    margin-top: auto;
-    /* ดันส่วน "ชื่อผู้ใช้งาน" ให้ลงไปด้านล่าง */
-    padding-top: 20px;
-    /* เพิ่มระยะห่างด้านบนของ "ชื่อผู้ใช้งาน" */
-    border-top: 1px solid #ddd;
-    /* เส้นแบ่งด้านบน */
-    font-size: 0.9rem;
-    color: gray;
-    text-align: left;
-    /* จัดข้อความชิดซ้าย */
-  }
-  
-  .container {
-    display: flex;
-    width: 100%;
-  }
-  
-  .petition-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .menu li {
-    margin-bottom: 15px;
-  }
-  
-  .menu li a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1rem;
-  }
-  
-  .menu li a.active {
-    color: #007BFF;
-    font-weight: bold;
-  }
-  
-  .user-info {
-    font-size: 0.9rem;
-    color: gray;
-    font-family: "Open Sans", sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    height: 100vh;
-    background-color: #f9f9f9;
-  }
-  
-  .container {
-      display: flex;
-      width: 100%;
-  }
-  
-  .user-info {
-      font-size: 0.9rem;
-      color: gray;
-  }
-  
-  /* Main Content */
-  .content {
-    height: fit-content;
-    width: 80%;
-    padding: 40px;
-  }
-  
-  h2 {
-    margin-bottom: 20px;
-    font-size: 2.25rem;
-  }
-  
-  .tab-btn {
-    background-color: transparent;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .tab-btn.active {
-    background-color: #000080;
-    color: white;
-    max-width: 120px;
-    width: 100%;
-    height: 40px;
-  }
-  
-  h2 {
-      margin-bottom: 20px;
-      font-size: 2.25rem;
-  }
-  
-  .tabs {
-      display: flex;
-      gap: 110px;
-      margin-top: 30px;
-      margin-bottom: 30px;
-      background-color: none;
-      font-size: 24px;
-      font-weight: 32;
-  }
-  
-  .tab-btn {
-      background-color: transparent;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-  }
-  
-  .tab-btn.active {
-      background-color: #000080;
-      color: white;
-  }
-  
-  /* กล่องใหญ่ครอบคำร้องทั้งหมด */
-  .requests-wrapper {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    margin-top: 20px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    height: fit-content;
-  }
-  
-  /* หัวข้อคำร้องทั้งหมด */
-  .requests-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* กล่องสำหรับคำร้อง */
-  .requests-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;/* ระยะห่างระหว่างคำร้อง */
-  }
-  
-  /* กล่องคำร้องแต่ละอัน */
-  .request-card {
-    position: relative;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;/* เนื้อหาชิดซ้าย ปุ่มชิดขวา */
-    align-items: flex-start;/* จัดให้อยู่ในจุดเริ่มต้น */
-    height: 15rem;/* กำหนดความสูง */
-  }
-  
-  /* ข้อความคำร้อง */
-  .request-title {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  /* ปุ่มแก้ไขและยกเลิก */
-  .request-actions {
-    position: absolute;
-    /* กำหนดตำแหน่งแบบสัมพัทธ์กับ request-card */
-    bottom: 10px;
-    /* ชิดขอบล่าง 10px */
-    right: 15px;
-    /* ชิดขอบขวา 15px */
-    display: flex;
-    /* จัดเรียงปุ่มในแนวนอน */
-    gap: 5px;
-    /* เพิ่มระยะห่างระหว่างปุ่ม */
-    overflow: hidden;
-    /* ป้องกันมุมโค้งหาย */
-  }
-  
-  .edit-btn {
-    background-color: #86868A;
-    /* สีเทา */
-    color: #1D1D1F;
-    /* สีข้อความ */
-    padding: 10px 20px;
-    /* ระยะห่างภายในปุ่ม */
-    border: none;
-    /* ลบเส้นขอบ */
-    border-radius: 20px 0 0 20px;
-    /* มุมโค้งเฉพาะด้านซ้าย */
-    font-size: 1rem;
-    /* ขนาดตัวอักษร */
-    font-weight: bold;
-    /* ตัวอักษรหนา */
-    cursor: pointer;
-    /* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
-  }
-  
-  .check-advisor-btn {
-    background-color: #86868A;
-    /* สีเทา */
-    color: #1D1D1F;
-    /* สีข้อความ */
-    padding: 10px 20px;
-    /* ระยะห่างภายในปุ่ม */
-    border: none;
-    /* ลบเส้นขอบ */
-    border-radius: 8px ;
-    /* มุมโค้งเฉพาะด้านซ้าย */
-    font-size: 1rem;
-    /* ขนาดตัวอักษร */
-    font-weight: bold;
-    /* ตัวอักษรหนา */
-    cursor: pointer;
-    /* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
-  }
+h2 {
+	margin-bottom: 20px;
+	font-size: 2.25rem;
+}
 
-  .delete-btn {
-    background-color: #F26868;
-    /* สีแดง */
-    color: #1D1D1F;
-    /* สีข้อความ */
-    padding: 10px 20px;
-    /* ระยะห่างภายในปุ่ม */
-    border: none;
-    /* ลบเส้นขอบ */
-    border-radius: 0 20px 20px 0;
-    /* มุมโค้งเฉพาะด้านขวา */
-    font-size: 1rem;
-    /* ขนาดตัวอักษร */
-    font-weight: bold;
-    /* ตัวอักษรหนา */
-    cursor: pointer;
-    /* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
-  }
-  
-  /* Pop up */
-  .popup {
-      position: absolute;
-      top: 40px;
-      right: 0;
-      background: #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      width: 80px;
-      z-index: 100;
-  }
-  
-  /* ซ่อนป๊อปอัพ */
-  .hidden {
-      display: none;
-  }
-  
-  /* ปุ่มในป๊อปอัพ */
-  .popup-btn {
-      background: none;
-      border: none;
-      font-size: 16px;
-      padding: 10px 20px;
-      text-align: center;
-      cursor: pointer;
-  }
-  
-  /* สไตล์สำหรับปุ่ม Profile */
-  .profile-btn {
-      color: black;
-  }
-  
-  /* สไตล์สำหรับปุ่ม Logout */
-  .logout-btn {
-      color: #f26868;
-  }
-  
-  /* เส้นแบ่งระหว่างปุ่ม */
-  .divider {
-      margin: 0;
-      border: none;
-      border-top: 1px solid #ddd;
-  }
-  
+.tab-btn {
+	background-color: transparent;
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.tab-btn.active {
+	background-color: #000080;
+	color: white;
+	max-width: 120px;
+	width: 100%;
+	height: 40px;
+}
+
+h2 {
+	margin-bottom: 20px;
+	font-size: 2.25rem;
+}
+
+.tabs {
+	display: flex;
+	gap: 110px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	background-color: none;
+	font-size: 24px;
+	font-weight: 32;
+}
+
+.tab-btn {
+	background-color: transparent;
+	border: none;
+	padding: 10px 15px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.tab-btn.active {
+	background-color: #000080;
+	color: white;
+}
+
+/* กล่องใหญ่ครอบคำร้องทั้งหมด */
+.requests-wrapper {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	padding: 20px;
+	margin-top: 20px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+	height: fit-content;
+}
+
+/* หัวข้อคำร้องทั้งหมด */
+.requests-title {
+	font-size: 1.5rem;
+	font-weight: bold;
+	margin-bottom: 20px;
+	color: #333;
+}
+
+/* กล่องสำหรับคำร้อง */
+.requests-container {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	/* ระยะห่างระหว่างคำร้อง */
+}
+
+/* กล่องคำร้องแต่ละอัน */
+.request-card {
+	position: relative;
+	background-color: #f4f4f4;
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	padding: 15px;
+	display: flex;
+	justify-content: space-between;
+	/* เนื้อหาชิดซ้าย ปุ่มชิดขวา */
+	align-items: flex-start;
+	/* จัดให้อยู่ในจุดเริ่มต้น */
+	height: 15rem;
+	/* กำหนดความสูง */
+}
+
+/* ข้อความคำร้อง */
+.request-title {
+	margin: 0;
+	font-size: 1rem;
+	font-weight: bold;
+	color: #333;
+}
+
+/* ปุ่มแก้ไขและยกเลิก */
+.request-actions {
+	position: absolute;
+	/* กำหนดตำแหน่งแบบสัมพัทธ์กับ request-card */
+	bottom: 10px;
+	/* ชิดขอบล่าง 10px */
+	right: 15px;
+	/* ชิดขอบขวา 15px */
+	display: flex;
+	/* จัดเรียงปุ่มในแนวนอน */
+	gap: 5px;
+	/* เพิ่มระยะห่างระหว่างปุ่ม */
+	overflow: hidden;
+	/* ป้องกันมุมโค้งหาย */
+}
+
+.edit-btn {
+	background-color: #86868a;
+	/* สีเทา */
+	color: #1d1d1f;
+	/* สีข้อความ */
+	padding: 10px 20px;
+	/* ระยะห่างภายในปุ่ม */
+	border: none;
+	/* ลบเส้นขอบ */
+	border-radius: 20px 0 0 20px;
+	/* มุมโค้งเฉพาะด้านซ้าย */
+	font-size: 1rem;
+	/* ขนาดตัวอักษร */
+	font-weight: bold;
+	/* ตัวอักษรหนา */
+	cursor: pointer;
+	/* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
+}
+
+.check-advisor-btn {
+	background-color: var(--primary-color);
+	/* สีเทา */
+	color: white;
+	/* สีข้อความ */
+	padding: 10px 20px;
+	/* ระยะห่างภายในปุ่ม */
+	border: none;
+	/* ลบเส้นขอบ */
+	border-radius: 8px;
+	/* มุมโค้งเฉพาะด้านซ้าย */
+	font-size: 1rem;
+	/* ขนาดตัวอักษร */
+	/* ตัวอักษรหนา */
+	cursor: pointer;
+	/* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
+}
+
+.delete-btn {
+	background-color: #f26868;
+	/* สีแดง */
+	color: #1d1d1f;
+	/* สีข้อความ */
+	padding: 10px 20px;
+	/* ระยะห่างภายในปุ่ม */
+	border: none;
+	/* ลบเส้นขอบ */
+	border-radius: 0 20px 20px 0;
+	/* มุมโค้งเฉพาะด้านขวา */
+	font-size: 1rem;
+	/* ขนาดตัวอักษร */
+	font-weight: bold;
+	/* ตัวอักษรหนา */
+	cursor: pointer;
+	/* เปลี่ยนเคอร์เซอร์เมื่อชี้ */
+}
+
+/* Pop up */
+.popup {
+	position: absolute;
+	top: 40px;
+	right: 0;
+	background: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+	width: 80px;
+	z-index: 100;
+}
+
+/* ซ่อนป๊อปอัพ */
+.hidden {
+	display: none;
+}
+
+/* ปุ่มในป๊อปอัพ */
+.popup-btn {
+	background: none;
+	border: none;
+	font-size: 16px;
+	padding: 10px 20px;
+	text-align: center;
+	cursor: pointer;
+}
+
+/* สไตล์สำหรับปุ่ม Profile */
+.profile-btn {
+	color: black;
+}
+
+/* สไตล์สำหรับปุ่ม Logout */
+.logout-btn {
+	color: #f26868;
+}
+
+/* เส้นแบ่งระหว่างปุ่ม */
+.divider {
+	margin: 0;
+	border: none;
+	border-top: 1px solid #ddd;
+}
