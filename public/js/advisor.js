@@ -22,8 +22,8 @@ async function fetchAndUpdate() {
                 const inProgress = [];
                 const denied = [];
 
-                for (const petition of data.data) {
-                    console.log("Processing petition:", petition); // Log each petition
+                data.data.forEach(petition => {
+                    console.log("Processing petition:", petition);
                     switch (petition.status) {
                         case "approved":
                             approved.push(petition);
@@ -37,17 +37,17 @@ async function fetchAndUpdate() {
                         default:
                             console.warn(`Unknown petition status: ${petition.status}`);
                     }
-                }
+                });
 
                 // Store petition status globally
                 window.petitionStatus = {
                     denied,
                     inProgress,
-                    approved: data.data,
+                    approved
                 };
 
                 // Display all petitions by default
-                updatePetitionStatus("รอดำเนินการ", data.data);
+                updatePetitionStatus("รอดำเนินการ", inProgress);
             } else {
                 console.error("No petitions found or incorrect data format");
             }
@@ -74,11 +74,31 @@ function updatePetitionStatus(statusLabel, petitions) {
                     <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
                 </div>
                 <div class="request-actions">
-                    <button class="edit-btn">แก้ไข</button>
-                    <button class="delete-btn">ยกเลิก</button>
+                    <button class="check-advisor-btn">เช็คคำร้อง</button>
                 </div>
             `;
-
+            petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
+                try {
+                    const response = await fetch(`/api/approval/:${petition.id}`, {
+                        method: "GET", 
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+            
+                    if (!response.ok) {
+                        throw new Error(`Error fetching approval: ${response.statusText}`);
+                    }
+            
+                    const data = await response.json();
+                    console.log("Approval data:", data);
+                    alert(
+                        JSON.stringify(data.data, null, 2) 
+                    );
+                } catch (e) {
+                    console.error(e);
+                }
+            });
             petitionCard.querySelector(".edit-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
                 sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
                 window.location.href = "/check"; //ส่งไปหน้าแก้คำร้อง
@@ -91,9 +111,9 @@ function updatePetitionStatus(statusLabel, petitions) {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            id: petition.id,
-                        })
-                    });
+                            id: petition.id, 
+                        })                            
+                    }); 
                     console.log(deleteRes.json());
                     window.location.reload();
                 } catch (e) {
