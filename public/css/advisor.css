@@ -8,17 +8,10 @@ body {
     height: fit-content;
     background-color: #f9f9f9;
   }
-  
-  .sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    /* ดันเนื้อหาด้านบนและด้านล่างให้ชิดขอบ */
-    height: 100%;
-    /* ให้ Sidebar ขยายเต็มความสูงของหน้าจอ */
-    padding: 20px;
+  .sidebar{
+    gap: 16px;
+    padding: 16px;
   }
-  
   .menu {
     display: flex;
     flex-direction: column;
@@ -48,11 +41,12 @@ body {
     font-size: 1.2rem;
     font-weight: bold;
   }
-  
+
   .menu {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin-bottom: 64px;
+    height: 708px;
   }
   
   .menu li {
@@ -79,16 +73,6 @@ body {
     display: flex;
     height: 100vh;
     background-color: #f9f9f9;
-  }
-  
-  .sidebar {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      /* ดันเนื้อหาด้านบนและด้านล่างให้ชิดขอบ */
-      height: 100%;
-      /* ให้ Sidebar ขยายเต็มความสูงของหน้าจอ */
-      padding: 20px;
   }
   
   .menu {
