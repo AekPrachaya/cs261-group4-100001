@@ -55,9 +55,6 @@ app.get("/", (_, res) => {
     res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
-app.get("/", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "login.html"));
-});
 app.use(isAuthenticated);
 
 app.get("/petition", (_, res) => {
@@ -72,17 +69,17 @@ app.get("/request", (_, res) => {
     res.sendFile(path.join(__dirname, "public", "html", "request.html"));
 });
 
-app.get('/edit', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'request_edit.html'));
-})
+app.get("/edit", (_, res) => {
+    res.sendFile(path.join(__dirname, "public", "html", "request_edit.html"));
+});
 
-app.get('/advisor', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'advisor.html'));
-})
+app.get("/advisor", (_, res) => {
+    res.sendFile(path.join(__dirname, "public", "html", "advisor.html"));
+});
 
-app.get('/check', (_, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'check.html'));
-})
+app.get("/check", (_, res) => {
+    res.sendFile(path.join(__dirname, "public", "html", "check.html"));
+});
 
 // DEMO: Create new advisor, staff, instructor, dean
 await createUser("advisor", "123", "advisor");
