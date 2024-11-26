@@ -75,19 +75,21 @@ function updatePetitionStatus(statusLabel, petitions) {
             </div>
             <div class="request-actions">
                 <button class="check-advisor-btn">เช็คคำร้อง</button>
-            </div>`;    
+            </div>`;
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
                 try {
              
                     const response = await fetch(`/api/approval/${petition.id}`, {
                         method: "GET",
-                        headers: { "Content-Type": "application/json" },
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
                     });
-            
+
                     if (!response.ok) {
                         throw new Error(`Error fetching approval: ${response.statusText}`);
                     }
-            
+
                     const data = await response.json();
                     console.log("Approval data:", data);
             

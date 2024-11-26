@@ -1,198 +1,198 @@
 .sidebar {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	width: 28rem;
-	height: 95vh;
-	/* ให้ขนาดสูงตามเนื้อหา */
-	background-color: white;
-	padding: 16px;
-	border-radius: 12px;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-	/* overflow-y: auto; */
-	position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28rem;
+    height: 95vh;
+    /* ให้ขนาดสูงตามเนื้อหา */
+    background-color: white;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* overflow-y: auto; */
+    position: fixed;
 }
 
 .header {
-	display: flex;
-	align-items: center;
-	margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 .sidebar-toggle {
-	display: none;
-	background: none;
-	border: none;
-	font-size: 24px;
-	margin-right: 15px;
-	cursor: pointer;
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    margin-right: 15px;
+    cursor: pointer;
 }
 
 .sidebar .logo {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	margin-bottom: 30px;
-	margin-top: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-top: 15px;
 }
 
 .sidebar .logo img {
-	width: 64px;
-	height: 64px;
-	margin-right: 10px;
+    width: 64px;
+    height: 64px;
+    margin-right: 10px;
 }
 
 .sidebar .Petition {
-	font-size: 36px;
-	/* ปรับขนาดตัวอักษรตามต้องการ */
-	font-weight: bold;
-	/* ทำให้ตัวหนา */
+    font-size: 36px;
+    /* ปรับขนาดตัวอักษรตามต้องการ */
+    font-weight: bold;
+    /* ทำให้ตัวหนา */
 }
 
 .sidebar .menu {
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .sidebar .menu li {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .sidebar .menu li a {
-	color: #1d1d1f;
-	text-decoration: none;
-	padding: 10px;
-	display: block;
-	border-radius: 5px;
+    color: #1d1d1f;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
 }
 
 .sidebar .menu li a.active,
 .sidebar .menu li a:hover {
-	background-color: #625cff;
-	color: white;
+    background-color: #625cff;
+    color: white;
 }
 
 .sidebar .menu li a active {
-	background-color: #625cff;
-	color: white;
+    background-color: #625cff;
+    color: white;
 }
 
 .user-info {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	padding: 10px;
-	padding-top: 40px;
-	border-top: 1px solid var(--divider-color);
-	position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    padding-top: 40px;
+    border-top: 1px solid var(--divider-color);
+    position: relative;
 }
 
 #user-info-name,
 #user-info-id {
-	margin: 2px;
+    margin: 2px;
 }
 
 #user-info-name {
-	color: #1d1d1f;
+    color: #1d1d1f;
 }
 
 #user-info-id {
-	color: #86868a;
+    color: #86868a;
 }
 
 .user-info a {
-	align-self: center;
+    align-self: center;
 }
 
 /* pop up profile and logout button */
 
 .pop-up {
-	display: none;
-	width: 80px;
-	flex-direction: column;
-	position: absolute;
+    display: none;
+    width: 80px;
+    flex-direction: column;
+    position: absolute;
 
-	top: 1%;
-	transform: translateX(10%) translateY(-30%);
+    top: 1%;
+    transform: translateX(10%) translateY(-30%);
 }
 
 .pop-up button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 70px;
-	background-color: white;
-	cursor: pointer;
-	height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    background-color: white;
+    cursor: pointer;
+    height: 30px;
 }
 
 .pop-up button:hover {
-	background-color: #86868a;
+    background-color: #86868a;
 }
 
 #pop-up-profile {
-	color: #625cff;
-	border-radius: 5px 5px 0 0;
-	border: none;
-	box-shadow: 0 4px 8px #0000004a;
+    color: #625cff;
+    border-radius: 5px 5px 0 0;
+    border: none;
+    box-shadow: 0 4px 8px #0000004a;
 }
 
 #pop-up-profile:hover {
-	background-color: #625cff;
-	color: white;
+    background-color: #625cff;
+    color: white;
 }
 
 #pop-up-logout {
-	color: red;
-	border-radius: 0 0 5px 5px;
-	border: none;
-	box-shadow: 0 4px 8px #0000004a;
+    color: red;
+    border-radius: 0 0 5px 5px;
+    border: none;
+    box-shadow: 0 4px 8px #0000004a;
 }
 
 #pop-up-logout:hover {
-	background-color: red;
-	color: white;
+    background-color: red;
+    color: white;
 }
 
 #pop-up-icon {
-	cursor: pointer;
-	transition: transform 1s;
+    cursor: pointer;
+    transition: transform 1s;
 }
 
 .pop-up-icon-spin {
-	transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 @media (max-width: 768px) {
-	.sidebar {
-		display: flex;
-		justify-content: space-between;
-		position: fixed;
-		left: -384px;
-		top: 30px;
-		/* คงระยะห่าง 30px ด้านบน */
-		bottom: 30px;
-		/* เว้นระยะด้านล่าง */
-		z-index: 1000;
-		transition: left 0.3s ease;
-	}
+    .sidebar {
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
+        left: -384px;
+        top: 30px;
+        /* คงระยะห่าง 30px ด้านบน */
+        bottom: 30px;
+        /* เว้นระยะด้านล่าง */
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
 
-	.sidebar.active {
-		left: 30px;
-		/* เมื่อ sidebar แสดง */
-	}
+    .sidebar.active {
+        left: 30px;
+        /* เมื่อ sidebar แสดง */
+    }
 
-	.sidebar-toggle {
-		display: block;
-	}
+    .sidebar-toggle {
+        display: block;
+    }
 
-	.layout {
-		flex-direction: column;
-		gap: 30px;
-	}
+    .layout {
+        flex-direction: column;
+        gap: 30px;
+    }
 
-	.btn {
-		width: 100%;
-	}
+    .btn {
+        width: 100%;
+    }
 }
