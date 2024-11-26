@@ -82,8 +82,8 @@ function updatePetitionStatus(statusLabel, petitions) {
                     <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
                 </div>
                 <div class="request-actions">
+                    <button class="delete-btn">ลบคำร้อง</button>
                     <button class="edit-btn">แก้ไข</button>
-                    <button class="delete-btn">ยกเลิก</button>
                 </div>
             `;
 

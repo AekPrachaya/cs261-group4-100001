@@ -124,8 +124,21 @@ function displayModal(img_source, message) {
 async function approve() {
     // function ใช้ approve คำร้อง
     try {
+        const session = await fetch("/api/session");
+
+        const sessionData = await session.json();
         const data = await fetch(
             `/api/approval/${sessionStorage.getItem("checkID")}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    authorizor: sessionData.role,
+                    status: "approved",
+                }),
+            },
         );
         console.log(data);
         displayModal("../img/checkmark.png", "อนุมัติสำเร็จ");

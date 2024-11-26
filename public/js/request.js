@@ -106,7 +106,10 @@ document
         // If validation passes, proceed with form submission
         if (isValid) {
             console.log("Form is valid, proceeding with submission...");
-            submitPetition(formData);
+            // TODO: change button color darker
+            // disable
+            await submitPetition(formData);
+            // TODO: change button color back to normal
         }
     });
 
@@ -350,7 +353,11 @@ function resetFileInput() {
 previewButton.addEventListener("click", () => {
     if (fileInput.files.length > 0) {
         const file = fileInput.files[0];
-        if (file.type.includes("pdf") || file.type.includes("image") || file.type.includes("text")) {
+        if (
+            file.type.includes("pdf") ||
+            file.type.includes("image") ||
+            file.type.includes("text")
+        ) {
             const fileURL = URL.createObjectURL(file);
             previewFrame.src = fileURL;
             filePreview.classList.add("show");
@@ -367,8 +374,6 @@ closePreviewBtn.addEventListener("click", () => {
     filePreview.classList.remove("show");
     overlay.classList.remove("show");
 });
-
-
 
 const saveDraftPopup = document.getElementById("saveDraftPopup");
 const cancelPopup = document.getElementById("cancelPopup");
