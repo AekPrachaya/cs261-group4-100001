@@ -1,14 +1,11 @@
-
-
 async function createFile(url) {
-    let response = await fetch(url);
-    let data = await response.blob();
-    let metadata = {
+    const response = await fetch(url);
+    const data = await response.blob();
+    const metadata = {
         type: "image/png",
     };
     return new File([data], "input.png", metadata);
 }
-
 
 //function ดึงข้อมูลคำร้องด้วย uuid
 async function getPetitionData(id) {
@@ -16,7 +13,7 @@ async function getPetitionData(id) {
     console.log(response);
     const petition = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
     console.log(petition); //ใช้ test
-    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content 
+    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content
 }
 
 //function ดึงข้อมูลไฟล์ของคำร้องด้วย uuid
@@ -31,7 +28,7 @@ async function getPetitionFile(id) {
 }
 
 async function displayPetitionDataInForm() {
-    //studeint 
+    //studeint
     const personInfo = document.querySelector("#student-info-id");
 
     //text input form
@@ -52,8 +49,8 @@ async function displayPetitionDataInForm() {
     //select form
     const yearSelect = document.querySelector("#form-year");
     const semesterSelect = document.querySelector("#form-semester"); //ไม่มีใน response
-    const resignYearSelect = document.querySelector("#form-resign-year");//ไม่มีใน response
-    const resignSemesterSelect = document.querySelector("#form-resign-semester");//ไม่มีใน response
+    const resignYearSelect = document.querySelector("#form-resign-year"); //ไม่มีใน response
+    const resignSemesterSelect = document.querySelector("#form-resign-semester"); //ไม่มีใน response
 
     //type
     const pettitionType = document.querySelector("#petition-type");
@@ -61,16 +58,13 @@ async function displayPetitionDataInForm() {
     //checkbox form
     const addRemoveCheck = document.querySelector("#form-check-add-remove");
     const dropCheck = document.querySelector("#form-check-drop");
-    const resignCheck = document.querySelector("#form-check-resign");//ไม่มีใน response
-    const otherCheck = document.querySelector("#form-check-other");//ไม่มีใน response
-
+    const resignCheck = document.querySelector("#form-check-resign"); //ไม่มีใน response
+    const otherCheck = document.querySelector("#form-check-other"); //ไม่มีใน response
 
     const petition = await getPetitionData(sessionStorage.getItem("checkID"));
     console.log(petition.data.content);
 
     const content = petition.data.content; //ใช้เฉพาะรายละเอียดของคำร้อง
-
-
 
     // ใส่ข้อมูลในแต่ละ input เรียงตาม content ในคำร้อง
     personInfo.textContent = `${content.person_in_charge} รหัสนักศึกษา ${content.student_info.student_id}`;
@@ -94,8 +88,6 @@ async function displayPetitionDataInForm() {
     //student info
     yearSelect.textContent = content.student_info.year;
 
-
-
     phoneInput.textContent = content.phone_no;
     topicInput.textContent = content.topic;
     reasonTextarea.textContent = content.reason;
@@ -118,28 +110,32 @@ function displayFilename(file) {
 
 /*******************************************/
 
-function displayModal(img_source, message) { // ใช้แสดง popup การอนุมัติคำร้อง
-    const modal = document.querySelector(".modal")
+function displayModal(img_source, message) {
+    // ใช้แสดง popup การอนุมัติคำร้อง
+    const modal = document.querySelector(".modal");
     const modalImg = document.querySelector(".modal-content img");
-    const modalText = document.querySelector(".modal-content span")
+    const modalText = document.querySelector(".modal-content span");
 
     modalImg.src = img_source;
     modalText.textContent = message;
     modal.style.display = "block";
 }
 
-
-async function approve() { // function ใช้ approve คำร้อง
+async function approve() {
+    // function ใช้ approve คำร้อง
     try {
-        const data = await fetch(`/api/approval/${sessionStorage.getItem("checkID")}`);
+        const data = await fetch(
+            `/api/approval/${sessionStorage.getItem("checkID")}`,
+        );
         console.log(data);
         displayModal("../img/checkmark.png", "อนุมัติสำเร็จ");
     } catch (e) {
-        console.log("can't approve: " + e)
+        console.log("can't approve: " + e);
     }
 }
 
-async function sendComment() { // function ใช้ส่ง comment
+async function sendComment() {
+    // function ใช้ส่ง comment
     const commentText = document.querySelector(".comment-container textarea");
     console.log(commentText);
     try {
@@ -151,18 +147,19 @@ async function sendComment() { // function ใช้ส่ง comment
             body: JSON.stringify({
                 comment: commentText.value,
             }),
-        })
+        });
         commentData = await commentRes.json();
         if (commentData.ok) {
-            commentText.value = '';
+            commentText.value = "";
         }
         console.log(commentData);
     } catch (e) {
-        console.log("can't send comment: " + e)
+        console.log(`can't send comment: ${e}`);
     }
 }
 
-async function disApprove() { // function ใช้ปฏิเสธคำร้อง
+async function disApprove() {
+    // function ใช้ปฏิเสธคำร้อง
     const comment = document.querySelector(".comment-container");
     const commentBtn = document.querySelector(".comment-container button");
     comment.style.display = "block";
@@ -172,16 +169,15 @@ async function disApprove() { // function ใช้ปฏิเสธคำร�
 document.querySelector("#btnApprove").addEventListener("click", approve);
 document.querySelector("#btnDisapprove").addEventListener("click", disApprove);
 
-document.addEventListener("click", e => { //ปิด popup เมื่อกดที่ส่วนอื่นที่ไม่ใช่ตัว pop up
-    const modal = document.querySelector(".modal")
+document.addEventListener("click", (e) => {
+    //ปิด popup เมื่อกดที่ส่วนอื่นที่ไม่ใช่ตัว pop up
+    const modal = document.querySelector(".modal");
     const comment = document.querySelector(".comment-container");
-    if (e.target == modal) {
+    if (e.target === modal) {
         modal.style.display = "none";
     }
 
-    if (e.target == comment) {
+    if (e.target === comment) {
         comment.style.display = "none";
     }
 });
-
-
