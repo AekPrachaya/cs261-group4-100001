@@ -315,10 +315,60 @@ async function displayUserInformation() {
 const fileInput = document.getElementById("fileInput");
 const attachFileBtn = document.getElementById("attachFileBtn");
 const fileNameSpan = document.getElementById("fileName");
+const clearFileBtn = document.getElementById("clearFileBtn");
+const previewButton = document.getElementById("previewFileBtn");
+const previewFrame = document.getElementById("previewFrame");
+const filePreview = document.getElementById("filePreview");
+const overlay = document.getElementById("overlay");
+const closePreviewBtn = document.getElementById("closePreviewBtn");
 
 attachFileBtn.addEventListener("click", () => {
     fileInput.click();
 });
+
+fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+        fileNameSpan.textContent = fileInput.files[0].name;
+        clearFileBtn.style.display = "inline-block";
+    } else {
+        resetFileInput();
+    }
+});
+
+clearFileBtn.addEventListener("click", () => {
+    resetFileInput();
+});
+
+function resetFileInput() {
+    fileInput.value = "";
+    fileNameSpan.textContent = "";
+    clearFileBtn.style.display = "none";
+    filePreview.classList.remove("show");
+    overlay.classList.remove("show");
+}
+
+previewButton.addEventListener("click", () => {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (file.type.includes("pdf") || file.type.includes("image") || file.type.includes("text")) {
+            const fileURL = URL.createObjectURL(file);
+            previewFrame.src = fileURL;
+            filePreview.classList.add("show");
+            overlay.classList.add("show");
+        } else {
+            alert("This file type cannot be previewed.");
+        }
+    } else {
+        alert("No file selected for preview.");
+    }
+});
+
+closePreviewBtn.addEventListener("click", () => {
+    filePreview.classList.remove("show");
+    overlay.classList.remove("show");
+});
+
+
 
 const saveDraftPopup = document.getElementById("saveDraftPopup");
 const cancelPopup = document.getElementById("cancelPopup");
@@ -338,6 +388,13 @@ function showPopup(popup) {
     setTimeout(() => {
         popup.style.display = "none";
     }, 3000); // Hide the popup after 3 seconds
+}
+
+async function getUserInformation() {
+    const userInfo = await fetch("/api/session", {
+        headers: {},
+    });
+    return userInfo.json();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -385,6 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 checkbox.classList.remove("disabled-checkbox");
                 checkbox.removeAttribute("data-disabled");
             }
+            resetFileInput();
             showPopup(cancelPopup);
         });
     }

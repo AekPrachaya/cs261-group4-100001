@@ -1,28 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: "Open Sans", sans-serif;
-}
-
 body {
-	min-height: 100vh;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: #f5f5ff;
+	justify-content: end;
 }
 
 .login-container {
-	width: 672px;
-	height: 1020px;
-	padding: 32px;
+	width: 42rem;
+	padding: 2rem;
 	background-color: #ffffff;
-	border-radius: 8px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	margin: 30px 30px 30px auto;
+	border-radius: 12px;
+	box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.1);
 }
 
 .language-switch {
@@ -31,7 +17,7 @@ body {
 	border: none;
 	color: #625cff;
 	cursor: pointer;
-	margin-bottom: 20px;
+	margin-bottom: 1.25rem;
 }
 
 .language-switch:hover {
@@ -39,71 +25,69 @@ body {
 }
 
 .logo img {
-	width: 100px;
+	width: 6.25rem;
 	display: block;
 	margin: 0 auto;
 }
 
 .welcome-text {
 	text-align: center;
-	font-size: 36px;
+	font-size: 2.25rem;
+	/* 36px */
 	font-weight: bold;
-	margin-top: 20px;
+	margin-top: 1.25rem;
+	/* 20px */
 	color: #1d1d1f;
 }
 
 .subtitle {
 	text-align: center;
-	font-size: 16px;
+	font-size: 1rem;
+	/* 16px */
 	color: #1d1d1f;
-	margin-top: 10px;
+	margin-top: 0.625rem;
+	/* 10px */
 }
 
-.form-group {
-	margin-bottom: 20px;
-	padding: 0 64px;
-}
-
-label {
+.input-label {
 	display: block;
-	margin-bottom: 8px;
-	font-size: 14px;
+	margin-bottom: 0.5rem;
+	font-size: 0.875rem;
 }
 
 input[type="text"],
 input[type="password"] {
 	width: 100%;
-	padding: 12px;
-	border: 1px solid #d5d6d2;
-	border-radius: 8px;
-	font-size: 14px;
-	margin: 0;
-	padding: 10px;
+	padding: 0.75rem;
+	border: 0.0625rem solid #d5d6d2;
+	border-radius: 0.5rem;
+	font-size: 0.875rem;
 }
 
 .remember-me {
 	display: flex;
 	align-items: center;
-	margin-bottom: 20px;
-	padding-left: 64px;
-	padding-right: 64px;
+	/* 20px */
+	padding: 1rem 0;
 }
 
 .remember-me input[type="checkbox"] {
-	margin-right: 8px;
-	width: 20px;
-	height: 20px;
+	margin-right: 0.5rem;
+	/* 8px */
+	width: 1.25rem;
+	/* 20px */
+	height: 1.25rem;
+	/* 20px */
 }
 
 .submit-button {
-	width: 480px;
-	height: 48px;
-	padding: 8px 16px;
+	width: 100%;
+	padding: 1rem;
 	background-color: #6366f1;
 	color: white;
 	border: none;
-	border-radius: 4px;
-	font-size: 14px;
+	border-radius: 0.25rem;
+	font-size: 0.875rem;
 	cursor: pointer;
 	transition: background-color 0.3s;
 	display: block;
@@ -116,7 +100,16 @@ input[type="password"] {
 
 .footer {
 	text-align: center;
-	margin-top: 425px;
-	font-size: 14px;
+	/* 425px */
+	font-size: 0.875rem;
+	/* 14px */
 	color: #86868a;
+}
+
+.login-form {
+	padding: 0 4rem;
+}
+
+.login-form * {
+	margin: 0.5rem 0;
 }

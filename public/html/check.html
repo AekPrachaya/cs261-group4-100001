@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TU Petition</title>
+    <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/check.css">
     <link rel="stylesheet" href="../css/nav.css">
 </head>
 
 <body>
-
-    <div class="layout">
+    <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div>
@@ -20,8 +20,7 @@
                     <span class="Petition">TU Petition</span>
                 </div>
                 <ul class="menu">
-                    <li><a href="request">ยื่นคำร้อง</a></li>
-                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                    <li><a href="/advisor">จัดการคำร้องของนักศึกษา</a></li>
                 </ul>
             </div>
             <footer class="user-info">
@@ -39,7 +38,7 @@
             </footer>
         </aside>
 
-        <div class="main-container">
+        <div class="main-container content">
             <header class="header">
                 <button id="sidebarToggle" class="sidebar-toggle">☰</button>
                 <h2>คำร้องของนักศึกษา</h2>
@@ -144,6 +143,10 @@
 
 
                     <div class="form-group">
+                        <label>เรื่องที่ต้องการยื่นคำร้อง</label>
+                        <input type="text" class="form-control" name="topic">
+                    </div>
+                    <div class="form-group">
                         <label>เรื่องที่ต้องการยื่นคำร้อง:</label>
                         <p id="form-topic" class="petition-data"></p>
                     </div>
@@ -183,7 +186,6 @@
                     </div>
 
                 </form>
-            </main>
         </div>
     </div>
     <div class="modal">
