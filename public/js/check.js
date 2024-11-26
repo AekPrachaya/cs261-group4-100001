@@ -1,17 +1,4 @@
 
-async function displayUserInformation() {
-    const id = document.querySelector("#student-info-id");
-
-    try {
-        const info = await getUserInformation();
-        id.textContent = `${info.displayname_th} รหัสนักศึกษา ${info.username} ${info.faculty} ${info.department}`;
-    } catch (e) {
-        console.error(e);
-        id.textContent = "เกิดข้อผิดพลาด";
-    }
-}
-
-
 
 async function createFile(url) {
     let response = await fetch(url);
@@ -44,6 +31,9 @@ async function getPetitionFile(id) {
 }
 
 async function displayPetitionDataInForm() {
+    //studeint 
+    const personInfo = document.querySelector("#student-info-id");
+
     //text input form
     const phoneInput = document.querySelector("#form-phone_no");
     const advisorInput = document.querySelector("#form-advisor");
@@ -80,7 +70,11 @@ async function displayPetitionDataInForm() {
 
     const content = petition.data.content; //ใช้เฉพาะรายละเอียดของคำร้อง
 
+
+
     // ใส่ข้อมูลในแต่ละ input เรียงตาม content ในคำร้อง
+    personInfo.textContent = `${content.person_in_charge} รหัสนักศึกษา ${content.student_info.student_id}`;
+
     pettitionType.textContent = petition.data.type;
     advisorInput.textContent = content.advisor;
 
@@ -110,7 +104,6 @@ async function displayPetitionDataInForm() {
     displayFilename(file); //ในหน้า check เรียกใช้ครั้งเดียวเนื่องจากไม่จำเป็นต้องเพิ่มไฟล์
 }
 document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
-document.addEventListener("DOMContentLoaded", displayUserInformation);
 
 /******************************************/
 

@@ -78,7 +78,7 @@ function updatePetitionStatus(statusLabel, petitions) {
             </div>`;
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
                 try {
-             
+
                     const response = await fetch(`/api/approval/${petition.id}`, {
                         method: "GET",
                         headers: {
@@ -92,9 +92,9 @@ function updatePetitionStatus(statusLabel, petitions) {
 
                     const data = await response.json();
                     console.log("Approval data:", data);
-            
+
                     // edit
-                    sessionStorage.setItem("editID", petition.id);
+                    sessionStorage.setItem("checkID", petition.id);
                     window.location.href = "/check";
                 } catch (e) {
                     console.error(e);
@@ -102,7 +102,7 @@ function updatePetitionStatus(statusLabel, petitions) {
             });
 
             container.appendChild(petitionCard);
-        
+
         });
     } else {
         container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
@@ -121,7 +121,7 @@ for (const tab of document.querySelectorAll(".tab-btn")) {
         }
 
         tab.classList.add("active");
-        
+
         tab.setAttribute("aria-selected", "true");
         document.querySelectorAll(".tab-btn:not([aria-selected='true'])").forEach((t) => t.setAttribute("aria-selected", "false"));
 
