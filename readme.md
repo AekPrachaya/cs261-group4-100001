@@ -257,4 +257,35 @@ PUT `/api/comment`
 > - id: comment_id
 > - comment: Update_comment_text
 
+### approval
+PUT `/api/approval/:petition_id`
+
+>[!require]
+>
+> - petition_id
+> - authorizor {role of the person updating the approval status ["advisor", "staff", "instructor", "dean"] }
+> - status {updated approval status.}
+
+>[!return]
+>
+>Success //Updated approval data 
+>
+> - petition_id
+> - authorizor 
+> - status: updated_status
+> - timestamp
+
+GET `/api/approval/:petition_id`
+
+>[!require]
+>
+> - petition_id
+
+>[!return]
+>
+> - petition_id
+> - approvals: [ 
+>    { "authorizor": "advisor", "status": "approved" },
+>    { "authorizor": "staff", "status": "pending" },
+>    { "authorizor": "instructor", "status": "rejected" }]
 [View type](https://github.com/AekPrachaya/cs261-group4-100001/blob/d9ac45c16d3f981ee151895be2e6221db2021a79/server/type.js)
