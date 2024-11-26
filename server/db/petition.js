@@ -85,6 +85,14 @@ export const updatePetition = async (petition_id, petition) => {
     return rows[0];
 };
 
+export const updatePetitionStatus = async (petition_id, status) => {
+    const { rows } = await POOL.query(
+        "UPDATE petitions SET status = $1 WHERE id = $2 RETURNING *",
+        [status, petition_id],
+    );
+    return rows[0];
+};
+
 /** Delete a petition by petition_id
  * @param {string} petition_id
  * @returns {Promise<Petition>}
