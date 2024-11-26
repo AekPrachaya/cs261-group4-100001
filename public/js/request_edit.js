@@ -290,6 +290,7 @@ async function submitPetition(formData) {
                     console.error("Failed to submit files:", await fileResponse.json());
                 }
             }
+            deleteFile(public_id);
             showPopup(saveRequestPopup);
             return petitionResponse;
         } else {
@@ -319,9 +320,61 @@ async function displayUserInformation() {
 const fileInput = document.getElementById("fileInput");
 const attachFileBtn = document.getElementById("attachFileBtn");
 const fileNameSpan = document.getElementById("fileName");
+const clearFileBtn = document.getElementById("clearFileBtn");
+const previewButton = document.getElementById("previewFileBtn");
+const previewFrame = document.getElementById("previewFrame");
+const filePreview = document.getElementById("filePreview");
+const overlay = document.getElementById("overlay");
+const closePreviewBtn = document.getElementById("closePreviewBtn");
 
 attachFileBtn.addEventListener("click", () => {
     fileInput.click();
+});
+
+fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+        fileNameSpan.textContent = fileInput.files[0].name;
+        clearFileBtn.style.display = "inline-block";
+    } else {
+        resetFileInput();
+    }
+});
+
+clearFileBtn.addEventListener("click", () => {
+    resetFileInput();
+});
+
+function resetFileInput() {
+    fileInput.value = "";
+    fileNameSpan.textContent = "";
+    clearFileBtn.style.display = "none";
+    filePreview.classList.remove("show");
+    overlay.classList.remove("show");
+}
+
+previewButton.addEventListener("click", () => {
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        if (
+            file.type.includes("pdf") ||
+            file.type.includes("image") ||
+            file.type.includes("text")
+        ) {
+            const fileURL = URL.createObjectURL(file);
+            previewFrame.src = fileURL;
+            filePreview.classList.add("show");
+            overlay.classList.add("show");
+        } else {
+            alert("This file type cannot be previewed.");
+        }
+    } else {
+        alert("No file selected for preview.");
+    }
+});
+
+closePreviewBtn.addEventListener("click", () => {
+    filePreview.classList.remove("show");
+    overlay.classList.remove("show");
 });
 
 // อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
@@ -391,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 checkbox.classList.remove("disabled-checkbox");
                 checkbox.removeAttribute("data-disabled");
             }
+            resetFileInput();
             showPopup(cancelPopup);
         });
     }
@@ -445,8 +499,26 @@ async function getPetitionFile(id) {
     const response = await fetch(`api/files/${id}`);
     const petitionFile = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
     console.log("GET FILE", petitionFile); //ใช้ test
+    globalThis.public_id = (petitionFile.data[0].public_id); //ใช้ test
     const file = await createFile(petitionFile.data[0].url);
     return file; // return เป็น file obj
+}
+
+async function deleteFile(public_id) {
+    const response = await fetch("/api/files", {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ public_ids: public_id }),
+    });
+    if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error deleting files:", errorData.error);
+        return;
+    }    
+    const result = await response.json();
+    console.log("Files deleted successfully:", result.data);
 }
 
 async function displayPetitionDataInForm() {
@@ -522,7 +594,7 @@ document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
 //function สำหรับอัพเดตชื่อไฟล์ข้างปุ่มอัพโหลดไฟล์
 function updateFilename() {
     const fileInput = document.querySelector("#fileInput");
-    const fileName = document.querySelector("#file-name");
+    const fileName = document.querySelector("#fileName");
     if (fileInput.files.length >= 1) {
         fileName.textContent = fileInput.files[0].name;
         fileName.href = window.URL.createObjectURL(fileInput.files[0]);
@@ -530,6 +602,7 @@ function updateFilename() {
         fileName.style.cursor = "grab";
         fileName.style.textDecoration = "underline";
         fileName.style.pointerEvents = "auto";
+        clearFileBtn.style.display = "inline-block";
     } else {
         fileName.textContent = "No file choosen";
         fileName.href = "";
