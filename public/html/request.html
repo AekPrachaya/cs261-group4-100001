@@ -202,10 +202,19 @@
                     <label>แนบไฟล์</label>
                     <button type="button" class="btn btn-secondary" id="attachFileBtn">แนบไฟล์</button>
                     <input type="file" id="fileInput" style="display:none;" name="fileInput">
+                    <span id="fileName" ></span>
+                    <button type="button" id="clearFileBtn" class="hidden btn btn-danger btn-small">X</button>
                 </div>
-
+                
+                <div id="overlay"></div>
+                <div id="filePreview" class="hidden">
+                    <button type="button" id="closePreviewBtn">X</button>
+                    <h4>File Preview</h4>
+                    <iframe id="previewFrame" src=""></iframe>
+                </div>
+                
                 <div class="button-group">
-                    <button type="button" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
+                    <button type="button" id="previewFileBtn"class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
                     <button type="button" id="btnSaveDraft" class="btn btn-outline">บันทึกแบบร่าง</button>
                     <button type="button" id="btnCancel" class="btn btn-danger">ยกเลิก</button>
                     <button type="submit" id="btnSaveRequest" class="btn btn-success">บันทึกคำร้อง</button>
