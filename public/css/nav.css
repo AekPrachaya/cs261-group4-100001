@@ -1,51 +1,16 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Open Sans", sans-serif;
-}
-
-body {
-    background-color: #f5f6fa;
-    padding: 30px;
-    /* เพิ่มระยะห่างจากขอบด้านนอก */
-}
-
-.layout {
-    display: flex;
-    gap: 30px;
-    /* เพิ่มระยะห่างระหว่าง sidebar และ main-container */
-}
-
 .sidebar {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 500px;
+    width: 28rem;
     height: 95vh;
     /* ให้ขนาดสูงตามเนื้อหา */
-    background-color: #ffffff;
+    background-color: white;
     padding: 16px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* overflow-y: auto; */
-    margin-top: 30px;
-
-    position: sticky;
-    top: 60px;
-
-    /* เว้นระยะห่างด้านบน */
-}
-
-.main-container {
-    flex-grow: 1;
-    padding: 30px;
-    /* เพิ่มระยะห่างภายในเนื้อหา */
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
-    /* เว้นระยะห่างด้านบน */
+    position: fixed;
 }
 
 .header {
@@ -108,13 +73,18 @@ body {
     color: white;
 }
 
+.sidebar .menu li a active {
+    background-color: #625cff;
+    color: white;
+}
+
 .user-info {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 10px;
     padding-top: 40px;
-    border-top: 1px solid rgb(198, 189, 189);
+    border-top: 1px solid var(--divider-color);
     position: relative;
 }
 

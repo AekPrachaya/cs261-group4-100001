@@ -12,6 +12,7 @@ export const uploadDocument = async (file, petitionID) => {
         const stream = cloudinary.uploader.upload_stream(
             {
                 folder: `${petitionID}`,
+                use_filename: true,
                 resource_type: "raw", // For non-image files like PDFs
             },
             (error, result) => {
