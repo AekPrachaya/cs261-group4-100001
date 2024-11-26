@@ -22,7 +22,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     width: 500px;
-    height: 95vh;
+    height: 93vh;
     /* ให้ขนาดสูงตามเนื้อหา */
     background-color: #ffffff;
     padding: 16px;
@@ -33,6 +33,7 @@ body {
 
     position: sticky;
     top: 60px;
+
 
     /* เว้นระยะห่างด้านบน */
 }

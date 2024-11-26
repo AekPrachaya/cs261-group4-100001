@@ -515,7 +515,7 @@ async function displayPetitionDataInForm() {
 document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
 
 /******************************************/
-const fileI = document.querySelector("#fileInput");
+
 //function สำหรับอัพเดตชื่อไฟล์ข้างปุ่มอัพโหลดไฟล์
 function updateFilename() {
     const fileInput = document.querySelector("#fileInput");
@@ -535,5 +535,5 @@ function updateFilename() {
         fileName.style.pointerEvents = "none";
     }
 }
-fileI.addEventListener("change", updateFilename);
+fileUpload.addEventListener("change", updateFilename);
 
