@@ -78,11 +78,10 @@ function updatePetitionStatus(statusLabel, petitions) {
             </div>`;    
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
                 try {
+             
                     const response = await fetch(`/api/approval/${petition.id}`, {
-                        method: "GET", 
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
+                        method: "GET",
+                        headers: { "Content-Type": "application/json" },
                     });
             
                     if (!response.ok) {
@@ -91,18 +90,17 @@ function updatePetitionStatus(statusLabel, petitions) {
             
                     const data = await response.json();
                     console.log("Approval data:", data);
-                    alert(
-                        JSON.stringify(data.data, null, 2) 
-                    );
+            
+                    // edit
+                    sessionStorage.setItem("editID", petition.id);
+                    window.location.href = "/check";
                 } catch (e) {
                     console.error(e);
                 }
             });
-            petitionCard.querySelector(".check-advisor-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
-                sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
-                window.location.href = "/check"; //ส่งไปหน้าแก้คำร้อง
-            });
+
             container.appendChild(petitionCard);
+        
         });
     } else {
         container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
@@ -121,27 +119,25 @@ for (const tab of document.querySelectorAll(".tab-btn")) {
         }
 
         tab.classList.add("active");
+        
+        tab.setAttribute("aria-selected", "true");
+        document.querySelectorAll(".tab-btn:not([aria-selected='true'])").forEach((t) => t.setAttribute("aria-selected", "false"));
 
         // Update title
         const title = document.querySelector(".requests-title");
         title.textContent = tab.textContent;
 
         // Update petitions based on selected tab
-        switch (status) {
-            case "in-progress":
-                updatePetitionStatus(
-                    "อยู่ระหว่างดำเนินการ",
-                    window.petitionStatus.inProgress,
-                );
-                break;
-            case "denied":
-                updatePetitionStatus("ปฏิเสธคำร้อง", window.petitionStatus.denied);
-                break;
-            case "approved":
-                updatePetitionStatus("อนุมัติแล้ว", window.petitionStatus.approved);
-                break;
-            default:
-                console.warn("Unknown tab selected");
+        const statusMap = {
+            "in-progress": { label: "อยู่ระหว่างดำเนินการ", data: window.petitionStatus.inProgress },
+            "denied": { label: "ปฏิเสธคำร้อง", data: window.petitionStatus.denied },
+            "approved": { label: "อนุมัติแล้ว", data: window.petitionStatus.approved },
+        };
+
+        if (statusMap[status]) {
+            updatePetitionStatus(statusMap[status].label, statusMap[status].data);
+        } else {
+            console.warn("Unknown tab selected");
         }
     });
 }
