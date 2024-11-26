@@ -1,11 +1,7 @@
 async function fetchAndUpdate() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.username) {
-        console.error("User not logged in or missing username");
-        return;
-    }
-    const id = parseInt(user.username);
-
+    const userInfo = await getUserInformation();
+    const id = parseInt(userInfo.username);
+    console.log(userInfo);
 
     await fetch(`/api/petitions/${id}`, {
         method: "GET",

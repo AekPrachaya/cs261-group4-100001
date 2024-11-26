@@ -390,6 +390,13 @@ function showPopup(popup) {
     }, 3000); // Hide the popup after 3 seconds
 }
 
+async function getUserInformation() {
+    const userInfo = await fetch("/api/session", {
+        headers: {},
+    });
+    return userInfo.json();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     applyResetListeners();
     displayUserInformation();
