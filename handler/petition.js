@@ -90,12 +90,13 @@ router.get("/api/petitions/:student_id", async (req, res) => {
 
 router.get("/api/petitions/role/:role", async (req, res) => {
     const { role } = req.params;
+    const { status = "waiting" } = req.query;
 
     const roles = ["staff", "advisor", "instructor", "dean"];
 
     if (role && roles.includes(role)) {
         try {
-            const result = await getPetitionsByRole(role);
+            const result = await getPetitionsByRole(role, status);
 
             if (result.length > 0) {
                 return res.status(200).json({ data: result });
