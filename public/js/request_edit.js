@@ -1,112 +1,114 @@
-const fileUpload = document.getElementById('fileInput');
+const fileUpload = document.getElementById("fileInput");
 
-document.getElementById("petitionForm").addEventListener("submit", async function (event) {
-    event.preventDefault();
+document
+    .getElementById("petitionForm")
+    .addEventListener("submit", async function(event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
+        const formData = new FormData(this);
 
-    const selectedPetitionType = formData.getAll("petitionType");
-    const petitionDefault = {
-        phone_no: formData.get("phone_no"),
-        advisor: formData.get("advisor"),
-        location: {
-            houseNumber: formData.get("houseNumber"),
-            village: formData.get("village"),
-            subDistrict: formData.get("subDistrict"),
-            district: formData.get("district"),
-            province: formData.get("province"),
-            postal_code: formData.get("postal_code"),
-        },
-        topic: formData.get("topic"),
-        reason: formData.get("reason"),
-    };
+        const selectedPetitionType = formData.getAll("petitionType");
+        const petitionDefault = {
+            phone_no: formData.get("phone_no"),
+            advisor: formData.get("advisor"),
+            location: {
+                houseNumber: formData.get("houseNumber"),
+                village: formData.get("village"),
+                subDistrict: formData.get("subDistrict"),
+                district: formData.get("district"),
+                province: formData.get("province"),
+                postal_code: formData.get("postal_code"),
+            },
+            topic: formData.get("topic"),
+            reason: formData.get("reason"),
+        };
 
-    // Mark a field as invalid
-    const markInvalid = (fieldName) => {
-        const field = document.querySelector(`[name="${fieldName}"]`);
-        if (field) {
-            field.classList.add("error-border");
-        }
-    };
-
-    const petitionType = selectedPetitionType[0];
-
-    let isValid = true;
-
-    // Ensure only one petition type is checked
-    if (selectedPetitionType.length !== 1) {
-        markPetitionTypeError();
-    }
-
-    if (petitionType === "add/remove" || petitionType === "drop") {
-        const year = formData.get("year");
-        const semester = formData.get("semester");
-        const courseId = formData.get("course_id");
-        const section = formData.get("section");
-        const courseName = formData.get("courseName");
-
-        if (!year) {
-            isValid = false;
-            markInvalid("year");
-        }
-        if (!semester) {
-            isValid = false;
-            markInvalid("semester");
-        }
-        if (!courseId) {
-            isValid = false;
-            markInvalid("course_id");
-        }
-        if (!section) {
-            isValid = false;
-            markInvalid("section");
-        }
-        if (!courseName) {
-            isValid = false;
-            markInvalid("courseName");
-        }
-        if (!isValid) {
-            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
-        }
-    } else if (petitionType === "resign") {
-        const year = formData.get("Year");
-        const semester = formData.get("semester");
-
-        if (!year) {
-            isValid = false;
-            markInvalid("Year");
-        }
-        if (!semester) {
-            isValid = false;
-            markInvalid("semester");
-        }
-        if (!isValid) {
-            alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการลาออก");
-        }
-    }
-
-    // Validate petition default fields
-    for (const [key, value] of Object.entries(petitionDefault)) {
-        if (key === "location") {
-            // Check each property inside location object
-            for (const [locationKey, locationValue] of Object.entries(value)) {
-                if (!locationValue) {
-                    isValid = false;
-                    markInvalid(locationKey);
-                }
+        // Mark a field as invalid
+        const markInvalid = (fieldName) => {
+            const field = document.querySelector(`[name="${fieldName}"]`);
+            if (field) {
+                field.classList.add("error-border");
             }
-        } else if (!value) {
-            isValid = false;
-            markInvalid(key);
-        }
-    }
+        };
 
-    // If validation passes, proceed with form submission
-    if (isValid) {
-        console.log("Form is valid, proceeding with submission...");
-        submitPetition(formData);
-    }
-});
+        const petitionType = selectedPetitionType[0];
+
+        let isValid = true;
+
+        // Ensure only one petition type is checked
+        if (selectedPetitionType.length !== 1) {
+            markPetitionTypeError();
+        }
+
+        if (petitionType === "add/remove" || petitionType === "drop") {
+            const year = formData.get("year");
+            const semester = formData.get("semester");
+            const courseId = formData.get("course_id");
+            const section = formData.get("section");
+            const courseName = formData.get("courseName");
+
+            if (!year) {
+                isValid = false;
+                markInvalid("year");
+            }
+            if (!semester) {
+                isValid = false;
+                markInvalid("semester");
+            }
+            if (!courseId) {
+                isValid = false;
+                markInvalid("course_id");
+            }
+            if (!section) {
+                isValid = false;
+                markInvalid("section");
+            }
+            if (!courseName) {
+                isValid = false;
+                markInvalid("courseName");
+            }
+            if (!isValid) {
+                alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการเพิ่มหรือถอนรายวิชา");
+            }
+        } else if (petitionType === "resign") {
+            const year = formData.get("Year");
+            const semester = formData.get("semester");
+
+            if (!year) {
+                isValid = false;
+                markInvalid("Year");
+            }
+            if (!semester) {
+                isValid = false;
+                markInvalid("semester");
+            }
+            if (!isValid) {
+                alert("กรุณากรอกข้อมูลที่จำเป็นสำหรับการลาออก");
+            }
+        }
+
+        // Validate petition default fields
+        for (const [key, value] of Object.entries(petitionDefault)) {
+            if (key === "location") {
+                // Check each property inside location object
+                for (const [locationKey, locationValue] of Object.entries(value)) {
+                    if (!locationValue) {
+                        isValid = false;
+                        markInvalid(locationKey);
+                    }
+                }
+            } else if (!value) {
+                isValid = false;
+                markInvalid(key);
+            }
+        }
+
+        // If validation passes, proceed with form submission
+        if (isValid) {
+            console.log("Form is valid, proceeding with submission...");
+            submitPetition(formData);
+        }
+    });
 
 //reset error borders
 const resetErrorBorders = () => {
@@ -117,7 +119,9 @@ const resetErrorBorders = () => {
 
 // mark petitiontype as invalid
 const markPetitionTypeError = () => {
-    const petitionTypeInputs = document.querySelectorAll('input[name="petitionType"]');
+    const petitionTypeInputs = document.querySelectorAll(
+        'input[name="petitionType"]',
+    );
     petitionTypeInputs.forEach((input) => {
         input.classList.add("error-border");
     });
@@ -148,54 +152,56 @@ const applyResetListeners = () => {
             }
         });
 
-        checkbox.addEventListener("click", function (event) {
+        checkbox.addEventListener("click", function(event) {
             if (this.getAttribute("data-disabled") === "true") {
                 event.preventDefault();
                 this.classList.add("error-border");
-
             }
         });
     });
 };
 
-
 // Get all the petitiontype checkboxes
-const petitionTypeCheckboxes = document.querySelectorAll('.petition-type-checkbox');
+const petitionTypeCheckboxes = document.querySelectorAll(
+    ".petition-type-checkbox",
+);
 
-petitionTypeCheckboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function () {
+petitionTypeCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", function() {
         if (this.checked) {
             // Disable all other checkboxes
-            petitionTypeCheckboxes.forEach(otherCheckbox => {
+            petitionTypeCheckboxes.forEach((otherCheckbox) => {
                 if (otherCheckbox !== this) {
-                    otherCheckbox.classList.add('disabled-checkbox');
-                    otherCheckbox.setAttribute('data-disabled', 'true');
+                    otherCheckbox.classList.add("disabled-checkbox");
+                    otherCheckbox.setAttribute("data-disabled", "true");
                 }
             });
 
-            this.classList.add('checked-checkbox');
+            this.classList.add("checked-checkbox");
         } else {
-            const anyChecked = Array.from(petitionTypeCheckboxes).some(cb => cb.checked);
+            const anyChecked = Array.from(petitionTypeCheckboxes).some(
+                (cb) => cb.checked,
+            );
 
             if (!anyChecked) {
-                petitionTypeCheckboxes.forEach(otherCheckbox => {
-                    otherCheckbox.classList.remove('disabled-checkbox');
-                    otherCheckbox.removeAttribute('data-disabled');
+                petitionTypeCheckboxes.forEach((otherCheckbox) => {
+                    otherCheckbox.classList.remove("disabled-checkbox");
+                    otherCheckbox.removeAttribute("data-disabled");
                 });
             }
 
-            this.classList.remove('checked-checkbox');
+            this.classList.remove("checked-checkbox");
         }
     });
 
-    checkbox.addEventListener('click', function (event) {
-        if (this.getAttribute('data-disabled') === 'true') {
+    checkbox.addEventListener("click", function(event) {
+        if (this.getAttribute("data-disabled") === "true") {
             event.preventDefault();
 
-            this.classList.add('error-border');
+            this.classList.add("error-border");
 
             setTimeout(() => {
-                this.classList.remove('error-border');
+                this.classList.remove("error-border");
             }, 500);
         }
     });
@@ -250,15 +256,15 @@ async function submitPetition(formData) {
 
         console.log(sessionStorage.getItem("editID"));
         // Send petition data to the server
-        const petitionResponse = await fetch('/api/petition', {
-            method: 'PUT',
+        const petitionResponse = await fetch("/api/petition", {
+            method: "PUT",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
                 id: sessionStorage.getItem("editID"),
-                petition: petitionData
-            })
+                petition: petitionData,
+            }),
         });
 
         sessionStorage.removeItem("editID");
@@ -270,33 +276,33 @@ async function submitPetition(formData) {
             // Check if there's a file to upload
             if (fileInput.files.length > 0) {
                 const fileData = new FormData();
-                fileData.append('files', fileInput.files[0]); // File from file input
-                fileData.append('petition_id', petitionId);
+                fileData.append("files", fileInput.files[0]); // File from file input
+                fileData.append("petition_id", petitionId);
 
-                const fileResponse = await fetch('/api/files', {
-                    method: 'POST',
-                    body: fileData
+                const fileResponse = await fetch("/api/files", {
+                    method: "POST",
+                    body: fileData,
                 });
                 if (fileResponse.ok) {
                     const fileDataResponse = await fileResponse.json();
-                    console.log('Files submitted successfully:', fileDataResponse);
+                    console.log("Files submitted successfully:", fileDataResponse);
                 } else {
-                    console.error('Failed to submit files:', await fileResponse.json());
+                    console.error("Failed to submit files:", await fileResponse.json());
                 }
             }
             showPopup(saveRequestPopup);
             return petitionResponse;
-
         } else {
             const errorData = await petitionResponse.json();
-            console.error('Failed to submit petition:', errorData);
+            console.error("Failed to submit petition:", errorData);
         }
-
     } catch (error) {
-        console.error('Error occurred:', error);
-        alert('There was an error submitting your petition. Please try again later.');
+        console.error("Error occurred:", error);
+        alert(
+            "There was an error submitting your petition. Please try again later.",
+        );
     }
-};
+}
 
 async function displayUserInformation() {
     const id = document.querySelector("#student-info-id");
@@ -310,19 +316,18 @@ async function displayUserInformation() {
     }
 }
 
-const fileInput = document.getElementById('fileInput');
-const attachFileBtn = document.getElementById('attachFileBtn');
-const fileNameSpan = document.getElementById('fileName');
+const fileInput = document.getElementById("fileInput");
+const attachFileBtn = document.getElementById("attachFileBtn");
+const fileNameSpan = document.getElementById("fileName");
 
-attachFileBtn.addEventListener('click', () => {
+attachFileBtn.addEventListener("click", () => {
     fileInput.click();
 });
 
-
 // อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
-const saveDraftPopup = document.getElementById('saveDraftPopup');
-const cancelPopup = document.getElementById('cancelPopup');
-const saveRequestPopup = document.getElementById('saveRequestPopup');
+const saveDraftPopup = document.getElementById("saveDraftPopup");
+const cancelPopup = document.getElementById("cancelPopup");
+const saveRequestPopup = document.getElementById("saveRequestPopup");
 
 function hideAllPopups() {
     const popups = [saveDraftPopup, cancelPopup, saveRequestPopup];
@@ -414,15 +419,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
+// ERROR: metadata
 async function createFile(url) {
-    let response = await fetch(url);
-    let data = await response.blob();
-    let metadata = {
+    const response = await fetch(url);
+    const data = await response.blob();
+    // FIX
+    const metadata = {
         type: "image/png",
     };
+    // FIX
     return new File([data], "input.png", metadata);
 }
-
 
 //function ดึงข้อมูลคำร้องด้วย uuid
 async function getPetitionData(id) {
@@ -430,17 +437,15 @@ async function getPetitionData(id) {
     console.log(response);
     const petition = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
     console.log(petition); //ใช้ test
-    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content 
+    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content
 }
 
 //function ดึงข้อมูลไฟล์ของคำร้องด้วย uuid
 async function getPetitionFile(id) {
     const response = await fetch(`api/files/${id}`);
-    console.log(response);
     const petitionFile = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
-    console.log(petitionFile); //ใช้ test
+    console.log("GET FILE", petitionFile); //ใช้ test
     const file = await createFile(petitionFile.data[0].url);
-    console.log(file);
     return file; // return เป็น file obj
 }
 
@@ -463,17 +468,17 @@ async function displayPetitionDataInForm() {
     //select form
     const yearSelect = document.querySelector("#form-year");
     const semesterSelect = document.querySelector("#form-semester"); //ไม่มีใน response
-    const resignYearSelect = document.querySelector("#form-resign-year");//ไม่มีใน response
-    const resignSemesterSelect = document.querySelector("#form-resign-semester");//ไม่มีใน response
+    const resignYearSelect = document.querySelector("#form-resign-year"); //ไม่มีใน response
+    const resignSemesterSelect = document.querySelector("#form-resign-semester"); //ไม่มีใน response
 
     //checkbox form
     const addRemoveCheck = document.querySelector("#form-check-add-remove");
     const dropCheck = document.querySelector("#form-check-drop");
-    const resignCheck = document.querySelector("#form-check-resign");//ไม่มีใน response
-    const otherCheck = document.querySelector("#form-check-other");//ไม่มีใน response
+    const resignCheck = document.querySelector("#form-check-resign"); //ไม่มีใน response
+    const otherCheck = document.querySelector("#form-check-other"); //ไม่มีใน response
 
     //file input
-    const fileInput = document.querySelector("#fileInput");//ไม่เจอใน response
+    const fileInput = document.querySelector("#fileInput"); //ไม่เจอใน response
 
     const petition = await getPetitionData(sessionStorage.getItem("editID"));
     console.log(petition.data.content);
@@ -498,8 +503,6 @@ async function displayPetitionDataInForm() {
 
     //student info
     yearSelect.value = content.student_info.year;
-
-
 
     phoneInput.value = content.phone_no;
     topicInput.value = content.topic;
@@ -529,11 +532,10 @@ function updateFilename() {
         fileName.style.pointerEvents = "auto";
     } else {
         fileName.textContent = "No file choosen";
-        fileName.href = '';
+        fileName.href = "";
         fileName.style.cursor = "not-allowed";
         fileName.style.textDecoration = "none";
         fileName.style.pointerEvents = "none";
     }
 }
 fileUpload.addEventListener("change", updateFilename);
-
