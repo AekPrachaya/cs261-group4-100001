@@ -75,31 +75,31 @@ function updatePetitionStatus(statusLabel, petitions) {
             </div>
             <div class="request-actions">
                 <button class="check-advisor-btn">เช็คคำร้อง</button>
-            </div>`;    
+            </div>`;
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", async function () {
                 try {
                     const response = await fetch(`/api/approval/${petition.id}`, {
-                        method: "GET", 
+                        method: "GET",
                         headers: {
                             "Content-Type": "application/json",
                         },
                     });
-            
+
                     if (!response.ok) {
                         throw new Error(`Error fetching approval: ${response.statusText}`);
                     }
-            
+
                     const data = await response.json();
                     console.log("Approval data:", data);
                     alert(
-                        JSON.stringify(data.data, null, 2) 
+                        JSON.stringify(data.data, null, 2)
                     );
                 } catch (e) {
                     console.error(e);
                 }
             });
             petitionCard.querySelector(".check-advisor-btn").addEventListener("click", function () {// function ปุ่มแก้คำร้อง
-                sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
+                sessionStorage.setItem("checkID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าเช็คคำร้อง
                 window.location.href = "/check"; //ส่งไปหน้าแก้คำร้อง
             });
             container.appendChild(petitionCard);
