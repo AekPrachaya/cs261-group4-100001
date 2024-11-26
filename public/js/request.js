@@ -442,6 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 checkbox.classList.remove("disabled-checkbox");
                 checkbox.removeAttribute("data-disabled");
             }
+            resetFileInput();
             showPopup(cancelPopup);
         });
     }
