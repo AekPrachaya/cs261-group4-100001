@@ -14,27 +14,25 @@ services:
     networks:
       - cs261-group
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U dev"]
+      test: [ "CMD-SHELL", "pg_isready -U dev" ]
       interval: 5s
       timeout: 5s
       retries: 5
 
   nodejs:
-      image: 'node:latest'  # Use the latest Node.js image or specify a version like 'node:18'
-      working_dir: /app
-      volumes:
-        - .:/app  # Mount the current directory to /app in the container
-      command: "sh -c 'npm install && npm run dev'"  # Adjust this command if your app has a different start script
-      environment:
-        - TU_API_KEY=TU944d712063904d3ba4a7fff8c3eca332dad0ca8b5b8d514492eae1bb849d295d48834f4e8db9d1749d0f0877dde4bba8
-        - CLOUDINARY_URL=cloudinary://575936662574232:uuQjdw0PBNsYNExHF6MFK0MUj08@dnsctzpnq
-        - POSTGRESQL_URL=postgresql://dev:cs261isnotevenfun@postgresql:5432/tupetition
-      ports:
-        - '3000:3000'  # Map port 3000 on the host to port 3000 in the container
-      depends_on:
-        postgresql:
-          condition: service_healthy
-      networks:
-        - cs261-group
-
-
+    image: 'node:latest' # Use the latest Node.js image or specify a version like 'node:18'
+    working_dir: /app
+    volumes:
+      - .:/app # Mount the current directory to /app in the container
+    command: "sh -c 'npm install && npm run dev'" # Adjust this command if your app has a different start script
+    environment:
+      - TU_API_KEY=<TU_API_KEY>
+      - CLOUDINARY_URL=cloudinary://<CLOUDINARY_URL>
+      - POSTGRESQL_URL=postgresql://dev:cs261isnotevenfun@postgresql:5432/tupetition
+    ports:
+      - '3000:3000' # Map port 3000 on the host to port 3000 in the container
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    networks:
+      - cs261-group
