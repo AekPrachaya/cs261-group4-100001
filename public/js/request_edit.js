@@ -257,6 +257,19 @@ async function submitPetition(formData) {
 			},
 		};
 
+		const submitButton = document.getElementById("btnSaveRequest");
+		submitButton.style.backgroundColor = "#17156b"; 
+        submitButton.style.color = "#fff";;
+		submitButton.disabled = true;
+        submitButton.style.cursor = "not-allowed";
+
+		setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.style.cursor = "";
+            submitButton.style.backgroundColor = ""; 
+            submitButton.style.color = "";
+        }, 5000);
+
 		console.log(sessionStorage.getItem("editID"));
 		// Send petition data to the server
 		const petitionResponse = await fetch("/api/petition", {
@@ -585,7 +598,7 @@ async function displayPetitionDataInForm() {
 
 	//student info
 	yearSelect.value = content.student_info.year;
-
+	semesterSelect.value = content.student_info.semester;
 	phoneInput.value = content.phone_no;
 	topicInput.value = content.topic;
 	reasonTextarea.value = content.reason;
