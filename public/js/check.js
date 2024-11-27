@@ -135,7 +135,7 @@ async function approve() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    authorizor: sessionData.role,
+                    role: sessionData.role,
                     status: "approved",
                 }),
             },
@@ -147,10 +147,43 @@ async function approve() {
     }
 }
 
-async function sendComment() {
+async function sendComment(role) {
     // function ใช้ส่ง comment
+    const date = new Date();
     const commentText = document.querySelector(".comment-container textarea");
-    console.log(commentText);
+    let commentContent;
+    switch (role) { //เปลี่ยนรายละเอียด comment ตาม role
+        case "advisor":
+            commentContent = {
+                petition_id: sessionStorage.getItem("checkID"),
+                advisor_comment: commentText,
+                advisor_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            }
+            break;
+        case "staff":
+            commentContent = {
+                petition_id: sessionStorage.getItem("checkID"),
+                staff_comment: commentText,
+                staff_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            }
+            break;
+        case "instructor":
+            commentContent = {
+                petition_id: sessionStorage.getItem("checkID"),
+                instructor_comment: commentText,
+                instructor_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            }
+            break;
+        case "dean":
+            commentContent = {
+                petition_id: sessionStorage.getItem("checkID"),
+                dean_comment: commentText,
+                dean_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+            }
+            break;
+        default:
+
+    }
     try {
         const commentRes = await fetch("/api/comment", {
             method: "POST",
@@ -158,14 +191,13 @@ async function sendComment() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                comment: commentText.value,
+                comment: commentContent,
             }),
         });
         commentData = await commentRes.json();
-        if (commentData.ok) {
-            commentText.value = "";
-        }
+        commentText.value = "";
         console.log(commentData);
+        return 1;
     } catch (e) {
         console.log(`can't send comment: ${e}`);
     }
@@ -176,7 +208,31 @@ async function disApprove() {
     const comment = document.querySelector(".comment-container");
     const commentBtn = document.querySelector(".comment-container button");
     comment.style.display = "block";
-    commentBtn.addEventListener("click", sendComment);
+    commentBtn.addEventListener("click", async function () {
+        try {
+            const session = await fetch("/api/session");
+            const sessionData = await session.json();
+            console.log("Role: " + sessionData.role);
+            const data = await fetch(
+                `/api/approval/${sessionStorage.getItem("checkID")}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        role: sessionData.role,
+                        status: "rejected",
+                    }),
+                },
+            );
+            console.log(data);
+            await sendComment(sessionData.role);
+            window.location.href = "/advisor";
+        } catch (e) {
+            console.log("can't rejected: " + e);
+        }
+    });
 }
 
 document.querySelector("#btnApprove").addEventListener("click", approve);
@@ -187,7 +243,8 @@ document.addEventListener("click", (e) => {
     const modal = document.querySelector(".modal");
     const comment = document.querySelector(".comment-container");
     if (e.target === modal) {
-        modal.style.display = "none";
+        window.location.href = "/advisor";
+        // modal.style.display = "none";
     }
 
     if (e.target === comment) {
