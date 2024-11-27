@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "node index.js",
 		"test": "mocha ./tests/index.test.js --timeout 10000",
-		"format": "npx @biomejs/biome format --write ./*"
+		"format": "npx @biomejs/biome check --formatter-enabled=true --linter-enabled=false --organize-imports-enabled=true --write ./**/*.js"
 	},
 	"author": "",
 	"license": "ISC",
