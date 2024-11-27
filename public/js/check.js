@@ -95,6 +95,7 @@ async function displayPetitionDataInForm() {
 
     //student info
     yearSelect.textContent = content.student_info.year;
+    semesterSelect.textContent = content.student_info.semester;
 
     phoneInput.textContent = content.phone_no;
     topicInput.textContent = content.topic;
