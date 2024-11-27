@@ -9,12 +9,6 @@ h1 {
     color: var(--primary-color);
 }
 
-.main-content {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 h2 {
     font-size: 40px;
     margin-bottom: 15px;
@@ -27,8 +21,11 @@ h2 {
 }
 
 .form-group {
-    width: 100%;
-    margin: 0.5rem auto;
+    margin-bottom: 20px;
+    padding: 10px;
+
+    background-color: #d2d2d267;
+    border-radius: 10px;
 }
 
 .form-row {
@@ -52,6 +49,7 @@ label {
     padding: 8px 12px;
     border: 1px solid #dcdde1;
     border-radius: 4px;
+    font-size: 16px;
 }
 
 .form-control:focus {
@@ -89,25 +87,6 @@ input[type="checkbox"] {
     border-radius: 5px;
     background-color: white;
     transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Checked checkbox style */
-input[type="checkbox"].checked-checkbox {
-    background-color: blue;
-    border-color: rgb(0, 0, 206);
-}
-
-/* Visually disable checkboxes */
-input[type="checkbox"].disabled-checkbox {
-    background-color: lightgray;
-    border-color: gray;
-    pointer-events: all;
-    /* Allow clicks on disabled checkboxes */
-}
-
-/* Error border for when a disabled checkbox is clicked */
-input[type="checkbox"].error-border {
-    border-color: red;
 }
 
 .error-border {
@@ -157,66 +136,8 @@ textarea.form-control {
     margin-top: 30px;
 }
 
-.btn-small {
-    padding: 4px 8px;
-    font-size: 12px;
-    border-radius: 20px;
-}
-
 .btn:hover {
     opacity: 0.9;
-}
-
-#filePreview {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-#overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-#filePreview.show, #overlay.show {
-    display: block;
-}
-
-#closePreviewBtn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #ff0000;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#previewFrame {
-    width: 100%;
-    height: 500px;
-    border: none;
-    overflow: none;
 }
 
 /* Pop up */
@@ -315,6 +236,100 @@ textarea.form-control {
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
+}
+
+label {
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.modal {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    width: 600px;
+    background-color: #ffffff;
+
+    margin: 30vh auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+}
+
+.modal-content img {
+    width: 40%;
+    height: 40%;
+
+    margin: 10px;
+}
+
+.modal-content span {
+    font-size: 36px;
+
+    margin: 10px;
+}
+
+.comment-container {
+    display: none;
+
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.comment-content {
+    width: 600px;
+    background-color: #ffffff;
+
+    margin: 30vh auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+    border: none;
+    border-radius: 20px;
+}
+
+.comment-content span {
+    align-self: flex-start;
+    margin: 10px;
+}
+
+.comment-content textarea {
+    padding: 10px;
+    resize: none;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    border: none;
+}
+
+.comment-content button {
+    align-self: flex-end;
+    margin: 10px;
 }
 
 @media (max-width: 768px) {

@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TU Petition Status</title>
+    <link rel="stylesheet" href="../css/base.css">
     <link rel="stylesheet" href="../css/status.css">
     <link rel="stylesheet" href="../css/nav.css">
+
 </head>
 
 <body>
@@ -20,12 +22,12 @@
                 </div>
                 <ul class="menu">
                     <li><a href="request">ยื่นคำร้อง</a></li>
-                    <li><a href="petition">ตรวจสอบสถานะคำร้อง</a></li>
+                    <li><a href="petition" class="active">ตรวจสอบสถานะคำร้อง</a></li>
                 </ul>
             </div>
             <footer class="user-info">
                 <div>
-                    <p id="user-info-name">ชื่อผู้ใช้งาน: <span></span></p>
+                    <p id="user-info-name"> <span></span></p>
                     <p id="user-info-id"></p>
                 </div>
                 <div>
@@ -39,8 +41,8 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="content">
-            <h2>คำร้องของฉัน</h2>
+        <main class="content main-container">
+            <h2 class="page-title">คำร้องของฉัน</h2>
             <div class="tabs">
                 <button class="tab-btn active" data-tab="all">ทั้งหมด</button>
                 <button class="tab-btn" data-tab="in-progress">อยู่ระหว่างดำเนินการ</button>
@@ -53,7 +55,7 @@
             <div class="requests-wrapper">
                 <h3 class="requests-title">คำร้องทั้งหมด</h3>
                 <div class="requests-container">
-                    <div class="request-card">
+                    <!-- <div class="request-card">
                         <div class="request-content">
                             <p class="request-title">คำร้องที่ 1</p>
                         </div>
@@ -61,8 +63,8 @@
                             <button class="edit-btn">แก้ไข</button>
                             <button class="delete-btn">ยกเลิก</button>
                         </div>
-                    </div>
-                    <div class="request-card">
+                    </div> -->
+                    <!-- <div class="request-card">
                         <div class="request-content">
                             <p class="request-title">คำร้องที่ 2</p>
                         </div>
@@ -70,7 +72,7 @@
                             <button class="edit-btn">แก้ไข</button>
                             <button class="delete-btn">ยกเลิก</button>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 

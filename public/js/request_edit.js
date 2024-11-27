@@ -106,17 +106,15 @@ document
         // If validation passes, proceed with form submission
         if (isValid) {
             console.log("Form is valid, proceeding with submission...");
-            // TODO: change button color darker
-            // disable
-            await submitPetition(formData);
-            // TODO: change button color back to normal
+            submitPetition(formData);
         }
     });
 
+//reset error borders
 const resetErrorBorders = () => {
-    for (const element of document.querySelectorAll(".error-border")) {
+    document.querySelectorAll(".error-border").forEach((element) => {
         element.classList.remove("error-border");
-    }
+    });
 };
 
 // mark petitiontype as invalid
@@ -124,33 +122,33 @@ const markPetitionTypeError = () => {
     const petitionTypeInputs = document.querySelectorAll(
         'input[name="petitionType"]',
     );
-
-    for (const input of petitionTypeInputs) {
+    petitionTypeInputs.forEach((input) => {
         input.classList.add("error-border");
-    }
+    });
 };
 
 // Apply event listeners to form fields and checkboxes for real-time reset
 const applyResetListeners = () => {
-    for (const field of document.querySelectorAll("input, textarea, select")) {
+    // Add listeners to all input fields
+    document.querySelectorAll("input, textarea, select").forEach((field) => {
         field.addEventListener("focus", () => {
             field.classList.remove("error-border");
         });
-    }
+    });
 
-    for (const checkbox of petitionTypeCheckboxes) {
+    petitionTypeCheckboxes.forEach((checkbox) => {
         checkbox.addEventListener("change", () => {
+            // Remove error border on this checkbox
             checkbox.classList.remove("error-border");
 
             if (checkbox.checked) {
                 // Uncheck all other checkboxes
-
-                for (const otherCheckbox of petitionTypeCheckboxes) {
+                petitionTypeCheckboxes.forEach((otherCheckbox) => {
                     if (otherCheckbox !== checkbox) {
                         otherCheckbox.checked = false;
                         otherCheckbox.classList.remove("error-border");
                     }
-                }
+                });
             }
         });
 
@@ -160,7 +158,7 @@ const applyResetListeners = () => {
                 this.classList.add("error-border");
             }
         });
-    }
+    });
 };
 
 // Get all the petitiontype checkboxes
@@ -168,17 +166,16 @@ const petitionTypeCheckboxes = document.querySelectorAll(
     ".petition-type-checkbox",
 );
 
-for (checkbox of petitionTypeCheckboxes) {
+petitionTypeCheckboxes.forEach((checkbox) => {
     checkbox.addEventListener("change", function() {
         if (this.checked) {
             // Disable all other checkboxes
-
-            for (const otherCheckbox of petitionTypeCheckboxes) {
+            petitionTypeCheckboxes.forEach((otherCheckbox) => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.classList.add("disabled-checkbox");
                     otherCheckbox.setAttribute("data-disabled", "true");
                 }
-            }
+            });
 
             this.classList.add("checked-checkbox");
         } else {
@@ -187,10 +184,10 @@ for (checkbox of petitionTypeCheckboxes) {
             );
 
             if (!anyChecked) {
-                for (const otherCheckbox of petitionTypeCheckboxes) {
+                petitionTypeCheckboxes.forEach((otherCheckbox) => {
                     otherCheckbox.classList.remove("disabled-checkbox");
                     otherCheckbox.removeAttribute("data-disabled");
-                }
+                });
             }
 
             this.classList.remove("checked-checkbox");
@@ -208,7 +205,7 @@ for (checkbox of petitionTypeCheckboxes) {
             }, 500);
         }
     });
-}
+});
 
 async function submitPetition(formData) {
     try {
@@ -257,17 +254,20 @@ async function submitPetition(formData) {
             },
         };
 
+        console.log(sessionStorage.getItem("editID"));
         // Send petition data to the server
         const petitionResponse = await fetch("/api/petition", {
-            method: "POST",
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                type: petitionData.type,
-                content: petitionData,
+                id: sessionStorage.getItem("editID"),
+                petition: petitionData,
             }),
         });
+
+        sessionStorage.removeItem("editID");
 
         if (petitionResponse.ok) {
             const responseData = await petitionResponse.json();
@@ -291,6 +291,7 @@ async function submitPetition(formData) {
                 }
             }
             showPopup(saveRequestPopup);
+            return petitionResponse;
         } else {
             const errorData = await petitionResponse.json();
             console.error("Failed to submit petition:", errorData);
@@ -318,63 +319,12 @@ async function displayUserInformation() {
 const fileInput = document.getElementById("fileInput");
 const attachFileBtn = document.getElementById("attachFileBtn");
 const fileNameSpan = document.getElementById("fileName");
-const clearFileBtn = document.getElementById("clearFileBtn");
-const previewButton = document.getElementById("previewFileBtn");
-const previewFrame = document.getElementById("previewFrame");
-const filePreview = document.getElementById("filePreview");
-const overlay = document.getElementById("overlay");
-const closePreviewBtn = document.getElementById("closePreviewBtn");
 
 attachFileBtn.addEventListener("click", () => {
     fileInput.click();
 });
 
-fileInput.addEventListener("change", () => {
-    if (fileInput.files.length > 0) {
-        fileNameSpan.textContent = fileInput.files[0].name;
-        clearFileBtn.style.display = "inline-block";
-    } else {
-        resetFileInput();
-    }
-});
-
-clearFileBtn.addEventListener("click", () => {
-    resetFileInput();
-});
-
-function resetFileInput() {
-    fileInput.value = "";
-    fileNameSpan.textContent = "";
-    clearFileBtn.style.display = "none";
-    filePreview.classList.remove("show");
-    overlay.classList.remove("show");
-}
-
-previewButton.addEventListener("click", () => {
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        if (
-            file.type.includes("pdf") ||
-            file.type.includes("image") ||
-            file.type.includes("text")
-        ) {
-            const fileURL = URL.createObjectURL(file);
-            previewFrame.src = fileURL;
-            filePreview.classList.add("show");
-            overlay.classList.add("show");
-        } else {
-            alert("This file type cannot be previewed.");
-        }
-    } else {
-        alert("No file selected for preview.");
-    }
-});
-
-closePreviewBtn.addEventListener("click", () => {
-    filePreview.classList.remove("show");
-    overlay.classList.remove("show");
-});
-
+// อ้างอิงปุ่มและ Popup ใช้เพื่อดูสำหรับตกแต่งCss
 const saveDraftPopup = document.getElementById("saveDraftPopup");
 const cancelPopup = document.getElementById("cancelPopup");
 const saveRequestPopup = document.getElementById("saveRequestPopup");
@@ -387,19 +337,13 @@ function hideAllPopups() {
     }
 }
 
+// ฟังก์ชันเปิดและปิด Popup
 function showPopup(popup) {
     hideAllPopups();
     popup.style.display = "block";
     setTimeout(() => {
         popup.style.display = "none";
     }, 3000); // Hide the popup after 3 seconds
-}
-
-async function getUserInformation() {
-    const userInfo = await fetch("/api/session", {
-        headers: {},
-    });
-    return userInfo.json();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -447,7 +391,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 checkbox.classList.remove("disabled-checkbox");
                 checkbox.removeAttribute("data-disabled");
             }
-            resetFileInput();
             showPopup(cancelPopup);
         });
     }
@@ -475,3 +418,124 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 });
+
+// ERROR: metadata
+async function createFile(url) {
+    const response = await fetch(url);
+    const data = await response.blob();
+    // FIX
+    const metadata = {
+        type: "image/png",
+    };
+    // FIX
+    return new File([data], "input.png", metadata);
+}
+
+//function ดึงข้อมูลคำร้องด้วย uuid
+async function getPetitionData(id) {
+    const response = await fetch(`api/petition/${id}`);
+    console.log(response);
+    const petition = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
+    console.log(petition); //ใช้ test
+    return petition; //return ข้อมูลของคำร้อง ประกอบไปด้วย id, type, content
+}
+
+//function ดึงข้อมูลไฟล์ของคำร้องด้วย uuid
+async function getPetitionFile(id) {
+    const response = await fetch(`api/files/${id}`);
+    const petitionFile = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
+    console.log("GET FILE", petitionFile); //ใช้ test
+    const file = await createFile(petitionFile.data[0].url);
+    return file; // return เป็น file obj
+}
+
+async function displayPetitionDataInForm() {
+    //text input form
+    const phoneInput = document.querySelector("#form-phone_no");
+    const advisorInput = document.querySelector("#form-advisor");
+    const houseNumberInput = document.querySelector("#form-houseNumber");
+    const villageInput = document.querySelector("#form-village");
+    const subDistrictInput = document.querySelector("#form-subDistrict");
+    const districtInput = document.querySelector("#form-district");
+    const provinceInput = document.querySelector("#form-province");
+    const postalCodeInput = document.querySelector("#form-postal_code");
+    const courseIdInput = document.querySelector("#form-course_id");
+    const sectionInput = document.querySelector("#form-section");
+    const courseNameInput = document.querySelector("#form-courseName");
+    const topicInput = document.querySelector("#form-topic");
+    const reasonTextarea = document.querySelector("#form-reason");
+
+    //select form
+    const yearSelect = document.querySelector("#form-year");
+    const semesterSelect = document.querySelector("#form-semester"); //ไม่มีใน response
+    const resignYearSelect = document.querySelector("#form-resign-year"); //ไม่มีใน response
+    const resignSemesterSelect = document.querySelector("#form-resign-semester"); //ไม่มีใน response
+
+    //checkbox form
+    const addRemoveCheck = document.querySelector("#form-check-add-remove");
+    const dropCheck = document.querySelector("#form-check-drop");
+    const resignCheck = document.querySelector("#form-check-resign"); //ไม่มีใน response
+    const otherCheck = document.querySelector("#form-check-other"); //ไม่มีใน response
+
+    //file input
+    const fileInput = document.querySelector("#fileInput"); //ไม่เจอใน response
+
+    const petition = await getPetitionData(sessionStorage.getItem("editID"));
+    console.log(petition.data.content);
+
+    const content = petition.data.content; //ใช้เฉพาะรายละเอียดของคำร้อง
+
+    // ใส่ข้อมูลในแต่ละ input เรียงตาม content ในคำร้อง
+    advisorInput.value = content.advisor;
+
+    //courses
+    courseIdInput.value = content.courses[0].course_id;
+    sectionInput.value = content.courses[0].section;
+    courseNameInput.value = content.courses[0].course_name;
+
+    //location
+    districtInput.value = content.location.district;
+    houseNumberInput.value = content.location.house_no;
+    postalCodeInput.value = content.location.postal_code;
+    provinceInput.value = content.location.province;
+    subDistrictInput.value = content.location.sub_district;
+    villageInput.value = content.location.village_no;
+
+    //student info
+    yearSelect.value = content.student_info.year;
+
+    phoneInput.value = content.phone_no;
+    topicInput.value = content.topic;
+    reasonTextarea.value = content.reason;
+
+    //set file input from cloudinary
+    const dt = new DataTransfer();
+    const file = await getPetitionFile(sessionStorage.getItem("editID"));
+    dt.items.add(file);
+    fileInput.files = dt.files;
+    updateFilename();
+}
+document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
+
+/******************************************/
+
+//function สำหรับอัพเดตชื่อไฟล์ข้างปุ่มอัพโหลดไฟล์
+function updateFilename() {
+    const fileInput = document.querySelector("#fileInput");
+    const fileName = document.querySelector("#file-name");
+    if (fileInput.files.length >= 1) {
+        fileName.textContent = fileInput.files[0].name;
+        fileName.href = window.URL.createObjectURL(fileInput.files[0]);
+        fileName.target = "_blank";
+        fileName.style.cursor = "grab";
+        fileName.style.textDecoration = "underline";
+        fileName.style.pointerEvents = "auto";
+    } else {
+        fileName.textContent = "No file choosen";
+        fileName.href = "";
+        fileName.style.cursor = "not-allowed";
+        fileName.style.textDecoration = "none";
+        fileName.style.pointerEvents = "none";
+    }
+}
+fileUpload.addEventListener("change", updateFilename);

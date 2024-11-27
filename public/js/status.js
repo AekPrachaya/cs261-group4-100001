@@ -1,10 +1,7 @@
 async function fetchAndUpdate() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.username) {
-        console.error("User not logged in or missing username");
-        return;
-    }
-    const id = Number.parseInt(user.username);
+    const userInfo = await getUserInformation();
+    const id = Number.parseInt(userInfo.username);
+    console.log(userInfo);
 
     await fetch(`/api/petitions/${id}`, {
         method: "GET",
@@ -75,7 +72,7 @@ function updatePetitionStatus(statusLabel, petitions) {
     container.innerHTML = ""; // Clear the container
 
     if (petitions.length > 0) {
-        for (const petition of petitions) {
+        petitions.forEach((petition) => {
             const petitionCard = document.createElement("div");
             petitionCard.classList.add("request-card");
 
@@ -85,13 +82,40 @@ function updatePetitionStatus(statusLabel, petitions) {
                     <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
                 </div>
                 <div class="request-actions">
+                    <button class="delete-btn">ลบคำร้อง</button>
                     <button class="edit-btn">แก้ไข</button>
-                    <button class="delete-btn">ยกเลิก</button>
                 </div>
             `;
 
+            petitionCard
+                .querySelector(".edit-btn")
+                .addEventListener("click", function() {
+                    // function ปุ่มแก้คำร้อง
+                    sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
+                    window.location.href = "/edit"; //ส่งไปหน้าแก้คำร้อง
+                });
+            petitionCard
+                .querySelector(".delete-btn")
+                .addEventListener("click", async function() {
+                    //function ปุ่มลบคำร้อง
+                    try {
+                        const deleteRes = await fetch(`api/petition/${petition.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                id: petition.id,
+                            }),
+                        });
+                        console.log(deleteRes.json());
+                        window.location.reload();
+                    } catch (e) {
+                        console.log(e);
+                    }
+                });
             container.appendChild(petitionCard);
-        }
+        });
     } else {
         container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
     }

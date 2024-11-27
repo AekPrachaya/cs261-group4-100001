@@ -51,7 +51,7 @@ form.addEventListener("submit", async (event) => {
         return;
     }
 
-    if (!(username.length === 10)) {
+/*     if (!(username.length === 10)) {
         //เช็ค username ต้องมี 10 หลัก
         showCustomAlert("Your username or password is not correct.");
         usernameInput.focus();
@@ -63,7 +63,7 @@ form.addEventListener("submit", async (event) => {
         showCustomAlert("Your username or password is not correct.");
         passwordInput.focus();
         return;
-    }
+    } */
 
     const result = await login(username, password); // login
     console.log(result);
