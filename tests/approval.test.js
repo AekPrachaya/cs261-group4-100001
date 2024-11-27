@@ -2,8 +2,8 @@ import request from "supertest";
 
 import { expect } from "chai";
 import express from "express";
-import petitionRouter from "../handler/petition.js";
 import approvalRouter from "../handler/approval.js";
+import petitionRouter from "../handler/petition.js";
 import "../config.js";
 
 const app = express();

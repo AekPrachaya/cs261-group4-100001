@@ -1,36 +1,36 @@
 h2 {
-    margin-bottom: 40px;
-    font-size: 36px;
+	margin-bottom: 40px;
+	font-size: 36px;
 }
 
 .profile-container {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
 .personal-info {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    /* ระยะห่างระหว่างบรรทัด */
-    font-size: 28;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	/* ระยะห่างระหว่างบรรทัด */
+	font-size: 28;
 }
 
 .info-row {
-    display: flex;
-    padding: 0px;
+	display: flex;
+	padding: 0px;
 }
 
 .label {
-    flex: auto;
-    /* ให้ label กินพื้นที่เท่ากันทุกบรรทัด */
+	flex: auto;
+	/* ให้ label กินพื้นที่เท่ากันทุกบรรทัด */
 }
 
 .value {
-    color: #000080;
-    /* ข้อความ value เป็นสีน้ำเงิน */
-    text-align: left;
-    /* จัดข้อความไปทางซ้าย */
-    margin-left: 50px;
+	color: #000080;
+	/* ข้อความ value เป็นสีน้ำเงิน */
+	text-align: left;
+	/* จัดข้อความไปทางซ้าย */
+	margin-left: 50px;
 }
