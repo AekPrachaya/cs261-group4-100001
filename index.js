@@ -47,6 +47,8 @@ app.get("/", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
+app.use(authRouter);
+
 app.use(isAuthenticated);
 
 app.get("/petition", (_, res) => {
@@ -73,8 +75,11 @@ app.get("/check", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "check.html"));
 });
 
+app.get("/read", (_, res) => {
+	res.sendFile(path.join(__dirname, "public", "html", "check_readonly.html"));
+});
+
 // handlers
-app.use(authRouter);
 app.use(fileRouter);
 app.use(petitionRouter);
 app.use(userRouter);

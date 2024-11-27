@@ -1,4 +1,10 @@
 async function createFile(url, filename) {
+    // const url = cloudinary.url(url, {
+    //     transformation: [
+    //         { format: 'pdf' }, // Convert to PDF if applicable
+    //     ],
+    // });
+
     const response = await fetch(url);
     const data = await response.blob();
     // FIX
@@ -95,7 +101,6 @@ async function displayPetitionDataInForm() {
 
     //student info
     yearSelect.textContent = content.student_info.year;
-    semesterSelect.textContent = content.student_info.semester;
 
     phoneInput.textContent = content.phone_no;
     topicInput.textContent = content.topic;
@@ -118,160 +123,6 @@ function displayFilename(file) {
 }
 
 /*******************************************/
-
-function displayModal(img_source, message) {
-    // ใช้แสดง popup การอนุมัติคำร้อง
-    const modal = document.querySelector(".modal");
-    const modalImg = document.querySelector(".modal-content img");
-    const modalText = document.querySelector(".modal-content span");
-
-    modalImg.src = img_source;
-    modalText.textContent = message;
-    modal.style.display = "block";
-}
-
-async function approve() {
-    // function ใช้ approve คำร้อง
-    const approveComment = document.querySelector("#approve-comment");
-    const commentText = approveComment.querySelector("#approve-text");
-    const commentBtn = approveComment.querySelector(".comment-container button");
-    approveComment.style.display = "block";
-    commentBtn.addEventListener("click", async function () {
-        try {
-            const session = await fetch("/api/session");
-
-            const sessionData = await session.json();
-            const data = await fetch(
-                `/api/approval/${sessionStorage.getItem("checkID")}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        role: sessionData.role,
-                        status: "approved",
-                    }),
-                },
-            );
-            console.log(data);
-            const commentRes = await sendComment(sessionData.role, commentText.value);
-            console.log(commentRes);
-
-            approveComment.style.display = "none";
-            displayModal("../img/checkmark.png", "อนุมัติสำเร็จ");
-        } catch (e) {
-            console.log(`can't approve: ${e}`);
-        }
-    })
-}
-
-async function sendComment(role, comment) {
-    // function ใช้ส่ง comment
-    const date = new Date();
-    let commentContent;
-    switch (
-    role //เปลี่ยนรายละเอียด comment ตาม role
-    ) {
-        case "advisor":
-            commentContent = {
-                petition_id: sessionStorage.getItem("checkID"),
-                advisor_comment: comment,
-                advisor_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-            };
-            break;
-        case "staff":
-            commentContent = {
-                petition_id: sessionStorage.getItem("checkID"),
-                staff_comment: comment,
-                staff_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-            };
-            break;
-        case "instructor":
-            commentContent = {
-                petition_id: sessionStorage.getItem("checkID"),
-                instructor_comment: comment,
-                instructor_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-            };
-            break;
-        case "dean":
-            commentContent = {
-                petition_id: sessionStorage.getItem("checkID"),
-                dean_comment: comment,
-                dean_date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-            };
-            break;
-        default:
-    }
-    try {
-        const commentRes = await fetch("/api/comment", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                comment: commentContent,
-            }),
-        });
-        commentData = await commentRes.json();
-        console.log(commentData);
-        return 1;
-    } catch (e) {
-        console.log(`can't send comment: ${e}`);
-    }
-}
-
-async function disApprove() {
-    // function ใช้ปฏิเสธคำร้อง
-    const rejectComment = document.querySelector("#rejected-comment");
-    const commentText = rejectComment.querySelector("#rejected-text");
-    const commentBtn = rejectComment.querySelector(".comment-container button");
-    rejectComment.style.display = "block";
-    commentBtn.addEventListener("click", async () => {
-        try {
-            const session = await fetch("/api/session");
-            const sessionData = await session.json();
-            console.log(`Role: ${sessionData.role}`);
-            const data = await fetch(
-                `/api/approval/${sessionStorage.getItem("checkID")}`,
-                {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        role: sessionData.role,
-                        status: "rejected",
-                    }),
-                },
-            );
-            console.log(data);
-            await sendComment(sessionData.role, commentText.value);
-            displayModal("../img/ban.png", "ไม่อนุมัติ");
-            rejectComment.style.display = "none";
-        } catch (e) {
-            console.log(`can't rejected: ${e}`);
-        }
-    });
-}
-
-document.querySelector("#btnApprove").addEventListener("click", approve);
-document.querySelector("#btnDisapprove").addEventListener("click", disApprove);
-
-document.addEventListener("click", (e) => {
-    //ปิด popup เมื่อกดที่ส่วนอื่นที่ไม่ใช่ตัว pop up
-    const modal = document.querySelector(".modal");
-    const comment = document.querySelector(".comment-container");
-    if (e.target === modal) {
-        window.location.href = "/advisor";
-        // modal.style.display = "none";
-    }
-
-    if (e.target === comment) {
-        comment.style.display = "none";
-    }
-});
-
 
 
 

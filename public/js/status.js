@@ -75,7 +75,17 @@ function updatePetitionStatus(statusLabel, petitions) {
 		for (const petition of petitions) {
 			const petitionCard = document.createElement("div");
 			petitionCard.classList.add("request-card");
-
+			console.log(petition.status);
+			if(petition.status === "approved"){
+				petitionCard.innerHTML = `
+                <div class="request-content">
+                    <p class="request-title">${petition.content.topic}</p>
+                    <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
+                </div>
+				<div class="request-actions">
+                </div>
+            `;
+			} else {
 			petitionCard.innerHTML = `
                 <div class="request-content">
                     <p class="request-title">${petition.content.topic}</p>
@@ -86,6 +96,7 @@ function updatePetitionStatus(statusLabel, petitions) {
                     <button class="edit-btn">แก้ไข</button>
                 </div>
             `;
+			
 
 			petitionCard.querySelector(".edit-btn").addEventListener("click", () => {
 				// function ปุ่มแก้คำร้อง
@@ -112,6 +123,7 @@ function updatePetitionStatus(statusLabel, petitions) {
 						console.log(e);
 					}
 				});
+			}
 			container.appendChild(petitionCard);
 		}
 	} else {
