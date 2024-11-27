@@ -268,13 +268,15 @@ textarea.form-control {
 /* Popup หลัก */
 .Popupfinishrequest {
     position: fixed;
-    top: 0;
+    top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%); /* จัดกึ่งกลาง */
+    padding: 20px;
     width: auto;
+    max-width: 400px;
     height: auto;
     display: none;
     /* ซ่อน Popup เริ่มต้น */
-    justify-content: center;
     align-items: center;
     z-index: 1000;
 }
