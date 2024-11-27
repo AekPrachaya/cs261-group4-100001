@@ -15,13 +15,13 @@ import { POOL } from "../db.js";
  * @returns {Promise<Petition>} inserted row
  */
 export const insertPetition = async (petition) => {
-    const { student_id, type, advisor, content } = petition;
-    const { rows } = await POOL.query(
-        "INSERT INTO petitions (student_id, type, advisor, content) VALUES ($1, $2, $3, $4) RETURNING *",
-        [student_id, type, advisor, content],
-    );
+	const { student_id, type, advisor, content } = petition;
+	const { rows } = await POOL.query(
+		"INSERT INTO petitions (student_id, type, advisor, content) VALUES ($1, $2, $3, $4) RETURNING *",
+		[student_id, type, advisor, content],
+	);
 
-    return rows;
+	return rows;
 };
 
 /** Get all petitions by student_id
@@ -29,33 +29,33 @@ export const insertPetition = async (petition) => {
  * @returns {Promise<Petition[]>} all petitions
  * */
 export const getPetitions = async (student_id) => {
-    const { rows } = await POOL.query(
-        "SELECT * FROM petitions WHERE student_id = $1",
-        [student_id],
-    );
-    return rows;
+	const { rows } = await POOL.query(
+		"SELECT * FROM petitions WHERE student_id = $1",
+		[student_id],
+	);
+	return rows;
 };
 
 export const getPetitionsByRole = async (role, status = "all") => {
-    // Base query
-    let query = `
+	// Base query
+	let query = `
         SELECT p.*
         FROM petitions p
         JOIN approvals a ON p.id = a.petition_id
         WHERE a.${role}_id IS NULL
     `;
 
-    // Parameters for the query
-    const params = [];
+	// Parameters for the query
+	const params = [];
 
-    // Add condition for status if it's not "all"
-    if (status !== "all") {
-        query += ` AND a.${role}_status = $1`;
-        params.push(status);
-    }
+	// Add condition for status if it's not "all"
+	if (status !== "all") {
+		query += ` AND a.${role}_status = $1`;
+		params.push(status);
+	}
 
-    const { rows } = await POOL.query(query, params);
-    return rows;
+	const { rows } = await POOL.query(query, params);
+	return rows;
 };
 
 /** Get a petition by petition_id
@@ -63,11 +63,11 @@ export const getPetitionsByRole = async (role, status = "all") => {
  * @returns {Promise<Object>} petition
  * */
 export const getPetition = async (petition_id) => {
-    const { rows } = await POOL.query(
-        "SELECT * FROM petitions WHERE id = $1 LIMIT 1",
-        [petition_id],
-    );
-    return rows[0];
+	const { rows } = await POOL.query(
+		"SELECT * FROM petitions WHERE id = $1 LIMIT 1",
+		[petition_id],
+	);
+	return rows[0];
 };
 
 /** Update a petition by petition_id
@@ -76,21 +76,21 @@ export const getPetition = async (petition_id) => {
  * @returns {Object} updated petition
  * */
 export const updatePetition = async (petition_id, petition) => {
-    const { advisor, content, status } = petition;
+	const { advisor, content, status } = petition;
 
-    const { rows } = await POOL.query(
-        "UPDATE petitions SET advisor = $1, content = $2, status = $3 WHERE id = $4 RETURNING *",
-        [advisor, content, status, petition_id],
-    );
-    return rows[0];
+	const { rows } = await POOL.query(
+		"UPDATE petitions SET advisor = $1, content = $2, status = $3 WHERE id = $4 RETURNING *",
+		[advisor, content, status, petition_id],
+	);
+	return rows[0];
 };
 
 export const updatePetitionStatus = async (petition_id, status) => {
-    const { rows } = await POOL.query(
-        "UPDATE petitions SET status = $1 WHERE id = $2 RETURNING *",
-        [status, petition_id],
-    );
-    return rows[0];
+	const { rows } = await POOL.query(
+		"UPDATE petitions SET status = $1 WHERE id = $2 RETURNING *",
+		[status, petition_id],
+	);
+	return rows[0];
 };
 
 /** Delete a petition by petition_id
@@ -98,9 +98,9 @@ export const updatePetitionStatus = async (petition_id, status) => {
  * @returns {Promise<Petition>}
  * */
 export const deletePetition = async (petition_id) => {
-    const { rows } = await POOL.query(
-        "DELETE FROM petitions WHERE id = $1 RETURNING *",
-        [petition_id],
-    );
-    return rows[0];
+	const { rows } = await POOL.query(
+		"DELETE FROM petitions WHERE id = $1 RETURNING *",
+		[petition_id],
+	);
+	return rows[0];
 };

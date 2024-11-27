@@ -1,17 +1,17 @@
-import { PORT } from "./config.js";
-import express from "express";
-import session from "express-session";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isAuthenticated, isAuthorizer } from "./middleware.js";
 import cors from "cors";
+import express from "express";
+import session from "express-session";
+import { PORT } from "./config.js";
+import { isAuthenticated, isAuthorizer } from "./middleware.js";
 
+import approvalRouter from "./handler/approval.js";
 // Handlers
 import authRouter from "./handler/auth.js";
-import petitionRouter from "./handler/petition.js";
 import commentRouter from "./handler/comment.js";
 import fileRouter from "./handler/file.js";
-import approvalRouter from "./handler/approval.js";
+import petitionRouter from "./handler/petition.js";
 
 import userRouter from "./handler/user.js";
 import { createUser } from "./server/db/user.js";
@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 app.get("/", (_, res) => {
-
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
@@ -63,15 +62,15 @@ app.get("/request", (_, res) => {
 });
 
 app.get("/edit", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "request_edit.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "request_edit.html"));
 });
 
 app.get("/advisor", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "advisor.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "advisor.html"));
 });
 
 app.get("/check", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "check.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "check.html"));
 });
 
 // handlers
