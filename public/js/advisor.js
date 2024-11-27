@@ -131,9 +131,9 @@ for (const tab of document.querySelectorAll(".tab-btn")) {
 
         // Update petitions based on selected tab
         const statusMap = {
-            "in-progress": { label: "อยู่ระหว่างดำเนินการ", data: window.petitionStatus.inProgress },
-            "denied": { label: "ปฏิเสธคำร้อง", data: window.petitionStatus.denied },
-            "approved": { label: "อนุมัติแล้ว", data: window.petitionStatus.approved },
+            "waiting": { label: "อยู่ระหว่างดำเนินการ", data: window.petitionStatus.inProgress },
+            "rejected": { label: "ปฏิเสธคำร้อง", data: window.petitionStatus.denied },
+            "completed": { label: "อนุมัติแล้ว", data: window.petitionStatus.approved },
         };
 
         if (statusMap[status]) {
