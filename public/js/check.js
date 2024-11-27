@@ -143,7 +143,7 @@ async function approve() {
 		console.log(data);
 		displayModal("../img/checkmark.png", "อนุมัติสำเร็จ");
 	} catch (e) {
-		console.log("can't approve: " + e);
+		console.log(`can't approve: ${e}`);
 	}
 }
 

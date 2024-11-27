@@ -1,11 +1,11 @@
 import express from "express";
 import multer from "multer";
-import {
-	uploadDocuments,
-	getDocumentsByPetitionID,
-	deleteDocumentsByPublicIDs,
-} from "../server/document.js";
 import { addDocument } from "../server/db/document.js";
+import {
+	deleteDocumentsByPublicIDs,
+	getDocumentsByPetitionID,
+	uploadDocuments,
+} from "../server/document.js";
 
 const router = express.Router();
 

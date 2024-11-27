@@ -1,6 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
-import { deleteDocument, addDocument } from "../server/db/document.js";
 import streamifier from "streamifier";
+import { addDocument, deleteDocument } from "../server/db/document.js";
 
 /* upload document
  * @param {Multer.File} file

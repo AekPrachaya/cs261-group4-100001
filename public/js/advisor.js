@@ -4,7 +4,7 @@ async function fetchAndUpdate() {
 		console.error("User not logged in or missing username");
 		return;
 	}
-	const id = parseInt(user.username);
+	const id = Number.parseInt(user.username);
 
 	await fetch(`/api/petitions/${id}`, {
 		method: "GET",
@@ -22,7 +22,7 @@ async function fetchAndUpdate() {
 				const inProgress = [];
 				const denied = [];
 
-				data.data.forEach((petition) => {
+				for (const petition of data.data) {
 					console.log("Processing petition:", petition);
 					switch (petition.status) {
 						case "approved":
@@ -37,7 +37,7 @@ async function fetchAndUpdate() {
 						default:
 							console.warn(`Unknown petition status: ${petition.status}`);
 					}
-				});
+				}
 
 				// Store petition status globally
 				window.petitionStatus = {
@@ -64,7 +64,7 @@ function updatePetitionStatus(statusLabel, petitions) {
 	container.innerHTML = ""; // Clear the container
 
 	if (petitions.length > 0) {
-		petitions.forEach((petition) => {
+		for (const petition of petitions) {
 			const petitionCard = document.createElement("div");
 			petitionCard.classList.add("request-card");
 
@@ -78,7 +78,7 @@ function updatePetitionStatus(statusLabel, petitions) {
             </div>`;
 			petitionCard
 				.querySelector(".check-advisor-btn")
-				.addEventListener("click", async function () {
+				.addEventListener("click", async () => {
 					try {
 						const response = await fetch(`/api/approval/${petition.id}`, {
 							method: "GET",
@@ -105,7 +105,7 @@ function updatePetitionStatus(statusLabel, petitions) {
 				});
 
 			container.appendChild(petitionCard);
-		});
+		}
 	} else {
 		container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
 	}
@@ -125,9 +125,12 @@ for (const tab of document.querySelectorAll(".tab-btn")) {
 		tab.classList.add("active");
 
 		tab.setAttribute("aria-selected", "true");
-		document
-			.querySelectorAll(".tab-btn:not([aria-selected='true'])")
-			.forEach((t) => t.setAttribute("aria-selected", "false"));
+
+		for (const t of document.querySelectorAll(
+			".tab-btn:not([aria-selected='true'])",
+		)) {
+			t.setAttribute("aria-selected", "false");
+		}
 
 		// Update title
 		const title = document.querySelector(".requests-title");

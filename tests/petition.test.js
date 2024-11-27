@@ -1,6 +1,6 @@
-import request from "supertest";
 import { expect } from "chai";
 import express from "express";
+import request from "supertest";
 
 import petitionRouter from "../handler/petition.js";
 

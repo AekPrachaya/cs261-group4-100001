@@ -1,20 +1,20 @@
 import express from "express";
 import {
-	insertPetition,
 	deletePetition,
-	updatePetition,
-	getPetitions,
 	getPetition,
+	getPetitions,
 	getPetitionsByRole,
+	insertPetition,
+	updatePetition,
 } from "../server/db/petition.js";
 
+import { createApproval } from "../server/db/approval.js";
+import { insertComment } from "../server/db/comment.js";
+import { getDocumentsByPetitionId } from "../server/db/document.js";
 import {
 	deleteDocumentsByPublicIDs,
 	deleteDocumentsInDatabaseByPublicIDs,
 } from "../server/document.js";
-import { insertComment } from "../server/db/comment.js";
-import { getDocumentsByPetitionId } from "../server/db/document.js";
-import { createApproval } from "../server/db/approval.js";
 
 const router = express.Router();
 

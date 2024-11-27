@@ -1,5 +1,5 @@
-import { POOL } from "../db.js";
 import argon2 from "argon2";
+import { POOL } from "../db.js";
 
 export const createUser = async (username, password, role) => {
 	if (!username || !password || !role)

@@ -72,7 +72,7 @@ function updatePetitionStatus(statusLabel, petitions) {
 	container.innerHTML = ""; // Clear the container
 
 	if (petitions.length > 0) {
-		petitions.forEach((petition) => {
+		for (const petition of petitions) {
 			const petitionCard = document.createElement("div");
 			petitionCard.classList.add("request-card");
 
@@ -87,16 +87,14 @@ function updatePetitionStatus(statusLabel, petitions) {
                 </div>
             `;
 
-			petitionCard
-				.querySelector(".edit-btn")
-				.addEventListener("click", function () {
-					// function ปุ่มแก้คำร้อง
-					sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
-					window.location.href = "/edit"; //ส่งไปหน้าแก้คำร้อง
-				});
+			petitionCard.querySelector(".edit-btn").addEventListener("click", () => {
+				// function ปุ่มแก้คำร้อง
+				sessionStorage.setItem("editID", petition.id); //เก็บ id ของคำร้องไว้นำไปใช้ต่อที่หน้าแก้คำร้อง
+				window.location.href = "/edit"; //ส่งไปหน้าแก้คำร้อง
+			});
 			petitionCard
 				.querySelector(".delete-btn")
-				.addEventListener("click", async function () {
+				.addEventListener("click", async () => {
 					//function ปุ่มลบคำร้อง
 					try {
 						const deleteRes = await fetch(`api/petition/${petition.id}`, {
@@ -115,7 +113,7 @@ function updatePetitionStatus(statusLabel, petitions) {
 					}
 				});
 			container.appendChild(petitionCard);
-		});
+		}
 	} else {
 		container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
 	}

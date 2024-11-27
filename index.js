@@ -1,17 +1,17 @@
-import { PORT } from "./config.js";
-import express from "express";
-import session from "express-session";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { isAuthenticated, isAuthorizer } from "./middleware.js";
 import cors from "cors";
+import express from "express";
+import session from "express-session";
+import { PORT } from "./config.js";
+import { isAuthenticated, isAuthorizer } from "./middleware.js";
 
+import approvalRouter from "./handler/approval.js";
 // Handlers
 import authRouter from "./handler/auth.js";
-import petitionRouter from "./handler/petition.js";
 import commentRouter from "./handler/comment.js";
 import fileRouter from "./handler/file.js";
-import approvalRouter from "./handler/approval.js";
+import petitionRouter from "./handler/petition.js";
 
 import userRouter from "./handler/user.js";
 import { createUser } from "./server/db/user.js";

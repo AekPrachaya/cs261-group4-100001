@@ -1,5 +1,5 @@
-import request from "supertest";
 import session from "express-session";
+import request from "supertest";
 
 import { expect } from "chai";
 import express from "express";

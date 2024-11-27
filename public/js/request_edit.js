@@ -112,9 +112,9 @@ document
 
 //reset error borders
 const resetErrorBorders = () => {
-	document.querySelectorAll(".error-border").forEach((element) => {
+	for (const element of document.querySelectorAll(".error-border")) {
 		element.classList.remove("error-border");
-	});
+	}
 };
 
 // mark petitiontype as invalid
@@ -122,43 +122,45 @@ const markPetitionTypeError = () => {
 	const petitionTypeInputs = document.querySelectorAll(
 		'input[name="petitionType"]',
 	);
-	petitionTypeInputs.forEach((input) => {
+
+	for (const input of petitionTypeInputs) {
 		input.classList.add("error-border");
-	});
+	}
 };
 
 // Apply event listeners to form fields and checkboxes for real-time reset
 const applyResetListeners = () => {
 	// Add listeners to all input fields
-	document.querySelectorAll("input, textarea, select").forEach((field) => {
+
+	for (const field of document.querySelectorAll("input, textarea, select")) {
 		field.addEventListener("focus", () => {
 			field.classList.remove("error-border");
 		});
-	});
-
-	petitionTypeCheckboxes.forEach((checkbox) => {
+	}
+	for (const checkbox of petitionTypeCheckboxes) {
 		checkbox.addEventListener("change", () => {
 			// Remove error border on this checkbox
 			checkbox.classList.remove("error-border");
 
 			if (checkbox.checked) {
 				// Uncheck all other checkboxes
-				petitionTypeCheckboxes.forEach((otherCheckbox) => {
+
+				for (const otherCheckbox of petitionTypeCheckboxes) {
 					if (otherCheckbox !== checkbox) {
 						otherCheckbox.checked = false;
 						otherCheckbox.classList.remove("error-border");
 					}
-				});
+				}
 			}
-		});
 
-		checkbox.addEventListener("click", function (event) {
-			if (this.getAttribute("data-disabled") === "true") {
-				event.preventDefault();
-				this.classList.add("error-border");
-			}
+			checkbox.addEventListener("click", function (event) {
+				if (this.getAttribute("data-disabled") === "true") {
+					event.preventDefault();
+					this.classList.add("error-border");
+				}
+			});
 		});
-	});
+	}
 };
 
 // Get all the petitiontype checkboxes
@@ -166,16 +168,17 @@ const petitionTypeCheckboxes = document.querySelectorAll(
 	".petition-type-checkbox",
 );
 
-petitionTypeCheckboxes.forEach((checkbox) => {
+for (const checkbox of petitionTypeCheckboxes) {
 	checkbox.addEventListener("change", function () {
 		if (this.checked) {
 			// Disable all other checkboxes
-			petitionTypeCheckboxes.forEach((otherCheckbox) => {
+
+			for (const otherCheckbox of petitionTypeCheckboxes) {
 				if (otherCheckbox !== this) {
 					otherCheckbox.classList.add("disabled-checkbox");
 					otherCheckbox.setAttribute("data-disabled", "true");
 				}
-			});
+			}
 
 			this.classList.add("checked-checkbox");
 		} else {
@@ -184,10 +187,10 @@ petitionTypeCheckboxes.forEach((checkbox) => {
 			);
 
 			if (!anyChecked) {
-				petitionTypeCheckboxes.forEach((otherCheckbox) => {
+				for (const otherCheckbox of petitionTypeCheckboxes) {
 					otherCheckbox.classList.remove("disabled-checkbox");
 					otherCheckbox.removeAttribute("data-disabled");
-				});
+				}
 			}
 
 			this.classList.remove("checked-checkbox");
@@ -205,7 +208,7 @@ petitionTypeCheckboxes.forEach((checkbox) => {
 			}, 500);
 		}
 	});
-});
+}
 
 async function submitPetition(formData) {
 	try {
@@ -292,10 +295,9 @@ async function submitPetition(formData) {
 			}
 			showPopup(saveRequestPopup);
 			return petitionResponse;
-		} else {
-			const errorData = await petitionResponse.json();
-			console.error("Failed to submit petition:", errorData);
 		}
+		const errorData = await petitionResponse.json();
+		console.error("Failed to submit petition:", errorData);
 	} catch (error) {
 		console.error("Error occurred:", error);
 		alert(
