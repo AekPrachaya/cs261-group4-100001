@@ -276,11 +276,14 @@ async function submitPetition(formData) {
 			const responseData = await petitionResponse.json();
 			const petitionId = responseData.data.id;
 
+			console.log("petitionID", petitionId);
+
 			// Check if there's a file to upload
 			if (fileInput.files.length > 0) {
 				const fileData = new FormData();
 				fileData.append("files", fileInput.files[0]); // File from file input
 				fileData.append("petition_id", petitionId);
+				fileData.append("filename", fileInput.files[0].name);
 
 				const fileResponse = await fetch("/api/files", {
 					method: "POST",
@@ -476,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ERROR: metadata
-async function createFile(url) {
+async function createFile(url, filename) {
 	const response = await fetch(url);
 	const data = await response.blob();
 	// FIX
@@ -484,7 +487,7 @@ async function createFile(url) {
 		type: "image/png",
 	};
 	// FIX
-	return new File([data], "input.png", metadata);
+	return new File([data], filename, metadata);
 }
 
 //function ดึงข้อมูลคำร้องด้วย uuid
@@ -500,9 +503,14 @@ async function getPetitionData(id) {
 async function getPetitionFile(id) {
 	const response = await fetch(`api/files/${id}`);
 	const petitionFile = await response.json(); //แปลงข้อมูลที่รับมาเป็น JSON
-	console.log("GET FILE", petitionFile); //ใช้ test
-	globalThis.public_id = petitionFile.data[0].public_id; //ใช้ test
-	const file = await createFile(petitionFile.data[0].url);
+	console.log(petitionFile); //ใช้ test
+	const public_ids = petitionFile.data.map((file) => file.public_id);
+	globalThis.public_id = public_ids; //ใช้ test
+	if (petitionFile.data.length === 0) return null;
+	const file = await createFile(
+		petitionFile.data[0].url,
+		petitionFile.data[0].display_name,
+	);
 	return file; // return เป็น file obj
 }
 
@@ -553,7 +561,7 @@ async function displayPetitionDataInForm() {
 
 	//file input
 	const fileInput = document.querySelector("#fileInput"); //ไม่เจอใน response
-
+	console.log(sessionStorage.getItem("editID"));
 	const petition = await getPetitionData(sessionStorage.getItem("editID"));
 	console.log(petition.data.content);
 
@@ -585,8 +593,11 @@ async function displayPetitionDataInForm() {
 	//set file input from cloudinary
 	const dt = new DataTransfer();
 	const file = await getPetitionFile(sessionStorage.getItem("editID"));
-	dt.items.add(file);
-	fileInput.files = dt.files;
+	if (file) {
+		dt.items.add(file);
+		fileInput.files = dt.files;
+	}
+
 	updateFilename();
 }
 document.addEventListener("DOMContentLoaded", displayPetitionDataInForm);
