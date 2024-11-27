@@ -256,19 +256,23 @@ async function submitPetition(formData) {
 				reason: formData.get("reason"),
 			},
 		};
+
 		const submitButton = document.getElementById("btnSaveRequest");
-		submitButton.style.backgroundColor = "#17156b"; 
-        submitButton.style.color = "#fff";;
+
+		submitButton.style.backgroundColor = "#17156b";
+		submitButton.style.color = "#fff";
+		submitButton.style.cursor = "not-allowed";
 		submitButton.disabled = true;
-        submitButton.style.cursor = "not-allowed";
-
+		
 		setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.style.cursor = "";
-            submitButton.style.backgroundColor = ""; 
-            submitButton.style.color = "";
-        }, 5000);
-
+			submitButton.disabled = false;
+			submitButton.style.cursor = "";
+			submitButton.style.backgroundColor = "";
+			submitButton.style.color = "";
+		}, 5000);
+		
+		console.log(sessionStorage.getItem("editID"));
+	
 		// Send petition data to the server
 		const petitionResponse = await fetch("/api/petition", {
 			method: "POST",

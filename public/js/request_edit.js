@@ -211,116 +211,121 @@ for (const checkbox of petitionTypeCheckboxes) {
 }
 
 async function submitPetition(formData) {
-    try {
-        const info = await getUserInformation();
 
-        // Construct petition data
-        const petitionData = {
-            student_id: info.username,
-            type: formData.get("petitionType"),
-            advisor: formData.get("advisor"),
-            status: "pending",
-            content: {
-                topic: formData.get("topic"),
-                date: new Date().toISOString(),
-                person_in_charge: info.displayname_th,
-                student_info: {
-                    name_title: formData.get("title"),
-                    student_id: info.username,
-                    year: formData.get("year"),
-                    major: formData.get("department"),
-                },
-                location: {
-                    house_no: formData.get("houseNumber"),
-                    village_no: formData.get("village"),
-                    sub_district: formData.get("subDistrict"),
-                    district: formData.get("district"),
-                    province: formData.get("province"),
-                    postal_code: formData.get("postal_code"),
-                },
-                phone_no: formData.get("phone_no"),
-                telephone_no: formData.get("telephone_no"),
-                advisor: formData.get("advisor"),
-                is_add: formData.get("is_add") === "true",
-                courses: [
-                    {
-                        course_id: formData.get("course_id"),
-                        course_name: formData.get("courseName"),
-                        section: formData.get("section"),
-                        date: new Date().toISOString(),
-                        credit: formData.get("credit"),
-                        lecturer: formData.get("lecturer"),
-                        approve_by: formData.get("approve_by"),
-                    },
-                ],
-                reason: formData.get("reason"),
-            },
-        };
+	try {
+		const info = await getUserInformation();
 
-        const submitButton = document.getElementById("btnSaveRequest");
-        submitButton.style.backgroundColor = "#17156b";
-        submitButton.style.color = "#fff";;
-        submitButton.disabled = true;
-        submitButton.style.cursor = "not-allowed";
+		// Construct petition data
+		const petitionData = {
+			student_id: info.username,
+			type: formData.get("petitionType"),
+			advisor: formData.get("advisor"),
+			status: "pending",
+			content: {
+				topic: formData.get("topic"),
+				date: new Date().toISOString(),
+				person_in_charge: info.displayname_th,
+				student_info: {
+					name_title: formData.get("title"),
+					student_id: info.username,
+					year: formData.get("year"),
+					major: formData.get("department"),
+					semester: formData.get("semester"),
+				},
+				location: {
+					house_no: formData.get("houseNumber"),
+					village_no: formData.get("village"),
+					sub_district: formData.get("subDistrict"),
+					district: formData.get("district"),
+					province: formData.get("province"),
+					postal_code: formData.get("postal_code"),
+				},
+				phone_no: formData.get("phone_no"),
+				telephone_no: formData.get("telephone_no"),
+				advisor: formData.get("advisor"),
+				is_add: formData.get("is_add") === "true",
+				courses: [
+					{
+						course_id: formData.get("course_id"),
+						course_name: formData.get("courseName"),
+						section: formData.get("section"),
+						date: new Date().toISOString(),
+						credit: formData.get("credit"),
+						lecturer: formData.get("lecturer"),
+						approve_by: formData.get("approve_by"),
+					},
+				],
+				reason: formData.get("reason"),
+			},
+		};
 
-        setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.style.cursor = "";
-            submitButton.style.backgroundColor = "";
-            submitButton.style.color = "";
-        }, 5000);
+		const submitButton = document.getElementById("btnSaveRequest");
 
-        console.log(sessionStorage.getItem("editID"));
-        // Send petition data to the server
-        const petitionResponse = await fetch("/api/petition", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                id: sessionStorage.getItem("editID"),
-                petition: petitionData,
-            }),
-        });
+		submitButton.style.backgroundColor = "#17156b";
+		submitButton.style.color = "#fff";
+		submitButton.style.cursor = "not-allowed";
+		submitButton.disabled = true;
+		
+		setTimeout(() => {
+			submitButton.disabled = false;
+			submitButton.style.cursor = "";
+			submitButton.style.backgroundColor = "";
+			submitButton.style.color = "";
+		}, 5000);
+		
+		console.log(sessionStorage.getItem("editID"));
+		
+		// Send petition data to the server
+		const petitionResponse = await fetch("/api/petition", {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				id: sessionStorage.getItem("editID"),
+				petition: petitionData,
+			}),
+		});
 
-        sessionStorage.removeItem("editID");
+		sessionStorage.removeItem("editID");
 
-        if (petitionResponse.ok) {
-            const responseData = await petitionResponse.json();
-            const petitionId = responseData.data.id;
+		if (petitionResponse.ok) {
+			const responseData = await petitionResponse.json();
+			const petitionId = responseData.data.id;
 
-            console.log("petitionID", petitionId);
+			console.log("petitionID", petitionId);
 
-            // Check if there's a file to upload
-            if (fileInput.files.length > 0) {
-                const fileData = new FormData();
-                fileData.append("files", fileInput.files[0]); // File from file input
-                fileData.append("petition_id", petitionId);
-                fileData.append("filename", fileInput.files[0].name);
+			// Check if there's a file to upload
+			if (fileInput.files.length > 0) {
+				const fileData = new FormData();
+				fileData.append("files", fileInput.files[0]); // File from file input
+				fileData.append("petition_id", petitionId);
+				fileData.append("filename", fileInput.files[0].name);
 
-                const fileResponse = await fetch("/api/files", {
-                    method: "POST",
-                    body: fileData,
-                });
-                if (fileResponse.ok) {
-                    const fileDataResponse = await fileResponse.json();
-                    console.log("Files submitted successfully:", fileDataResponse);
-                } else {
-                    console.error("Failed to submit files:", await fileResponse.json());
-                }
-            }
-            deleteFile(public_id);
-            showPopup(saveRequestPopup);
-            return petitionResponse;
-        }
-        const errorData = await petitionResponse.json();
-        console.error("Failed to submit petition:", errorData);
-    } catch (error) {
-        console.error("Error occurred:", error);
-        alert(
-            "There was an error submitting your petition. Please try again later.",
-        );
-    }
+				const fileResponse = await fetch("/api/files", {
+					method: "POST",
+					body: fileData,
+				});
+				if (fileResponse.ok) {
+					const fileDataResponse = await fileResponse.json();
+					console.log("Files submitted successfully:", fileDataResponse);
+				} else {
+					console.error("Failed to submit files:", await fileResponse.json());
+				}
+			}
+			deleteFile(public_id);
+			showPopup(saveRequestPopup);
+			return petitionResponse;
+		}
+		const errorData = await petitionResponse.json();
+		console.error("Failed to submit petition:", errorData);
+	} catch (error) {
+		console.error("Error occurred:", error);
+		alert(
+			"There was an error submitting your petition. Please try again later.",
+		);
+	}
+
 }
 
 async function displayUserInformation() {
