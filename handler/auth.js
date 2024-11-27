@@ -21,16 +21,15 @@ router.post("/api/login", async (req, res) => {
 	// WARNING: This is for development only. Remove this in production
 	const devUser = ["advisor", "staff", "instructor", "dean", "test"];
 
-    if (devUser.includes(username)) {
-        try {
-            const user = await getUser(username, password);
-            req.session.user = user;
-            return res.redirect("/advisor");
-        } catch (error) {
-            return res.status(500).json({ error: "Invalid credentials" });
-        }
-    }
-
+	if (devUser.includes(username)) {
+		try {
+			const user = await getUser(username, password);
+			req.session.user = user;
+			return res.redirect("/advisor");
+		} catch (error) {
+			return res.status(500).json({ error: "Invalid credentials" });
+		}
+	}
 
 	try {
 		const response = await fetch(

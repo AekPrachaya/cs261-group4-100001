@@ -44,7 +44,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
 app.get("/", (_, res) => {
-
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
@@ -63,15 +62,15 @@ app.get("/request", (_, res) => {
 });
 
 app.get("/edit", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "request_edit.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "request_edit.html"));
 });
 
 app.get("/advisor", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "advisor.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "advisor.html"));
 });
 
 app.get("/check", (_, res) => {
-    res.sendFile(path.join(__dirname, "public", "html", "check.html"));
+	res.sendFile(path.join(__dirname, "public", "html", "check.html"));
 });
 
 // handlers
