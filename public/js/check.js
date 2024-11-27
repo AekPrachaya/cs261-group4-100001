@@ -1,10 +1,4 @@
 async function createFile(url, filename) {
-    // const url = cloudinary.url(url, {
-    //     transformation: [
-    //         { format: 'pdf' }, // Convert to PDF if applicable
-    //     ],
-    // });
-
     const response = await fetch(url);
     const data = await response.blob();
     // FIX
