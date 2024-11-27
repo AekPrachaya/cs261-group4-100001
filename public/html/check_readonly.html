@@ -158,30 +158,6 @@
                         <button type="button" id="previewFileBtn" class="btn btn-secondary">ดูตัวอย่างไฟล์</button>
                     </div>
 
-
-
-                    <div class="button-group">
-                        <button type="button" id="btnDisapprove" class="btn btn-danger">ไม่อนุมัติ</button>
-                        <button type="button" id="btnApprove" class="btn btn-success">อนุมัติ</button>
-                    </div>
-
-                    <!-- Popup: Cancel Success -->
-                    <div id="cancelPopup" class="Popupfinishrequest">
-                        <div class="popup-content">
-                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
-                            <p class="popup-message">ยกเลิกสำเร็จ</p>
-                        </div>
-                    </div>
-
-                    <!-- Popup: Save Request -->
-                    <div id="saveRequestPopup" class="Popupfinishrequest">
-                        <div class="popup-content">
-                            <img src="../img/checkmark.png" alt="Success Icon" class="icon">
-                            <p class="popup-message">ส่งคำร้องแล้ว</p>
-                            <button type="button" class="view-btn" id="viewStatus">ดูคำร้องของฉัน</button>
-                        </div>
-                    </div>
-
                 </form>
         </div>
     </div>
@@ -192,28 +168,16 @@
         </div>
     </div>
 
-    <div class="comment-container" id="rejected-comment">
+    <div class="comment-container">
         <div class="comment-content">
             <span>สาเหตุที่ไม่อนุมัติ</span>
-            <textarea name="comment" id="rejected-text">
+            <textarea name="comment" id="comment">
             </textarea>
             <button class="btn btn-secondary">
                 ยืนยัน
             </button>
         </div>
     </div>
-
-    <div class="comment-container" id="approve-comment">
-        <div class="comment-content">
-            <span>Comment</span>
-            <textarea name="comment" id="approve-text">
-            </textarea>
-            <button class="btn btn-secondary">
-                ยืนยัน
-            </button>
-        </div>
-    </div>
-
 
     <div id="overlay"></div>
     <div id="filePreview" class="hidden">
@@ -221,9 +185,8 @@
         <h4>File Preview</h4>
         <iframe id="previewFrame" src=""></iframe>
     </div>
-
     <script src="../js/nav.js"></script>
-    <script src="../js/check.js"></script>
+    <script src="../js/check_readonly.js"></script>
 </body>
 
 </html>

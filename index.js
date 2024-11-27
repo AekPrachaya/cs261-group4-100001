@@ -75,6 +75,10 @@ app.get("/check", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "check.html"));
 });
 
+app.get("/read", (_, res) => {
+	res.sendFile(path.join(__dirname, "public", "html", "check_readonly.html"));
+});
+
 // handlers
 app.use(fileRouter);
 app.use(petitionRouter);
