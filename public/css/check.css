@@ -320,6 +320,8 @@ label {
 }
 
 .comment-content textarea {
+    width: 100%;
+    height: 15em;
     padding: 10px;
     resize: none;
     background-color: #d9d9d9;
