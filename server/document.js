@@ -8,13 +8,21 @@ import { addDocument, deleteDocument } from "../server/db/document.js";
  * @returns {string} public_id
  */
 export const uploadDocument = async (file, filename, petitionID) => {
+    console.log(file);
+    const mimetype = file.mimetype;
+    let resourceType = "raw";
+    if (mimetype.includes("image")) {
+        resourceType = "image";
+    } else if (mimetype.includes("pdf")) {
+        resourceType = "raw";
+    }
     return new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
             {
                 filename_override: filename,
                 folder: `${petitionID}`,
                 use_filename: true,
-                resource_type: "raw", // For non-image files like PDFs
+                resource_type: resourceType,
             },
             (error, result) => {
                 if (error) {
@@ -69,7 +77,6 @@ export const getDocumentsByPetitionID = async (petitionID) => {
         const searchOptions = {
             type: "upload", // Ensure you are looking at uploaded resources
             prefix: petitionID, // Search in the specific folder based on petitionID
-            resource_type: "raw",
         };
         const result = await cloudinary.api.resources(searchOptions);
         console.log("result", result);
