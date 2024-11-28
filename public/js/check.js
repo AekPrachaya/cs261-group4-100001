@@ -1,11 +1,16 @@
 async function createFile(url, filename) {
     const response = await fetch(url);
     const data = await response.blob();
-    // FIX
+
+    // Get the content type from the response header
+    const contentType = response.headers.get("content-type");
+
+    // Set the appropriate type based on the content type
+
     const metadata = {
-        type: "application/pdf",
+        type: contentType,
     };
-    // FIX
+
     return new File([data], filename, metadata);
 }
 
@@ -26,14 +31,13 @@ async function getPetitionFile(id) {
     const public_ids = petitionFile.data.map((file) => file.public_id);
     globalThis.public_id = public_ids; //ใช้ test
     if (petitionFile.data.length === 0) return null;
+    console.log("File eiei", petitionFile.data[0]);
     const file = await createFile(
         petitionFile.data[0].url,
         petitionFile.data[0].display_name,
     );
     return file; // return เป็น file obj
 }
-
-
 
 async function displayPetitionDataInForm() {
     //studeint
@@ -68,7 +72,7 @@ async function displayPetitionDataInForm() {
     const dropCheck = document.querySelector("#form-check-drop");
     const resignCheck = document.querySelector("#form-check-resign"); //ไม่มีใน response
     const otherCheck = document.querySelector("#form-check-other"); //ไม่มีใน response
-
+    console.log(sessionStorage.getItem("checkID"));
     const petition = await getPetitionData(sessionStorage.getItem("checkID"));
     console.log(petition.data.content);
 
@@ -135,7 +139,7 @@ async function approve() {
     const commentText = approveComment.querySelector("#approve-text");
     const commentBtn = approveComment.querySelector(".comment-container button");
     approveComment.style.display = "block";
-    commentBtn.addEventListener("click", async function () {
+    commentBtn.addEventListener("click", async function() {
         try {
             const session = await fetch("/api/session");
 
@@ -162,7 +166,7 @@ async function approve() {
         } catch (e) {
             console.log(`can't approve: ${e}`);
         }
-    })
+    });
 }
 
 async function sendComment(role, comment) {
@@ -271,9 +275,6 @@ document.addEventListener("click", (e) => {
     }
 });
 
-
-
-
 /* ส่วนปุ่ม preview */
 const previewButton = document.getElementById("previewFileBtn");
 const previewFrame = document.getElementById("previewFrame");
@@ -281,9 +282,8 @@ const filePreview = document.getElementById("filePreview");
 
 // const dt = new DataTransfer();
 
-
-previewButton.addEventListener("click", async function () {
-    const dt = new DataTransfer()
+previewButton.addEventListener("click", async function() {
+    const dt = new DataTransfer();
     const file = await getPetitionFile(sessionStorage.getItem("checkID"));
     dt.items.add(file);
     if (dt.files[0]) {
@@ -308,5 +308,3 @@ closePreviewBtn.addEventListener("click", () => {
     filePreview.classList.remove("show");
     overlay.classList.remove("show");
 });
-
-
