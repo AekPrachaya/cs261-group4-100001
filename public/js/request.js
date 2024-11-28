@@ -263,16 +263,16 @@ async function submitPetition(formData) {
 		submitButton.style.color = "#fff";
 		submitButton.style.cursor = "not-allowed";
 		submitButton.disabled = true;
-		
+
 		setTimeout(() => {
 			submitButton.disabled = false;
 			submitButton.style.cursor = "";
 			submitButton.style.backgroundColor = "";
 			submitButton.style.color = "";
 		}, 5000);
-		
-		console.log(sessionStorage.getItem("editID"));
-	
+
+		// console.log(sessionStorage.getItem("editID"));
+
 		// Send petition data to the server
 		const petitionResponse = await fetch("/api/petition", {
 			method: "POST",
