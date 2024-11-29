@@ -8,7 +8,6 @@ import { addDocument, deleteDocument } from "../server/db/document.js";
  * @returns {string} public_id
  */
 export const uploadDocument = async (file, filename, petitionID) => {
-    console.log(file);
     const mimetype = file.mimetype;
     let resourceType = "raw";
     if (mimetype.includes("image")) {
@@ -74,20 +73,39 @@ export const uploadDocuments = async (fileBuffers, filename, petitionID) => {
  * */
 export const getDocumentsByPetitionID = async (petitionID) => {
     try {
-        const searchOptions = {
-            type: "upload", // Ensure you are looking at uploaded resources
-            prefix: petitionID, // Search in the specific folder based on petitionID
-        };
-        const result = await cloudinary.api.resources(searchOptions);
-        console.log("result", result);
-        const filteredResources = result.resources.map((resource) => ({
+        // Fetch raw (PDF) resources
+        const rawResult = await cloudinary.api.resources({
+            type: "upload",
+            prefix: petitionID,
+            resource_type: "raw",
+        });
+
+        // Fetch image resources
+        const imageResult = await cloudinary.api.resources({
+            type: "upload",
+            prefix: petitionID,
+            resource_type: "image",
+        });
+
+        console.log(imageResult);
+
+        // Combine raw and image resources
+        const combinedResources = [
+            ...rawResult.resources,
+            ...imageResult.resources,
+        ];
+
+        // Filter and map the relevant details
+        const filteredResources = combinedResources.map((resource) => ({
             public_id: resource.public_id,
             created_at: resource.created_at,
-            bytes: resource.bytes,
             display_name: resource.display_name,
-            url: resource.url,
+            bytes: resource.bytes,
+            format: resource.format, // Useful for distinguishing types (e.g., jpg, pdf)
+            url: resource.secure_url, // Use secure URL for HTTPS
         }));
-        return filteredResources; // Returns an array of resources
+
+        return filteredResources; // Return the combined array
     } catch (error) {
         console.error("Error fetching documents from Cloudinary:", error);
         return []; // Return an empty array on error

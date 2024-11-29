@@ -49,6 +49,7 @@ router.get("/api/files/:petition_id", async (req, res) => {
         return res.status(400).json({ error: "petition_id is required" });
     }
     try {
+        console.log("petition_id from /api/files", petition_id);
         const result = await getDocumentsByPetitionID(petition_id);
         return res.status(200).json({ data: result });
     } catch (error) {
