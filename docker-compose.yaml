@@ -26,8 +26,8 @@ services:
       - .:/app # Mount the current directory to /app in the container
     command: "sh -c 'npm install && npm run dev'" # Adjust this command if your app has a different start script
     environment:
-      - TU_API_KEY=TUd21d517fb7db46c7f23286d8ef81e3247fedcf5d65be3a954f8580e1605e806d2c6c1acbc6f3b6fbff1d218465983de3
-      - CLOUDINARY_URL=cloudinary://568454168881338:Ml-CEcZMDUZXzexlN1nKa2q5rMQ@dv8olw3cr
+      - TU_API_KEY=<TU_API_KEY>
+      - CLOUDINARY_URL=cloudinary://<CLOUDINARY_URL>
       - POSTGRESQL_URL=postgresql://dev:cs261isnotevenfun@postgresql:5432/tupetition
     ports:
       - '3000:3000' # Map port 3000 on the host to port 3000 in the container
