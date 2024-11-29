@@ -35,7 +35,7 @@ async function updateUserInfomation() {
 document.addEventListener("DOMContentLoaded", updateUserInfomation);
 
 // Elements ใช้เพื่อดูสำหรับตกแต่งCss
-const gearIcon = document.getElementById("gearIcon");
+const gearIcon = document.getElementById("pop-up-icon");
 const popupMenu = document.getElementById("popupMenu");
 
 // เปิด/ปิดป๊อปอัพเมื่อกดไอคอนฟันเฟือง
@@ -44,8 +44,8 @@ gearIcon.addEventListener("click", () => {
 });
 
 // ตัวอย่างการใช้งานปุ่ม Profile และ Logout
-const profileButton = document.getElementById("profileButton");
-const logoutButton = document.getElementById("logoutButton");
+const profileButton = document.getElementById("pop-up-profile");
+const logoutButton = document.getElementById("pop-up-logout");
 
 profileButton.addEventListener("click", () => {
 	alert("คุณเลือก Profile");

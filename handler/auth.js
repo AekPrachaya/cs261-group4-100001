@@ -60,7 +60,7 @@ router.post("/api/login", async (req, res) => {
 		const { status, message, ...filteredResult } = result;
 		filteredResult.role = "student";
 		req.session.user = filteredResult;
-		req.session.user = result;
+
 
 		// return res.status(200).json({ user: result, redirectTo: '/status' });
 		return res.redirect("/petition");

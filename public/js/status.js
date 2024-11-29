@@ -64,70 +64,81 @@ async function fetchAndUpdate() {
 }
 
 function updatePetitionStatus(statusLabel, petitions) {
-    const container = document.querySelector(".requests-container");
-    if (!container) {
-        console.warn("No requests container found!");
-        return;
-    }
+	const container = document.querySelector(".requests-container");
+	if (!container) {
+		console.warn("No requests container found!");
+		return;
+	}
 
-    container.innerHTML = "";
+	container.innerHTML = "";
 
-    if (petitions.length > 0) {
-        petitions.forEach(petition => {
-            const petitionCard = document.createElement("div");
-            petitionCard.classList.add("request-card");
+	if (petitions.length > 0) {
+		petitions.forEach(petition => {
+			const petitionCard = document.createElement("div");
+			petitionCard.classList.add("request-card");
 
-            petitionCard.innerHTML = `
+			petitionCard.innerHTML = `
                 <div class="request-content">
                     <p class="request-title">${petition.content.topic}</p>
                     <p class="request-status">สาเหตุ: ${petition.content.reason}</p>
+					<p class="request-badge">status: <span>${petition.status}</span><p>
                 </div>
                 <div class="request-actions"></div>
             `;
 
-            const actionsContainer = petitionCard.querySelector(".request-actions");
+			const actionsContainer = petitionCard.querySelector(".request-actions");
 
-            if (petition.status === "approved") {
-            } else if (petition.status === "rejected") {
-                actionsContainer.innerHTML = `
+			if (petition.status === "approved") {
+			} else if (petition.status === "rejected") {
+				actionsContainer.innerHTML = `
                     <button class="delete-btn">ลบคำร้อง</button>
                 `;
-            } else {
-                actionsContainer.innerHTML = `
+			} else {
+				actionsContainer.innerHTML = `
                     <button class="delete-btn">ลบคำร้อง</button>
                     <button class="edit-btn">แก้ไข</button>
                 `;
 
-                const editButton = actionsContainer.querySelector(".edit-btn");
-                editButton.addEventListener("click", () => {
-                    sessionStorage.setItem("editID", petition.id);
-                    window.location.href = "/edit";
-                });
-            }
+				const editButton = actionsContainer.querySelector(".edit-btn");
+				editButton.addEventListener("click", () => {
+					sessionStorage.setItem("editID", petition.id);
+					window.location.href = "/edit";
+				});
+			}
 
-            const deleteButton = actionsContainer.querySelector(".delete-btn");
-            if (deleteButton) {
-                deleteButton.addEventListener("click", async () => {
-                    try {
-                        const deleteRes = await fetch(`api/petition/${petition.id}`, {
-                            method: "DELETE",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ id: petition.id }),
-                        });
-                        const result = await deleteRes.json();
-                        console.log(result);
-                        window.location.reload();
-                    } catch (e) {
-                        console.error("Error deleting petition:", e);
-                    }
-                });
-            }
+			//badge color change
+			const badge = petitionCard.querySelector("span");
+			if (petition.status === "pending") {
+				badge.style.backgroundColor = "grey";
+			} else if (petition.status === "approved") {
+				badge.style.backgroundColor = "#9BCF53";
+			} else {
+				badge.style.backgroundColor = "red";
+			}
 
-            container.appendChild(petitionCard);
-        });
-    } else {
-        container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
-    }
+			const deleteButton = actionsContainer.querySelector(".delete-btn");
+			if (deleteButton) {
+				deleteButton.addEventListener("click", async () => {
+					try {
+						const deleteRes = await fetch(`api/petition/${petition.id}`, {
+							method: "DELETE",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ id: petition.id }),
+						});
+						const result = await deleteRes.json();
+						console.log(result);
+						window.location.reload();
+					} catch (e) {
+						console.error("Error deleting petition:", e);
+					}
+				});
+			}
+
+			container.appendChild(petitionCard);
+		});
+	} else {
+		container.innerHTML = "<p>ไม่มีคำร้องในสถานะนี้</p>";
+	}
 }
 
 // Tab switching logic

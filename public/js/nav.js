@@ -40,9 +40,24 @@ iconBtn.addEventListener("click", () => {
 	}
 });
 
-profileBtn.addEventListener("click", () => {
-	// function เมื่อกดที่ปุ่ม profile ให้ส่งไปที่หน้า /profile
-	window.location.href = "/profile";
+profileBtn.addEventListener("click", async function () {
+
+	try {
+		const session = await fetch("api/session");
+		const json = await session.json();
+		const role = json.role;
+		console.log(role);
+		if (role === "student") {
+			window.location.href = "/profile";
+
+		} else {
+			window.location.href = "/advisor-profile";
+		}
+
+	} catch (e) {
+
+	}
+
 });
 
 logoutBtn.addEventListener("click", async () => {

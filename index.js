@@ -43,12 +43,19 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 
+
 app.get("/", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "login.html"));
 });
 
-app.use(authRouter);
+// handlers
+app.use(fileRouter);
+app.use(petitionRouter);
+app.use(userRouter);
+app.use(commentRouter);
+app.use(approvalRouter);
 
+app.use(authRouter);
 app.use(isAuthenticated);
 
 app.get("/petition", (_, res) => {
@@ -79,12 +86,11 @@ app.get("/read", (_, res) => {
 	res.sendFile(path.join(__dirname, "public", "html", "check_readonly.html"));
 });
 
-// handlers
-app.use(fileRouter);
-app.use(petitionRouter);
-app.use(userRouter);
-app.use(commentRouter);
-app.use(approvalRouter);
+app.get("/advisor-profile", (_, res) => {
+	res.sendFile(path.join(__dirname, "public", "html", "profile_advisor.html"));
+});
+
+
 
 // DEMO: Create new advisor, staff, instructor, dean
 await createUser("advisor", "123", "advisor");
